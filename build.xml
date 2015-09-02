@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="proyecto3" default="proyecto3.jar" basedir="." >
+<project name="proyecto1" default="proyecto1.jar" basedir="." >
 
   <property name="build.dir" value="build" />
   <property name="src.dir"   value="src" />
   <property name="lib.dir"   value="lib" />
   <property name="doc.dir"   value="doc" />
 
-  <target name="proyecto3.jar" depends="compile.proyecto3">
-    <jar jarfile="proyecto3.jar">
+  <target name="proyecto1.jar" depends="compile.proyecto1">
+    <jar jarfile="proyecto1.jar">
       <zipfileset dir="${build.dir}" prefix="" />
       <manifest>
-        <attribute name="Main-Class" value="mx.unam.ciencias.edd.Proyecto3"/>
+        <attribute name="Main-Class" value="mx.unam.ciencias.edd.Proyecto1"/>
       </manifest>
     </jar>
   </target>
 
-  <target name="compile.proyecto3">
+  <target name="compile.proyecto1">
     <mkdir dir="${build.dir}"/>
     <javac srcdir="${src.dir}"
            destdir="${build.dir}"
@@ -33,7 +33,7 @@
     </javac>
   </target>
 
-  <target name="doc" depends="proyecto3.jar">
+  <target name="doc" depends="proyecto1.jar">
     <mkdir dir="${doc.dir}"/>
     <javadoc packagenames="mx.unam.ciencias.edd.*"
              sourcepath="src"
@@ -54,12 +54,12 @@
   </target>
 
   <target name="clean">
-    <delete file="proyecto3.jar"/>
+    <delete file="proyecto1.jar"/>
     <delete dir="${build.dir}"/>
     <delete dir="${doc.dir}"/>
   </target>
 
-  <target name="test" depends="proyecto3.jar">
+  <target name="test" depends="proyecto1.jar">
     <junit printsummary="yes" haltonfailure="no">
       <formatter type="plain" usefile="false" />
       <classpath>

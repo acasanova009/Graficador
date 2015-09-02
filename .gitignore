@@ -9,8 +9,10 @@ doc/
 
 !junit.jar
 !hamcrest-core.jar
-proyecto3.jar
+*.jar
 
 
 #System dependent.
-*.DS_Store
+.DS_Store
+src/mx/unam/ciencias/.DS_Store
+src/mx/unam/ciencias/edd/.DS_Store
