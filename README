@@ -1,0 +1,11 @@
+To compile to the program, one must have apache-ant installed.
+
+ant
+
+To run the program, after compiled.
+
+java -jar proyecto3.jar
+
+
+
+
