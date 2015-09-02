@@ -1,10 +1,10 @@
+This program is a java based, grapher. 
 To compile to the program, one must have apache-ant installed.
-
-ant
+From the terminal:
+$ant
 
 To run the program, after compiled.
-
-java -jar proyecto3.jar
+$ java -jar proyecto1.jar
 
 
 
