@@ -1,16 +1,16 @@
-*.class
-*.DS_STORE
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+
+#Ignore builds and doc from apache-ant.
 
 build/
+doc/
+
+
 # Package Files #
 
 !junit.jar
 !hamcrest-core.jar
-*.jar
-*.war
-*.ear
+proyecto3.jar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+
+#System dependent.
+*.DS_Store
