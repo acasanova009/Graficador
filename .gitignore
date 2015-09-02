@@ -4,6 +4,9 @@
 .mtj.tmp/
 
 # Package Files #
+
+!junit.jar
+!hamcrest-core.jar
 *.jar
 *.war
 *.ear
