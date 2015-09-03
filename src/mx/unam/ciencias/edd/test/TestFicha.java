@@ -25,5 +25,7 @@ public class TestFicha {
 //        random = new Random();
 //        total = 10 + random.nextInt(90);
 //        lista = new Lista<Integer>();
+        
+            //Mas pruebas de GitHub Desktop.
     }
 }
