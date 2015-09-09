@@ -17,13 +17,29 @@ public class TestAnalizadorSintactico {
 
     private Random random;
     private int total;
-    private Lista<Integer> lista;
-
+    private AnalizadorSintactico alex;
+    
     /**
      */
     public TestAnalizadorSintactico() {
-//        random = new Random();
-//        total = 10 + random.nextInt(90);
-//        lista = new Lista<Integer>();
+        random = new Random();
+        total = 10 + random.nextInt(90);
+        alex = new AnalizadorSintactico();
+    }
+    /**
+     * Prueba unitaria para {@link AnalizadorLexico#analizarLexico}.
+     */
+    @Test public void testAnalizarSintaxis() {
+        
+        Assert.assertTrue(true);
+        //        lista.agregaInicio(1);
+        //        Assert.assertTrue(1  == lista.getPrimero());
+        //        lista.agregaFinal(2);
+        //        Assert.assertFalse(2 == lista.getPrimero());
+        //        for (int i = 0; i < total; i++) {
+        //            int e = random.nextInt(total);
+        //            lista.agregaInicio(e);
+        //            Assert.assertTrue(e == lista.getPrimero());
+        //        }
     }
 }

@@ -32,7 +32,10 @@ public class Proyecto1 {
         
         
         //Clases por implementar. Fichas. Analizador Lexico. Analizador Sintactico. Arbol Sintactico, que por tener expresiones algebraicas, es binario.
-        
+        //Haciendo pruebas de GitHub Desktop.
+        //Sin guardar este archivo.
+        //Se estan guardando solos los archivos. Nice.
+        //Was up
         
         
     }

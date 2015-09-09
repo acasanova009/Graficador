@@ -1,0 +1,31 @@
+1<expresion> ::= <numero> | <variable> | "(" <expresion> ")" | "-" <expresion> | <funcion> "(" <expresion> ")" | <expresion> <operador> <expresion>
+
+2<numero> ::= <decimal> | <digitos>
+
+3//<decimal> ::= <digitos> "." <digitos> | <digitos> "." | "." <digitos>
+
+4//<digitos> ::= <undigito> | <muchosdigitos>
+
+5//<muchosdigitos> ::= "" | <digito> <lista-digitos>
+
+6//<undigito> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+7<variable> ::= "x"
+
+8<funcion> ::= "sin" | "cos" | "tan" | "cot" | "sec" | "csc"
+
+9<operador> ::= "+" | "-" | "*" | "/" | "^"
+
+
+
+TOKENS:
+S-> E
+E ->1 E#E 
+    2 -E 
+    3 (E) 
+    4 F(E) 
+    5 T
+F ->6 la función
+T ->7 var o numero.
+# ->8 operaicon 
+
