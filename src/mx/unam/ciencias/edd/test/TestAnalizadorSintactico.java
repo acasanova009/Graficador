@@ -17,29 +17,43 @@ public class TestAnalizadorSintactico {
 
     private Random random;
     private int total;
-    private AnalizadorSintactico alex;
+//    private AnalizadorSintactico aSin;
     
     /**
      */
     public TestAnalizadorSintactico() {
         random = new Random();
         total = 10 + random.nextInt(90);
-        alex = new AnalizadorSintactico();
+//        aSin = new AnalizadorSintactico();
     }
     /**
-     * Prueba unitaria para {@link AnalizadorLexico#analizarLexico}.
+     * Prueba unitaria para {@link AnalizadorLexico#EsGramaticaValida}.
      */
-    @Test public void testAnalizarSintaxis() {
+    @Test public void testEsGramaticaValida() {
         
-        Assert.assertTrue(true);
-        //        lista.agregaInicio(1);
-        //        Assert.assertTrue(1  == lista.getPrimero());
-        //        lista.agregaFinal(2);
-        //        Assert.assertFalse(2 == lista.getPrimero());
-        //        for (int i = 0; i < total; i++) {
-        //            int e = random.nextInt(total);
-        //            lista.agregaInicio(e);
-        //            Assert.assertTrue(e == lista.getPrimero());
-        //        }
+        Assert.assertTrue(AnalizadorSintactico.esGramaticaValida("[v,o,r,o,f,(,r,o,r,)]"));
+        
+        Assert.assertTrue(AnalizadorSintactico.esGramaticaValida("[o,r]"));
+        Assert.assertTrue(AnalizadorSintactico.esGramaticaValida("[o,v]"));
+        Assert.assertTrue(AnalizadorSintactico.esGramaticaValida("[f,(,o,v,),o,v,o,r]"));
+        Assert.assertTrue(AnalizadorSintactico.esGramaticaValida("[r]"));
+        Assert.assertTrue(AnalizadorSintactico.esGramaticaValida("[r,o,r]"));
+        Assert.assertTrue(AnalizadorSintactico.esGramaticaValida("[r,o,v]"));
+        Assert.assertTrue(AnalizadorSintactico.esGramaticaValida("[v,o,f,(,v,)]"));
+        Assert.assertTrue(AnalizadorSintactico.esGramaticaValida("[f,(,r,o,(,v,o,v,),)]"));
+        Assert.assertTrue(AnalizadorSintactico.esGramaticaValida("[r,o,(,r,o,v,)]"));
+        Assert.assertTrue(AnalizadorSintactico.esGramaticaValida("[v,o,v,o,v,o,v]"));
+        
+        
+        
+        Assert.assertFalse(AnalizadorSintactico.esGramaticaValida("[v,v]"));
+        Assert.assertFalse(AnalizadorSintactico.esGramaticaValida("[o,o]"));
+        Assert.assertFalse(AnalizadorSintactico.esGramaticaValida("[f,v]"));
+        Assert.assertFalse(AnalizadorSintactico.esGramaticaValida("[o,f]"));
+        Assert.assertFalse(AnalizadorSintactico.esGramaticaValida("[f,)]"));
+        Assert.assertFalse(AnalizadorSintactico.esGramaticaValida("[v,)]"));
+        Assert.assertFalse(AnalizadorSintactico.esGramaticaValida("[(,)]"));
+        Assert.assertFalse(AnalizadorSintactico.esGramaticaValida("[),(]"));
+        
     }
 }

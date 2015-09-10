@@ -17,7 +17,15 @@ import java.io.IOException;
  */
 public class AnalizadorSintactico{
 
+    
+    public static boolean esGramaticaValida(String s){
+        return false;
+    }
 
+    public static ArbolSintactico generarArbolConFichas(Lista<Ficha> lf)
+    {
+        return new ArbolSintactico();
+    }
     
 
 }

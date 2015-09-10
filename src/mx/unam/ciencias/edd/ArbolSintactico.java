@@ -2,6 +2,7 @@ package mx.unam.ciencias.edd;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.lang.IllegalArgumentException;
 
 /**
  * <p>Clase para árboles binarios completos.</p>
@@ -235,4 +236,13 @@ public class ArbolSintactico<T> extends ArbolBinario<T> {
 ////        return new ArbolBinarioCompleto<T>.Iterador<T>(this.raiz);
 //        return new Iterador<T>(raiz);
 //    }
+    
+    //Evaluamos el arbol en x, sin destruir el arbol. xD
+    public double evaluar(double x){
+//        if (x==0)
+//            throw new IllegalArgumentException("divisor is 0");
+        return 0;
+        
+    }
+    
 }

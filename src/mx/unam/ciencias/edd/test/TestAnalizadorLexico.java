@@ -18,7 +18,7 @@ public class TestAnalizadorLexico {
 
     private Random random;
     private int total;
-    private AnalizadorLexico alex;
+
     private Lista<Ficha> fichas;
 
     /**
@@ -26,7 +26,7 @@ public class TestAnalizadorLexico {
     public TestAnalizadorLexico() {
         random = new Random();
         total = 10 + random.nextInt(90);
-        alex = new AnalizadorLexico();
+
         fichas = new Lista<Ficha>();
     }
     /**
@@ -34,15 +34,72 @@ public class TestAnalizadorLexico {
      */
     @Test public void testAnalizarLexico() {
         
-        Assert.assertTrue(true);
-        Assert.assertTrue( alex.analizarLexico("1") != null);
-//        Assert.assertTrue(1  == lista.getPrimero());
-//        lista.agregaFinal(2);
-//        Assert.assertFalse(2 == lista.getPrimero());
-//        for (int i = 0; i < total; i++) {
-//            int e = random.nextInt(total);
-//            lista.agregaInicio(e);
-//            Assert.assertTrue(e == lista.getPrimero());
-//        }
+        String fixedString;
+        Ficha f;
+        Lista<Ficha> lf;
+        Ficha primera;
+
+        
+        fixedString = "123";
+        f = new Ficha("123");
+        lf = AnalizadorLexico.analizarLexico(fixedString);
+        primera = lf.getPrimero();
+        
+        Assert.assertTrue(primera.getValor() == f.getValor());
+        Assert.assertTrue(primera.getToken() == f.getToken());
+        
+        fixedString = "-123";
+        f = new Ficha("-");
+        lf = AnalizadorLexico.analizarLexico(fixedString);
+         primera = lf.getPrimero();
+        
+        Assert.assertTrue(primera.getValor() == f.getValor());
+        Assert.assertTrue(primera.getToken() == f.getToken());
+        
+        fixedString = "^12";
+        f = new Ficha("^");
+        lf = AnalizadorLexico.analizarLexico(fixedString);
+         primera = lf.getPrimero();
+        
+        Assert.assertTrue(primera.getValor() == f.getValor());
+        Assert.assertTrue(primera.getToken() == f.getToken());
+        
+        fixedString = "-1+2*3/4^5";
+        for(int i=0; i<10;i++){
+            if((i%2)==0)
+                fichas.agregaFinal(new Ficha("+"));
+            else
+                fichas.agregaFinal(new Ficha("1"));
+            
+        }
+        Assert.assertTrue(fichas.getLongitud()==AnalizadorLexico.analizarLexico(fixedString).getLongitud());
+        
+        
+        
+        
+//        fichas = new Lista<Ficha>();
+//        String[] arreglo = new String[total];
+        String parentesis = "";
+        for (int i = 0; i < total; i++) {
+            parentesis+="(";
+        }
+        
+        Assert.assertTrue(AnalizadorLexico.analizarLexico(parentesis).getLongitud()==total);
+        
+        
+        
+//        String[] arreglo = new String[total];
+         parentesis = "";
+        for (int i = 0; i < total; i++) {
+            parentesis+="&";
+        }
+        Assert.assertTrue(AnalizadorLexico.analizarLexico(parentesis).getLongitud()==0);
+        
+        
+        
+        
+        
+        
+        
     }
 }

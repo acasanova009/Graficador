@@ -22,12 +22,13 @@ public class AnalizadorLexico{
      * valores.
      */
     
-    public Lista<Ficha> analizarLexico(String texto){
+    public static Lista<Ficha> analizarLexico(String texto){
         
         //Crearemos una lista de fichas.
         
         //Analizaremos el texto por caracter.
         
+            //Le iremos preguntado a la clase Ficha si el texto es una ficha.
         
             //Mientras sea un numero decimal o entero lo continuaremos analizando.
             //Si detectamos letras entonces
@@ -42,7 +43,7 @@ public class AnalizadorLexico{
             //Por cada ficha que encontremos esta se agregara a la lista de fichas.
             //De no encontrar fichas correspondiete al texto de entrada se regresara null.
         
-        return null;
+        return new Lista<Ficha>();
         
 
     }

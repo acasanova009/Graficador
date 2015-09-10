@@ -460,7 +460,7 @@ public class Lista<T> implements Iterable<T> {
     {
         if (t ==null)
             return s;
-        
+
         
         if (t.anterior == null)
             s+="[";

@@ -7,6 +7,10 @@ import mx.unam.ciencias.edd.ExcepcionIndiceInvalido;
 import mx.unam.ciencias.edd.IteradorLista;
 import mx.unam.ciencias.edd.Lista;
 import mx.unam.ciencias.edd.ArbolSintactico;
+import mx.unam.ciencias.edd.AnalizadorSintactico;
+import mx.unam.ciencias.edd.AnalizadorLexico;
+import mx.unam.ciencias.edd.Ficha;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,29 +21,59 @@ public class TestArbolSintactico {
 
     private Random random;
     private int total;
-    private ArbolSintactico alex;
+    private ArbolSintactico arbol;
     
     /**
      */
     public TestArbolSintactico() {
         random = new Random();
         total = 10 + random.nextInt(90);
-        alex = new ArbolSintactico();
+        arbol = new ArbolSintactico();
     }
     /**
-     * Prueba unitaria para {@link AnalizadorLexico#analizarLexico}.
+     * Prueba unitaria para {@link AnalizadorLexico#evaluar}.
      */
-    @Test public void testArbolSintactico() {
+    @Test public void testEvaluar() {
         
-        Assert.assertTrue(true);
-        //        lista.agregaInicio(1);
-        //        Assert.assertTrue(1  == lista.getPrimero());
-        //        lista.agregaFinal(2);
-        //        Assert.assertFalse(2 == lista.getPrimero());
-        //        for (int i = 0; i < total; i++) {
-        //            int e = random.nextInt(total);
-        //            lista.agregaInicio(e);
-        //            Assert.assertTrue(e == lista.getPrimero());
-        //        }
+        arbol = AnalizadorSintactico.generarArbolConFichas(AnalizadorLexico.analizarLexico("5*5+x"));
+        Assert.assertTrue(arbol.evaluar(5.0)==30.0);
+        
+        
+        arbol = AnalizadorSintactico.generarArbolConFichas(AnalizadorLexico.analizarLexico("2^x"));
+        Assert.assertTrue(arbol.evaluar(4.0)==16.0);
+
+        
+        
+        
+
+        arbol = AnalizadorSintactico.generarArbolConFichas(AnalizadorLexico.analizarLexico("x/0"));
+        
+
+        
+        try{
+            
+            arbol.evaluar(1);
+            Assert.fail();
+            
+        }catch(IllegalArgumentException e)
+        {
+        }
+        
+        arbol = AnalizadorSintactico.generarArbolConFichas(AnalizadorLexico.analizarLexico("x^-(1/2)"));
+        try{
+            
+            arbol.evaluar(1.0);
+            
+            Assert.fail();
+            
+        }catch(IllegalArgumentException e)
+        {
+            
+        }
+        
+        
+        
+        
+       
     }
 }
