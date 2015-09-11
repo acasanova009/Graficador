@@ -2,59 +2,60 @@ package mx.unam.ciencias.edd;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.InputStreamReader;
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-import java.io.IOException;
+import mx.unam.ciencias.edd.Gramatica.ReglaGramatical;
 
 /**
- *
- *
+ * <p>El analizador sintactico permite dada una lista de fichas, verificar la sintaxis de esta lista.
+ * Lo hace a partir del algoritmo de construccion ascendente con retroceso.<p>
  *
  */
 public class AnalizadorSintactico{
 
     
-    public static boolean esGramaticaValida(String s){
-        
-        return false;
-    }
 
-    public static ArbolSintactico generarArbolConFichas(Lista<Ficha> fichas)
-    {
-        //En la pila t tendremos la derivacion del arbol final del arbol de ser que las fichas sean una gramatica sintacticamente valida. Y la usaremos para crear el arbol sintactico.
-        //Usaremos una "a" donde estaran las fichas a las que le aplicaremos las reducciones.
-        //Usaremos la cola "b", de la cual unicamente agregaremos y quitaremos elementos.
+   
+    /* A partir de una pila de fichas b, que proviene del analizador lexico, analizaremos las
+     * posibles derivaciones. Se usara el algoritmo de construccion acendente con retroceso.
+     *
+     * @param a Lista contenedora las derivaciones.
+     * @param b Pila que contiene las fichas originales.
+     * @param t ArbolRetroceso, nos permitira guardar todos los posibles caminos de reglasGramaticales,
+     * aunque solo uno sea efectivo.
+     * @return <tt>true</tt> las fichas de b eran sintacticamente correctas,
+     *         <tt>false</tt> en otro caso.
+
+     */
+    public static boolean analizar(Lista<Ficha> a, Pila<Ficha> b, ArbolRetroceso<ReglaGramatical> t){
         
-        //this.analizar(a,b,t);
         
-        return new ArbolSintactico();
-    }
-    
-    
-    private static boolean analizar(Lista<Ficha> a, Cola<Ficha> b, Pila<Integer> t){
+//        for (ReglaGramatical rG : ReglaGramatical.values()) {
+//
+//            
+//        }
+//        
+        //Por cada derivacion de fichas de las 16 derivaciones, que estan en mi Gramatica, le intentaremos aplicar la regla -r a las ultimas 4-posibles fichas de la lista -a. 4, ya que nuestra derivacion mas grande contiene 4 fichas.
         
-        //Por cada derivacion de fichas de las 16 derivaciones que tenemos en esta gramatica, le intentaremos aplicar la regla "d" a las ultimas 4 fichas de la lista "a". 4, ya que nuestra derivacion mas grande contiene 4 tokens.
-            //Si la lista "a", es reducible con d.
-                    //Se la aplicaremos.
-                //En nuestra pila "t", guardaremos el indice de la reduccion que le aplicamos.
-                //Si la lista "a", es el axioma inicial, y la cola b esta vacia.
+        //Por cada -r reglaGramatical
+            //Si la -r, aun no se registra en -t. Y las ultimas fichas de -a, son producibles por r.
+                    //Derivamos -a en -r. Y -r la registraremos en -t.
+                //Si la lista -a, es el axioma inicial, y la pila -b esta vacia.
                     //La derivacion fue exitosa.
-                //De otra manera analizaremos con respecto a la nueva reduccion de a.
-        //Si ninguna produccion es aplicable.
-            //Si podemos desplazar. b!=vacio
-                //Desplazaremos una ficha de "b" a "a".
-                //Intentaremos analizar nuevamente.
-        //Tenemos que retroceder sobre sobre t.
-            //Por cada produccion p en t. La aplicaremos p a "a", y quitaremos p de t
-             //Regresamos todos los simbolos finales.
-             //Hasta encontrar un simbolo no-terminal.
-            //Si se puede le aplico una derivacion no usada anteriormente.
+                //analizamos()
+        //Si ninguna regla -r es aplicable y -b no es vacia.
+                //Desplazaremos una ficha de -b a -a.
+                //analizamos()
+        
+        //Al llegar aqui significa:
+        //El camino que tomamos fue insuficiente para satisfacer la gramatica para llegar al aixoma inicial.
+        //Si t tiene mas reglasGramaticales. //Podemos buscar otros caminos.
+            //+De tener simbolos terminales, los regresamos a -b.
+            //Para la ultima regla -r en -t. Produciremos a -r en -a, y nos moveremos sobre t uno hacia atras.
+            //+De tener simbolos terminales, los regresamos a -b.
+                //analizamos nuevamente.
+        
+        //Si t NO tiene reglas // No hay mas caminos en t por encontrar.
+            //Y consideramos a esta expresion, sintacticamente incorrecta.
+                //La derivacion fallo.
                 
         
         
@@ -63,6 +64,11 @@ public class AnalizadorSintactico{
         
         
         
+    }
+    public static ArbolSintactico generar(Lista<Ficha> fichas, Lista<ReglaGramatical> listaReglas)
+    {
+        
+        return null;
     }
 
 }

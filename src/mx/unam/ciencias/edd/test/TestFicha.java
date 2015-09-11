@@ -35,27 +35,27 @@ public class TestFicha {
         
         Ficha f;
         f = new Ficha("sin");
-        Assert.assertTrue(Ficha.Token.FUNCION == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.FUNCION == f.getSimbolo());
         Assert.assertTrue("sin" == f.getValor());
         
         f = new Ficha("45678.67");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.REAL == f.getSimbolo());
         Assert.assertTrue("45678.67" == f.getValor());
         
         f = new Ficha(".67");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.REAL == f.getSimbolo());
         Assert.assertTrue(".67" == f.getValor());
         
         f = new Ficha("45678.");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.REAL == f.getSimbolo());
         Assert.assertTrue("45678." == f.getValor());
         
         f = new Ficha("45");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.REAL == f.getSimbolo());
         Assert.assertTrue("45" == f.getValor());
         
         f = new Ficha("x");
-        Assert.assertTrue(Ficha.Token.VAR == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.VAR == f.getSimbolo());
         Assert.assertTrue("x" == f.getValor());
         
     }
@@ -92,22 +92,22 @@ public class TestFicha {
         
         Ficha f;
         f = new Ficha("sin");
-        Assert.assertTrue(Ficha.Token.FUNCION == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.FUNCION == f.getSimbolo());
         
         f = new Ficha("45678.67");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.REAL == f.getSimbolo());
         
         f = new Ficha(".67");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.REAL == f.getSimbolo());
         
         f = new Ficha("45678.");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.REAL == f.getSimbolo());
         
         f = new Ficha("45");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.REAL == f.getSimbolo());
         
         f = new Ficha("x");
-        Assert.assertTrue(Ficha.Token.VAR == f.getToken());
+        Assert.assertTrue(Ficha.Simbolo.VAR == f.getSimbolo());
         
 
         

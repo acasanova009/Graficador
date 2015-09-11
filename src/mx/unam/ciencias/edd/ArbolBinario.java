@@ -184,6 +184,7 @@ public abstract class ArbolBinario<T> implements Iterable<T> {
         
         return profundidad(raiz);
     }
+    
     private int profundidad(Vertice<T> ver ) {
         if (ver == null || (!ver.hayIzquierdo() && !ver.hayDerecho()))
             return 0;
