@@ -2,11 +2,13 @@ package mx.unam.ciencias.edd.test;
 
 //import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.lang.IllegalArgumentException;
 import java.util.Random;
 import mx.unam.ciencias.edd.ExcepcionIndiceInvalido;
 import mx.unam.ciencias.edd.IteradorLista;
 import mx.unam.ciencias.edd.Lista;
 import mx.unam.ciencias.edd.Ficha;
+import mx.unam.ciencias.edd.Cola;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -110,5 +112,22 @@ public class TestFicha {
 
         
         
+    }
+    
+    /**
+     * Prueba unitaria para {@link Ficha#sePuedeReducir}.
+     */
+    @Test public void testSePuedeReducir() {
+
+//        try{
+//            Ficha.sePuedeReducir(null,-1);
+//            
+//        }catch(IllegalArgumentException e){}
+//        
+//        try{
+//            Ficha.sePuedeReducir(null,10);
+//            
+//        }catch(IllegalArgumentException e){}
+
     }
 }

@@ -1,5 +1,6 @@
 package mx.unam.ciencias.edd;
 
+import java.lang.IllegalArgumentException;
 /**
  * Classe contenedora de el valor en ficha, y el valor real.
  * EJEMPLO:  ficha.representa = "NUM"
@@ -8,17 +9,24 @@ package mx.unam.ciencias.edd;
 public class Ficha{
     
     public static enum Token {
-        OPERADOR ,
-        REAL,
-        VAR,
-        FUNCION,
+        MAS,
+        MENOS,
+        MULT,
+        DIV,
+        EXPO,
         PAR_I,
-        PAR_D
+        PAR_D,
+        
+        //Son los que usan valores. => Que si es FUNCION, mejor un string else un double.
+        FUNCION,
+        REAL,
+        VAR
     }
     
     //Token.
     private Token token;
     //Valor real.
+    //Unicamente me importara el valor cuando vaya a evaluar el arbol (y obviamente este construido).
     private String valor;
     
     //Valor del token.
@@ -56,6 +64,45 @@ public class Ficha{
         return false;
         
     }
+    public static enum Produccion {
+        
+        
+    }
+    /* Reductor de un lista de fichas a un ficha. 
+     * Constructor de fichas inverso.
+     
+     
+     Gramatica: 
+     
+     S-> E
+     E-> E+T | E-T | T
+     T-> T*F | T/F | F
+     F-> F^M | M
+     M-> Y(E) | (E) | -E | Q
+     Y-> func
+     Q-> num | var
+     
+     
+
+     
+     * @param Cola<Ficha> lista de fichas a reducir.
+     * @return  boolean <tt>true</tt> Si se puede reducir   
+     *                  <tt>false</tt> en otro caso.
+     
+     
+     
+     */
+    
+    public static boolean sePuedeReducir(Lista<Ficha> a, int reglaGramaticalNumero){
+        
+        boolean siSePuede= false;
+        switch(reglaGramaticalNumero){
+            case 0:
+            break;}
+        
+        
+            return siSePuede;
+    }
     
     /**
      * Regresa una representación en del token
@@ -64,7 +111,7 @@ public class Ficha{
     @Override public String toString(){
         String s = "";
         
-        if(this.token==Token.OPERADOR)
+        if(this.token==Token.EXPO)
             s= "o";
         if(this.token==Token.REAL)
             s= "r";
