@@ -1,3 +1,4 @@
+ 
 package mx.unam.ciencias.edd;
 
 import java.util.Iterator;
@@ -21,11 +22,12 @@ public class AnalizadorSintactico{
      * @param b Pila que contiene las fichas originales.
      * @param t ArbolRetroceso, nos permitira guardar todos los posibles caminos de reglasGramaticales,
      * aunque solo uno sea efectivo.
-     * @return <tt>true</tt> las fichas de b eran sintacticamente correctas,
+     * @return <tt>true</tt> las fichas de b eran sintacticamente correcta. Y el arbol final estara como 
+     * unico elemento en la lista -a.
      *         <tt>false</tt> en otro caso.
 
      */
-    public static boolean analizar(Lista<Ficha> a, Pila<Ficha> b, ArbolRetroceso<ReglaGramatical> t){
+    public static boolean analizar(Lista<ArbolSintactico<Ficha>> a, Pila<ArbolSintactico<Ficha>> b, ArbolRetroceso<ReglaGramatical> t){
         
         
 //        for (ReglaGramatical rG : ReglaGramatical.values()) {
@@ -37,7 +39,7 @@ public class AnalizadorSintactico{
         
         //Por cada -r reglaGramatical
             //Si la -r, aun no se registra en -t. Y las ultimas fichas de -a, son producibles por r.
-                    //Derivamos -a en -r. Y -r la registraremos en -t.
+                    //***Derivamos -a en -r. Y -r la registraremos en -t.
                 //Si la lista -a, es el axioma inicial, y la pila -b esta vacia.
                     //La derivacion fue exitosa.
                 //analizamos()
@@ -64,11 +66,6 @@ public class AnalizadorSintactico{
         
         
         
-    }
-    public static ArbolSintactico generar(Lista<Ficha> fichas, Lista<ReglaGramatical> listaReglas)
-    {
-        
-        return null;
     }
 
 }

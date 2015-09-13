@@ -69,7 +69,15 @@ public class Ficha{
             valor = v;
         
     }
-   
+    
+    /* Nos dice si el simbolo de la ficha es terminal.
+     *@return  <tt>true</tt> Si es Simbolo TERMINAL.,
+     *         <tt>false</tt> en otro caso.
+     */
+    public boolean esTerminal(){
+        return false;
+    }
+    
     
     /**
      * Regresa una representación en del Simbolo

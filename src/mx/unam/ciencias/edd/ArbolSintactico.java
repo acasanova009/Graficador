@@ -3,242 +3,85 @@ package mx.unam.ciencias.edd;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.lang.IllegalArgumentException;
-
+import mx.unam.ciencias.edd.Gramatica.ReglaGramatical;
 /**
- * <p>Clase para árboles binarios completos.</p>
- *
- * <p>Un árbol binario completo agrega y elimina elementos de tal
- * forma que el árbol siempre es lo más cercano posible a estar
- * lleno.<p>
- */
-public class ArbolSintactico<T> extends ArbolBinario<T> {
+ * <p>Clase para árboles sintacticos.</p>
 
-//    /* Clase privada para iteradores de árboles binarios
-//     * completos. */
-//    private class Iterador<T> implements Iterator<T> {
-//
-//        private Cola<ArbolBinario<T>.Vertice<T>> cola;
-//
-//        /* Constructor que recibe la raíz del árbol. */
-//        public Iterador(ArbolBinario<T>.Vertice<T> raiz) {
-//            
-//            cola = new Cola<ArbolBinario<T>.Vertice<T>>();
-//            Cola<ArbolBinario<T>.Vertice<T>> q = new Cola<ArbolBinario<T>.Vertice<T>>();
-//            
-//            if (raiz != null)
-//                q.mete(raiz);
-//                while(!q.esVacia())
-//                {
-//                    ArbolBinario<T>.Vertice<T> cVer = q.saca();
-//                    cola.mete(cVer);
-//                    
-//                    if(cVer.hayIzquierdo())
-//                    {
-//                        q.mete(cVer.izquierdo);
-//                    }
-//                    if(cVer.hayDerecho())
-//                    {
-//                        q.mete(cVer.derecho);
-//                    }
-//                }
-//            }
-//        
-//
-//        /* Nos dice si hay un elemento siguiente. */
-//        @Override public boolean hasNext() {
-//            // Aquí va su código.
-//            return !cola.esVacia();
-//        }
-//
-//        /* Regresa el elemento siguiente. */
-//        @Override public T next() {
-//            ArbolBinario<T>.Vertice<T> ver = cola.saca();
-//            return ver.elemento;
-//            // Aquí va su código.
-//        }
-//
-//        /* No lo implementamos: siempre lanza una excepción. */
-//        @Override public void remove() {
-//            throw new UnsupportedOperationException();
-//        }
-//    }
+ * <p>Un arbol sintactico contiene fichas en sus vertices. Las cuales son creadas a partir de una
+ * lista de reglas gramaticales.
+ * <p>
+ */
+public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
+    
+    /*Regla gramatical con la cual el arbol fue creado.*/
+    private ReglaGramatical reglaGramatical;
 
     /**
      * Constructor sin parámetros. Sencillamente ejecuta el
      * constructor sin parámetros de {@link ArbolBinario}.
      */
-    public ArbolSintactico() {
-        super(); }
-//
-//    /**
-//     * Agrega un elemento al árbol binario completo. El nuevo
-//     * elemento se coloca a la derecha del último nivel, o a la
-//     * izquierda de un nuevo nivel.
-//     * @param elemento el elemento a agregar al árbol.
-//     * @return un iterador que apunta al vértice del árbol que
-//     *         contiene el elemento.
-//     */
-    @Override public VerticeArbolBinario<T> agrega(T elemento) {return null;}
-//
-//
-//        Cola<ArbolBinario<T>.Vertice<T>> q = new Cola<ArbolBinario<T>.Vertice<T>>();
-//        ArbolBinario<T>.Vertice<T> verElem = new ArbolBinario<T>.Vertice<T>(elemento);
-//        
-//        if (raiz == null)
-//            raiz = verElem;
-//        else
-//        {
-//            q.mete(raiz);
-//            while(!q.esVacia())
-//            {
-//                ArbolBinario<T>.Vertice<T> cVer = q.saca();
-//            if(cVer.hayIzquierdo())
-//            {
-//                q.mete(cVer.izquierdo);
-//            }
-//            if(cVer.hayDerecho())
-//            {
-//                q.mete(cVer.derecho);
-//            }
-//            
-//                if (cVer.hayIzquierdo() && !cVer.hayDerecho())
-//                {
-//                    
-//                    cVer.derecho = verElem;
-//                    verElem.padre = cVer;
-//                    break;
-//                }
-//                else if (!cVer.hayIzquierdo() && !cVer.hayDerecho())
-//                {
-//                    
-//                    cVer.izquierdo = verElem;
-//                    verElem.padre = cVer;
-//                    break;
-//                }
-//            }
-//        }
-//        elementos++;
-//        return verElem;
-//    }
-//
-//    /**
-//     * Elimina un elemento del árbol. El elemento a eliminar cambia
-//     * lugares con el último elemento del árbol al recorrerlo por
-//     * BFS, y entonces es eliminado.
-//     * @param elemento el elemento a eliminar.
-//     */
-    @Override public void elimina(T elemento) {}
-//
-//        ArbolBinario<T>.Vertice<T> lastV = getLastElement();
-//        ArbolBinario<T>.Vertice<T> eraseV = busquedaBFS(elemento);
-//        
-//        if (eraseV != null)
-//        {
-//            elementos--;
-//            if (lastV == eraseV)
-//            {
-//                if (eraseV == raiz)
-//                {
-//                    raiz = null;
-//                }
-//                else
-//                {
-//                    if (lastV.padre.izquierdo == lastV)
-//                        lastV.padre.izquierdo = null;
-//                    else
-//                        lastV.padre.derecho = null;
-//                
-//                }
-//            }
-//            else
-//            {
-//                
-//                    eraseV.elemento = lastV.elemento;
-//                if (lastV.padre.izquierdo == lastV)
-//                    lastV.padre.izquierdo = null;
-//                else
-//                    lastV.padre.derecho = null;
-//            }
-//        }
-//    }
-//    private ArbolBinario<T>.Vertice<T> busquedaBFS(T e){
-//        ArbolBinario<T>.Vertice<T> eraseElem = null;
-//        Cola<ArbolBinario<T>.Vertice<T>> q = new Cola<ArbolBinario<T>.Vertice<T>>();
-//        if (raiz == null)
-//            return eraseElem;
-//        
-//        else
-//        {
-//            q.mete(raiz);
-//            while(!q.esVacia())
-//            {
-//                ArbolBinario<T>.Vertice<T> cVer = q.saca();
-//                
-//                if(cVer.elemento.equals(e))
-//                {
-//                    eraseElem = cVer;
-//                    break;
-//                }
-//                
-//                if(cVer.hayIzquierdo())
-//                {
-//                    q.mete(cVer.izquierdo);
-//                }
-//                if(cVer.hayDerecho())
-//                {
-//                    q.mete(cVer.derecho);
-//                }
-//               
-//            }
-//        }
-//        
-//        return eraseElem;
-//        
-//    }
-//    private ArbolBinario<T>.Vertice<T> getLastElement(){
-//        ArbolBinario<T>.Vertice<T> lastElem = null;
-//        Cola<ArbolBinario<T>.Vertice<T>> q = new Cola<ArbolBinario<T>.Vertice<T>>();
-//        if (raiz == null)
-//            return lastElem;
-//        
-//        else
-//        {
-//            q.mete(raiz);
-//            while(!q.esVacia())
-//            {
-//                ArbolBinario<T>.Vertice<T> cVer = q.saca();
-//                
-//                if(cVer.hayIzquierdo())
-//                {
-//                    q.mete(cVer.izquierdo);
-//                }
-//                if(cVer.hayDerecho())
-//                {
-//                    q.mete(cVer.derecho);
-//                }
-//                if (!cVer.hayIzquierdo() && !cVer.hayDerecho() && q.esVacia())
-//                {
-//                    lastElem = cVer;
-//                    break;
-//                }
-//            }
-//        }
-//        
-//        return lastElem;
-//    }
-//
-//    /**
-//     * Regresa un iterador para iterar el árbol. El árbol se itera
-//     * en orden BFS.
-//     * @return un iterador para iterar el árbol.
-//     */
-    @Override public Iterator<T> iterator() { return null;}
-////        return new ArbolBinarioCompleto<T>.Iterador<T>(this.raiz);
-//        return new Iterador<T>(raiz);
-//    }
+    public ArbolSintactico(T ficha) {
+        super();
+        reglaGramatical = ReglaGramatical.__none;
+        raiz.elemento = ficha;
+        
+    }
     
-    //Evaluamos el arbol en x, sin destruir el arbol. xD
-    public double evaluar(double x){
+    /**
+     * Consructor de arbol sintactico. 
+     * @param ficha La ficha que reprensta al inicio del arbol.
+     * @param r La regla Gramatical que nos permite saber como se comonen sus vertices hijos.
+     * @param l Lista de contiene a sus futuros Hijos.
+     */
+    public ArbolSintactico(T ficha, ReglaGramatical r, Lista<ArbolSintactico<Ficha>> l) {
+        super();
+        reglaGramatical = r;
+        raiz.elemento = ficha;
+        
+        //Agregar al vertice raiz, dependiendo de el tipo de gramatica en sus respectivos
+        //derecha e izquerda vertices.
+        
+        
+    }
+    /** Este metodo permite recuperar en sentido inverso a los hijos de nuestra raiz.
+     * Nos regresa una lista de sus hijos.
+     * En los casos de la gramatica con parentesis
+     * ReglaGramatical._10_M_Y_E_
+     * ReglaGramatical._11_M__E_
+     * se agregaran los parentesis.
+     
+     * Y en los casos de por ejemplo ReglaGramatical._3_E_E__T, se bajaran 2 niveles. para Una
+     * exitosa reduccion.
+     *@return Lista con los hijos de este arbol sintactico.
+     */
+    
+    public Lista<ArbolSintactico<Ficha>> reducir(){
+        return null;
+    };
+    
+    /** Este metodo no hace nada, por el comportamiento de este tipo de arboles.
+     */
+    @Override public VerticeArbolBinario<T> agrega(T elemento) {
+        
+        return null;
+    }
+    
+    /** Este metodo no hace nada, por el comportamiento de este tipo de arboles.
+     */
+    @Override public void elimina(T elemento) {}
+    
+
+
+   /** Este metodo no hace nada, por el comportamiento de este tipo de arboles.  */
+    @Override public Iterator<T> iterator() { return null;}
+
+    
+    /**
+     * Metodo que nos permite evaular este arbol en un valor x.
+     * @param x valor de la rectas sobre el eje x.
+     * @return valor de la funcion. Valor y.
+     */
+     public double evaluar(double x){
 //        if (x==0)
 //            throw new IllegalArgumentException("divisor is 0");
         return 0;

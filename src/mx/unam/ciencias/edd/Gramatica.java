@@ -1,3 +1,4 @@
+
 package mx.unam.ciencias.edd;
 
 import java.lang.IllegalArgumentException;
@@ -26,9 +27,9 @@ import java.lang.IllegalArgumentException;
     T-> F
     F-> F^M
     F-> M
-    M-> Y(E) 
+    M-> Y(E) //tamaño 4
     M-> (E)
-    M-> -E 
+    M-> -E   //tamño 2
     M-> Q
     Y-> func
     Q-> num 
@@ -44,7 +45,14 @@ import java.lang.IllegalArgumentException;
  */
 public class Gramatica {
     
+    public ReglaGramatical r;
     
+    public Gramatica(){
+        r = ReglaGramatical.__none;
+    }
+    public Gramatica(ReglaGramatical re){
+        r = re;
+    }
     public static enum ReglaGramatical{
 
         _1_S_E,
@@ -62,7 +70,9 @@ public class Gramatica {
         _13_M_Q,
         _14_Y_func,
         _15_Q_num,
-        _16_Q_var
+        _16_Q_var,
+        //La gramatica none especifica a los arboles que no fueron creados por una regla gramatical.
+        __none
     }
    
     /* Verifica que la ficha, es un token no-terminal.
