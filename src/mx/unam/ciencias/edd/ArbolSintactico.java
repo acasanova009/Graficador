@@ -1,7 +1,6 @@
 package mx.unam.ciencias.edd;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.lang.IllegalArgumentException;
 import mx.unam.ciencias.edd.Gramatica.ReglaGramatical;
 /**
@@ -25,6 +24,10 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
         reglaGramatical = ReglaGramatical.__none;
         raiz.elemento = ficha;
         
+    }
+    //Valor del Simbolo.
+    public Ficha getFicha(){
+        return raiz.elemento;
     }
     
     /**
@@ -81,11 +84,15 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
      * @param x valor de la rectas sobre el eje x.
      * @return valor de la funcion. Valor y.
      */
-     public double evaluar(double x){
+     public double evaluar(double x)throws IllegalArgumentException,AxiomaticSimbolException {
 //        if (x==0)
 //            throw new IllegalArgumentException("divisor is 0");
         return 0;
         
+    }
+    public ReglaGramatical getReglaGramatical()
+    {
+        return reglaGramatical;
     }
     
 }

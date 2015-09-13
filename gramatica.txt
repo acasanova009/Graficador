@@ -1,10 +1,10 @@
 Gramatica: 
      
      S-> E
-     E-> -E | E+T | E-T | T
+     E->  E+T | E-T | T
      T-> T*F | T/F | F
      F-> F^M | M
-     M-> Y(E) | (E) | Q
+     M-> Y(E) | (E) | -E | Q
      Y-> func
      Q-> num | var
 

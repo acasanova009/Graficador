@@ -21,7 +21,8 @@ public class Proyecto1 {
     public static void main(String[] args)
     {
         
-                
+        
+        
         //Dada una linea de texto con formato UTF-8.
         
         //Analizar la linea con el analizador léxico, y regresar un lista de fichas.

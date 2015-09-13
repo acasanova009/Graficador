@@ -22,7 +22,7 @@ public class AnalizadorSintactico{
      * @param b Pila que contiene las fichas originales.
      * @param t ArbolRetroceso, nos permitira guardar todos los posibles caminos de reglasGramaticales,
      * aunque solo uno sea efectivo.
-     * @return <tt>true</tt> las fichas de b eran sintacticamente correcta. Y el arbol final estara como 
+     * @return <tt>true</tt> las fichas de b eran sintacticamente correcta. Y el arbol-final estara como
      * unico elemento en la lista -a.
      *         <tt>false</tt> en otro caso.
 

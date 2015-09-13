@@ -34,7 +34,7 @@ public class Ficha{
     }
     
     //Simbolo.
-    private Simbolo Simbolo;
+    private Simbolo simbolo;
     
     //Valor real. Puede ser un string vacio o nulo. Excepto cuando se va a evauluar el arbol. Podria tirar una excepcion.
     private String valor;
@@ -42,7 +42,7 @@ public class Ficha{
     
     //Valor del Simbolo.
     public Simbolo getSimbolo(){
-        return Simbolo;
+        return simbolo;
     }
     
     //Getter para el valor real.
@@ -65,7 +65,7 @@ public class Ficha{
     public Ficha(Simbolo aSimbolo,String v){
         
 
-            Simbolo = aSimbolo;
+            simbolo = aSimbolo;
             valor = v;
         
     }
@@ -75,7 +75,7 @@ public class Ficha{
      *         <tt>false</tt> en otro caso.
      */
     public boolean esTerminal(){
-        return false;
+        return true;
     }
     
     
@@ -87,48 +87,59 @@ public class Ficha{
         String s = "";
         //NO-TERMINALES
     
-        if(this.Simbolo==Simbolo.S)
+        if(this.simbolo==Simbolo.S)
             s= "S";
-        if(this.Simbolo==Simbolo.E)
+        if(this.simbolo==Simbolo.E)
             s= "E";
-        if(this.Simbolo==Simbolo.T)
+        if(this.simbolo==Simbolo.T)
             s= "T";
-        if(this.Simbolo==Simbolo.F)
+        if(this.simbolo==Simbolo.F)
             s= "F";
-        if(this.Simbolo==Simbolo.M)
+        if(this.simbolo==Simbolo.M)
             s= "M";
-        if(this.Simbolo==Simbolo.Y)
+        if(this.simbolo==Simbolo.Y)
             s= "Y";
-        if(this.Simbolo==Simbolo.Q)
+        if(this.simbolo==Simbolo.Q)
             s= "Q";
-        
+
         //TERMINALES
         
-        if(this.Simbolo==Simbolo.MAS)
+        if(this.simbolo==Simbolo.MAS)
             s= "+";
-        if(this.Simbolo==Simbolo.MENOS)
+        if(this.simbolo==Simbolo.MENOS)
             s= "-";
-        if(this.Simbolo==Simbolo.MULT)
+        if(this.simbolo==Simbolo.MULT)
             s= "*";
-        if(this.Simbolo==Simbolo.DIV)
+        if(this.simbolo==Simbolo.DIV)
             s= "/";
-        if(this.Simbolo==Simbolo.EXPO)
+        if(this.simbolo==Simbolo.EXPO)
             s= "^";
-        if(this.Simbolo==Simbolo.PAR_I)
+        if(this.simbolo==Simbolo.PAR_I)
             s= "(";
-        if(this.Simbolo==Simbolo.PAR_D)
+        if(this.simbolo==Simbolo.PAR_D)
             s= ")";
-        if(this.Simbolo==Simbolo.FUNCION)
+        if(this.simbolo==Simbolo.FUNCION)
             s= "f";
-        if(this.Simbolo==Simbolo.REAL)
+        if(this.simbolo==Simbolo.REAL)
             s= "r";
-        if(this.Simbolo==Simbolo.VAR)
+        if(this.simbolo==Simbolo.VAR)
             s= "v";
-        
+    
             
         return s;
     }
     
+    
+    @Override public boolean equals(Object o){
+        if (o == null)
+            return false;
+        if (getClass() != o.getClass())
+            return false;
+        @SuppressWarnings("unchecked")Ficha f = (Ficha)o;
+        return (f.simbolo == this.simbolo);
+        
+    
+    }
 
     
 

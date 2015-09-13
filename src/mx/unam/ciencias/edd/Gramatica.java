@@ -45,14 +45,7 @@ import java.lang.IllegalArgumentException;
  */
 public class Gramatica {
     
-    public ReglaGramatical r;
     
-    public Gramatica(){
-        r = ReglaGramatical.__none;
-    }
-    public Gramatica(ReglaGramatical re){
-        r = re;
-    }
     public static enum ReglaGramatical{
 
         _1_S_E,
@@ -71,28 +64,28 @@ public class Gramatica {
         _14_Y_func,
         _15_Q_num,
         _16_Q_var,
-        //La gramatica none especifica a los arboles que no fueron creados por una regla gramatical.
+        //La gramatica __none especifica a los arboles que no fueron creados por una regla gramatical.
         __none
     }
-   
-    /* Verifica que la ficha, es un token no-terminal.
-     * Y verifica que la ficha se puede producir a partir de una reglaGramatical r.
-     * @return  boolean <tt>true</tt> Si se puede Producir
-     *                  <tt>false</tt> en otro caso.
-     */
-    public static boolean sePuedeProducir(Ficha f, ReglaGramatical r){
+//   
+//    /* Verifica que la ficha, es un token no-terminal.
+//     * Y verifica que la ficha se puede producir a partir de una reglaGramatical r.
+//     * @return  boolean <tt>true</tt> Si se puede Producir
+//     *                  <tt>false</tt> en otro caso.
+//     */
+    public static boolean sePuedeProducir(ArbolSintactico<Ficha> f, ReglaGramatical r){
         return false;
     }
     /* Produce la lista de fichas a partir de una reglaGramatical.
      * @return Lista<Ficha> Lista de fichas que provienen de una 
      * produccion.
      */
-    public static Lista<Ficha> producir(Ficha f, ReglaGramatical r){
-        if (!sePuedeProducir(f,r))
-            return null;
-        return null;
-    }
-    
+//    public static Lista<ArbolSintactico<Ficha>> producir(ArbolSintactico<Ficha> f, ReglaGramatical r){
+//        if (!sePuedeProducir(f,r))
+//            return null;
+//        return null;
+//    }
+//    
     
     /* Derivar de un lista de fichas a una anterior especifica.
      * @param a lista de fichas a reducir.
@@ -100,24 +93,24 @@ public class Gramatica {
      * @return  boolean <tt>true</tt> Si se puede reducir
      *                  <tt>false</tt> en otro caso.
      */
-    public static boolean sePuedeDerivar(Lista<Ficha> a, ReglaGramatical r){
+    public static boolean sePuedeDerivar(Lista<ArbolSintactico<Ficha>> a, ReglaGramatical r){
         
         return false;
     }
    
     
-    /* Derivador de una lista de fichas a un ficha -d particular.
-     * @param a lista de fichas a reducir.
-     * @param r Regla a aplicar.
-     * @return Ficha La ficha que se derivo de la lista.
-     */
-    public static Ficha derivar(Lista<Ficha> a,ReglaGramatical r){
-        if(!sePuedeDerivar(a,r))
-            return null;
-    
-        
-        return null;
-    }
-    
+//    /* Derivador de una lista de fichas a un ficha -d particular.
+//     * @param a lista de fichas a reducir.
+//     * @param r Regla a aplicar.
+//     * @return Ficha La ficha que se derivo de la lista.
+//     */
+//    public static ArbolSintactico<Ficha> derivar(Lista<ArbolSintactico<Ficha>> a,ReglaGramatical r){
+//        if(!sePuedeDerivar(a,r))
+//            return null;
+//    
+//        
+//        return null;
+//    }
+//    
 
 }

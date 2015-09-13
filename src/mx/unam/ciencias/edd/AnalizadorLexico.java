@@ -2,8 +2,7 @@ package mx.unam.ciencias.edd;
 
 
 
-import java.util.NoSuchElementException;
-import java.io.IOException;
+//import java.util.LexicalSimbolException;
 
 /**
   * <p>Clase encargada de analizar un String en fromato UTF-8, y separar los
@@ -20,10 +19,14 @@ public class AnalizadorLexico{
      * @param texto texto a analizar.
      * @return Lista donde estan las fichas correspondientes, y con sus respectivos
      * valores.
+     
+     * @throws LexicalSimbolException si no reconoce a los caracteres.
      */
     
-    public static Lista<Ficha> analizar(String texto){
+    public static Lista<Ficha> analizar(String texto) throws LexicalSimbolException{
         
+        if(texto.equals("."))
+            throw new LexicalSimbolException("Punto!");
         //Crearemos una lista de fichas.
         
         //Analizaremos el texto por caracter.
@@ -41,10 +44,21 @@ public class AnalizadorLexico{
         
             //Por cada ficha que encontremos esta se agregara a la lista de fichas.
         
-            //De no encontrar fichas correspondiete lanzaremos una excepcion
+            //De no encontrar fichas correspondiete lanzaremos una excepcion de Lexico.
         
         return null;
         
 
     }
+    /* Metemos las fichas en una pila.
+     * @param l Lista con la fichas originales.
+     * @return Pila con la fichas.
+     */
+    
+    public static Pila<ArbolSintactico<Ficha>> convertir(Lista<Ficha> l)
+    {
+        return null;
+    }
+    
+    
 }
