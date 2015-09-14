@@ -115,11 +115,11 @@ public class TestArbolSintactico {
         }
        
        
-        /**
-         * Para gramaticas de un simbolo, si el simbolo no esta contenido genera una expcion.
-         * Independiente a los demas arboles.
-         *
-         */
+//        /**
+//         * Para gramaticas de un simbolo, si el simbolo no esta contenido genera una expcion.
+//         * Independiente a los demas arboles.
+//         *
+//         */
         l= new Lista<ArbolSintactico<Ficha>>();
         _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
         _2 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
@@ -141,19 +141,19 @@ public class TestArbolSintactico {
             {}
             
         }
-        
-        
-        
-
-        //        _2_E_E_T,
-        //        _3_E_E__T,
-        //        _5_T_T_F,
-        //        _6_T_T__F,
-        //        _8_F_F_M,
-        
-        //        _11_M__E_,
-        
-      
+//
+//        
+//        
+//
+//        //        _2_E_E_T,
+//        //        _3_E_E__T,
+//        //        _5_T_T_F,
+//        //        _6_T_T__F,
+//        //        _8_F_F_M,
+//        
+//        //        _11_M__E_,
+//        
+//      
         l= new Lista<ArbolSintactico<Ficha>>();
         _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
         _2 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E));
@@ -182,8 +182,8 @@ public class TestArbolSintactico {
             }
             
         }
-        
-        
+//
+//        
         l= new Lista<ArbolSintactico<Ficha>>();
         _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
         _2 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
@@ -209,10 +209,10 @@ public class TestArbolSintactico {
             }
             
         }
-        
-        
-        //        _12_M__E,
-        
+//
+//        
+//        //        _12_M__E,
+//        
         l= new Lista<ArbolSintactico<Ficha>>();
         _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
         _2 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
@@ -238,7 +238,7 @@ public class TestArbolSintactico {
             }
             
         }
-        
+//
         l= new Lista<ArbolSintactico<Ficha>>();
         _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
         _2 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
@@ -264,9 +264,9 @@ public class TestArbolSintactico {
             }
             
         }
-        
-        
-        //        _10_M_Y_E_,
+//
+//        
+//        //        _10_M_Y_E_,
         l= new Lista<ArbolSintactico<Ficha>>();
         _1 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.Y));
         _2 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_I));
@@ -288,8 +288,8 @@ public class TestArbolSintactico {
             {
                 Assert.fail();
             }
-            
-        
+//
+//        
         l= new Lista<ArbolSintactico<Ficha>>();
         _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
         _2 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
@@ -315,7 +315,7 @@ public class TestArbolSintactico {
             }
             
         }
-        
+//
         
     }
     
