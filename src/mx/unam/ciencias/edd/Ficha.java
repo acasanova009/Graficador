@@ -1,6 +1,7 @@
 package mx.unam.ciencias.edd;
 
 import java.lang.IllegalArgumentException;
+import mx.unam.ciencias.edd.Gramatica.ReglaGramatical;
 /**
  * Clase contenedora de el valor en ficha, y el valor real.
  *
@@ -41,6 +42,8 @@ public class Ficha{
     //Valor real. Puede ser un string vacio o nulo. Excepto cuando se va a evauluar el arbol. Podria tirar una excepcion.
     private String valor;
 
+    //Por un problema del modelo de mi arbolSintactico de grado mayor, tengo que poder saber de que gramatica proviene esta Ficha, para evaluar el arbolSintactico de manera correcta.
+    private ReglaGramatical regla;
     
     //Valor del Simbolo.
     public Simbolo getSimbolo(){
@@ -51,24 +54,45 @@ public class Ficha{
     public String getValor(){
         return valor;
     }
+    //Getter para el valor real.
+    public void setRegla(ReglaGramatical r){
+        regla = r;
+    }
+    public ReglaGramatical getRegla(){
+        return regla;
+    }
     
 
     /*Consutrctor de un ficha sin valor.
      *@param Simbolo aSimbolo El Simbolo que representa.
      */
     public Ficha(Simbolo aSimbolo){
-        this(aSimbolo, "");
+        this(aSimbolo, ReglaGramatical.__none,"");
 
     }
+    /*Consutrctor de un ficha sin valor.
+    *@param r regla Gramatical Constructora.
+     *@param Simbolo aSimbolo El Simbolo que representa.
+     */
+    public Ficha(Simbolo aSimbolo , Gramatica.ReglaGramatical  r){
+        this(aSimbolo,r,"");
+        
+        
+        
+    }
+    
     /*Constructor de una ficha con valor.
      *@param Simbolo aSimbolo El Simbolo que representa.
+     *@param r regla Gramatical Constructora.
      *@param String texto que sera el valor de la ficha.
      */
-    public Ficha(Simbolo aSimbolo,String v){
-        
+    public Ficha(Simbolo aSimbolo, Gramatica.ReglaGramatical  r ,String v){
 
+        
             simbolo = aSimbolo;
+            regla = r;
             valor = v;
+        
         
     }
     

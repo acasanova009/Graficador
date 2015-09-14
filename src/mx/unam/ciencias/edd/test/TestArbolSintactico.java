@@ -442,75 +442,224 @@ public class TestArbolSintactico {
     /**
      * Prueba unitaria para {@link ArbolSintactico#reducir}.
      */
-//    @Test public void testReducir() {
-//        
-//        
-//        Lista<ArbolSintactico<Ficha>> r;
-//        
-//        ArbolSintactico<Ficha> y = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.FUNCION));
-//        ArbolSintactico<Ficha> p_i = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_I));
-//        ArbolSintactico<Ficha> e = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E));
-//        ArbolSintactico<Ficha> p_d = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_D));
-//        Lista<ArbolSintactico<Ficha>> l = new Lista<ArbolSintactico<Ficha>>();
-//        
-//        l.agregaFinal(y);
-//        l.agregaFinal(p_i);
-//        l.agregaFinal(e);
-//        l.agregaFinal(p_d);
-//        
-//        
-//        ArbolSintactico<Ficha> m = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.M), ReglaGramatical._10_M_Y_E_,l);
-//        
-//        
-//         r = m.reducir();
-//        Assert.assertTrue(l.getLongitud() == r.getLongitud());
-//        Assert.assertTrue(l.equals(r));
-//        
-//        
-//
-////        p_i = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_I));
-//        e = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E));
-////        p_d = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_D));
-//        l = new Lista<ArbolSintactico<Ficha>>();
-//        
-//
-//        l.agregaFinal(p_i);
-//        l.agregaFinal(e);
-//        l.agregaFinal(p_d);
-//        
-//        
-//         m = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.M), ReglaGramatical._11_M__E_,l);
-//        
-//         r = m.reducir();
-//        
-//        
-//        Assert.assertTrue(l.getLongitud() == r.getLongitud());
-//        Assert.assertTrue(l.equals(r));
-//        
-//        
-//        
-//        ArbolSintactico<Ficha> exp = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E));
-//        ArbolSintactico<Ficha> suma = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MAS));
-//        ArbolSintactico<Ficha> t_exp = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.T));
-//         l = new Lista<ArbolSintactico<Ficha>>();
-//        
-//        
-//        l.agregaFinal(p_i);
-//        l.agregaFinal(e);
-//        l.agregaFinal(p_d);
-//        
-//        
-//         m = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.M), ReglaGramatical._2_E_E_T,l);
-//        
-//        r = m.reducir();
-//        
-//        
-//        Assert.assertTrue(l.getLongitud() == r.getLongitud());
-//        Assert.assertTrue(l.equals(r));
-//        
-//        
-//        
-//    }
+    @Test public void testReducir() {
+        
+        
+        ArbolSintactico<Ficha> root = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.S),ReglaGramatical.__none);
+        
+        Lista<ArbolSintactico<Ficha>> l;
+        ArbolSintactico<Ficha> _1;
+        ArbolSintactico<Ficha> _2;
+        ArbolSintactico<Ficha> _3;
+        ArbolSintactico<Ficha> _4;
+        Lista<ArbolSintactico<Ficha>> m; //Lista despues de la derivacion
+    
+        Lista<ArbolSintactico<Ficha>> acotada;//Lista original simplemente acotada.
+        Lista<ArbolSintactico<Ficha>> reducida;//Tendria que ser igual a la acotada.
+        
+        
+        ArbolSintactico<Ficha> arbolParaReducir;
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()),ReglaGramatical.__none);
+        reducida =  _1.reducir();
+        Assert.assertTrue(reducida.getLongitud()==0);
+        
+
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(1);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.S), ReglaGramatical._1_S_E,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        
+        Assert.assertTrue(acotada.equals(reducida));
+        
+
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MAS));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.T));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(3);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.E), ReglaGramatical._2_E_E_T,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        Assert.assertTrue(acotada.equals(reducida));
+        
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MENOS));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.T));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(3);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.E), ReglaGramatical._3_E_E__T,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        Assert.assertTrue(acotada.equals(reducida));
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.T));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(1);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.E), ReglaGramatical._4_E_T,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        Assert.assertTrue(acotada.equals(reducida));
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.T));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MULT));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.F));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(3);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.T), ReglaGramatical._5_T_T_F,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        Assert.assertTrue(acotada.equals(reducida));
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.T));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.DIV));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.F));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(3);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.T), ReglaGramatical._6_T_T__F,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        Assert.assertTrue(acotada.equals(reducida));
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.F));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(1);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.T), ReglaGramatical._7_T_F,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        Assert.assertTrue(acotada.equals(reducida));
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.F));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.EXPO));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.M));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(3);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.F), ReglaGramatical._8_F_F_M,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        Assert.assertTrue(acotada.equals(reducida));
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.M));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(3);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.F), ReglaGramatical._9_F_M,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        Assert.assertTrue(acotada.equals(reducida));
+        
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.Y));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_I));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_D));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(4);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.M), ReglaGramatical._10_M_Y_E_,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        Assert.assertTrue(acotada.equals(reducida));
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_I));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_D));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(3);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.M), ReglaGramatical._11_M__E_,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        Assert.assertTrue(acotada.equals(reducida));
+        
+        l= new Lista<ArbolSintactico<Ficha>>();
+        _1 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _2 = new  ArbolSintactico<Ficha>(new Ficha(randomSimbol()));
+        _3 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MENOS));
+        _4 = new  ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E));
+        l.agregaFinal(_1);
+        l.agregaFinal(_2);
+        l.agregaFinal(_3);
+        l.agregaFinal(_4);
+        acotada = l.getUltimos(2);
+        m =  root.derivar(new Ficha(Ficha.Simbolo.M), ReglaGramatical._12_M__E,acotada);
+        arbolParaReducir = m.getUltimo();
+        reducida = arbolParaReducir.reducir();
+        Assert.assertTrue(acotada.equals(reducida));
+        
+        
+                                         
+                                         
+                                         
+                                         
+        
+        
+
+    }
    
     
     /**

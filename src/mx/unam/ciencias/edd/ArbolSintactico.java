@@ -27,9 +27,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
      * Sin regla gramatical.
      */
     public ArbolSintactico(T ficha) {
-        super();
-        reglaGramatical = ReglaGramatical.__none;
-        raiz = new Vertice<T>(ficha);
+        this(ficha,ReglaGramatical.__none);
         
         
     }
@@ -45,6 +43,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
         
         super();
         reglaGramatical = r;
+        ficha.setRegla(r);
         raiz = new Vertice<T>(ficha);
     }
     
@@ -64,6 +63,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     {
         if(l.getLongitud()<1 || l== null)
             throw new IllegalArgumentException("La lista de arboles esta vacia. O es nula.");
+        
         ArbolSintactico<T> arbolContenedor = new ArbolSintactico<T>(ficha,r);
         
         //Debido a que es un arbol Binario, para conservar esto en los vertices unicamente guardaremos las fichas. No otro arbolSintactico. En otras palabras, un arbolSintactico no tiene Arboles Sintacticos.
@@ -422,7 +422,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
      * @param r La regla Gramatical que nos permite saber como se comonen sus vertices hijos.
      * @param l Lista de contiene a sus futuros Hijos.
      * @throws  IllegalArgumentException Si no se corroboro con anteriorioridad si era una gramatica valida.
-     * @deprecated Uso no recomendado.
+     * @deprecated Uso inutil.
      */
     public ArbolSintactico(T ficha, ReglaGramatical r, Lista<ArbolSintactico<T>> l) throws IllegalArgumentException{
         super();
@@ -440,8 +440,66 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
      */
     
     public Lista<ArbolSintactico<Ficha>> reducir(){
+        
+        
+        switch(reglaGramatical){
+            case _1_S_E:
+                
+                break;
+            case _2_E_E_T:
+                
+                break;
+            case _3_E_E__T:
+                
+                break;
+            case _4_E_T:
+                
+                break;
+            case _5_T_T_F:
+                
+                break;
+            case _6_T_T__F:
+                
+                break;
+            case _7_T_F:
+                
+                break;
+            case _8_F_F_M:
+                
+                break;
+            case _9_F_M:
+                
+                break;
+            case _10_M_Y_E_:
+                
+                break;
+            case _11_M__E_:
+                
+                break;
+            case _12_M__E:
+                
+                break;
+            case _13_M_Q:
+                
+                break;
+            case _14_Y_func:
+                
+                break;
+            case _15_Q_num:
+                
+                break;
+            case _16_Q_var:
+                
+                break;
+                
+            default:
+                
+        }
+        
+        
+        
         return null;
-    };
+    }
     
     /** Este metodo no hace nada, por el comportamiento de este tipo de arboles.
      */
@@ -490,6 +548,22 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
             expectativa.agregaFinal(s);
         }
         return original.equals(expectativa);
+    }
+    
+    /**
+     * Nos dice si este arbolSintactico es igual a otro.
+     * Unicamente vamos a comparar el simbolo de la raiz de ambos arboles.
+     * @param o el objeto con el que hay que comparar.
+     * @return <tt>true</tt> si la lista es igual al objeto
+     *         recibido; <tt>false</tt> en otro caso.
+     */
+    @Override public boolean equals(Object o) {
+        if (o == null)
+            return false;
+        if (getClass() != o.getClass())
+            return false;
+        @SuppressWarnings("unchecked") ArbolSintactico<T> arbol = (ArbolSintactico<T>)o;
+        return (this.raiz.elemento.getSimbolo()==arbol.raiz.elemento.getSimbolo());
     }
     
 }
