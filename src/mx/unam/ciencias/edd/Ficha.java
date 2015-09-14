@@ -13,6 +13,7 @@ public class Ficha{
         E,
         T,
         F,
+        
         M,
         Y,
         Q,
@@ -23,6 +24,7 @@ public class Ficha{
         MENOS,
         MULT,
         DIV,
+        
         EXPO,
         PAR_I,
         PAR_D,
@@ -74,8 +76,21 @@ public class Ficha{
      *@return  <tt>true</tt> Si es Simbolo TERMINAL.,
      *         <tt>false</tt> en otro caso.
      */
+  
+    
     public boolean esTerminal(){
-        return true;
+        boolean siEs = true;
+        if (simbolo == Simbolo.S ||
+            simbolo == Simbolo.E ||
+            simbolo == Simbolo.T ||
+            simbolo == Simbolo.F ||
+            simbolo == Simbolo.M ||
+            simbolo == Simbolo.Y ||
+            simbolo == Simbolo.Q)
+            siEs = false;
+            
+
+        return siEs;
     }
     
     

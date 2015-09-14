@@ -98,7 +98,14 @@ public class ArbolRetroceso<T> {
      */
     public boolean elementoYaFueRegistrado(T elem)
     {
-        return false;
+        boolean yaFueRegistrado = false;
+        for(Vertice<T> v : verticeActual.hijos)
+        {
+            if (v.elemento == elem){
+                yaFueRegistrado = true;
+            }
+        }
+        return yaFueRegistrado;
     }
     
     /**
@@ -107,24 +114,32 @@ public class ArbolRetroceso<T> {
      * @param elem element a crear.
      */
     public void registrar(T elemento){
-        //..
+        if(elementoYaFueRegistrado(elemento))
+            return;
+        
+        Vertice<T> nuevo = new Vertice<T>(elemento);
+        nuevo.padre = verticeActual;
+        verticeActual.hijos.agregaFinal(nuevo);
+        verticeActual = nuevo;
     }
     
     /**
-     *
+     * Regresa un elemento.
+     * Excepto cuando ya no hayan mas.
      *
      */
- //WARNING
     public T regresar(){
 
-        //REVISAR PARA CASO CUANDO YA NO HAY PADRE.
+        if(!hayMasPosiblesCaminos())
+            return null;
+            
         T t= verticeActual.elemento;
         verticeActual = verticeActual.padre;
         return t;
     }
     
     /**
-     *
+     *Revisa si el vertice actual es igual al vertice raiz.
      *
      */
     public boolean hayMasPosiblesCaminos(){

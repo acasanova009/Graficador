@@ -47,12 +47,12 @@ public class TestGramatica {
                 
                     Assert.assertFalse(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.S)),r));
             }
-        
+//
         Ficha.Simbolo actual = Ficha.Simbolo.E;
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._2_E_E_T));
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._3_E_E__T));
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._4_E_T));
-        
+
         for (ReglaGramatical r : ReglaGramatical.values())
         {
             if(r == ReglaGramatical._2_E_E_T ||  r == ReglaGramatical._3_E_E__T || r == ReglaGramatical._4_E_T )
@@ -60,14 +60,14 @@ public class TestGramatica {
             
                 Assert.assertFalse(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),r));
         }
-        
-        
+//
+//        
         actual = Ficha.Simbolo.T;
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._5_T_T_F));
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._6_T_T__F));
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._7_T_F));
-        
-        
+//
+//        
         for (ReglaGramatical r : ReglaGramatical.values())
         {
             if(r == ReglaGramatical._5_T_T_F ||  r == ReglaGramatical._6_T_T__F || r == ReglaGramatical._7_T_F )
@@ -75,8 +75,8 @@ public class TestGramatica {
             
             Assert.assertFalse(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),r));
         }
-        
-        
+//
+//        
         actual = Ficha.Simbolo.F;
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._8_F_F_M));
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._9_F_M));
@@ -88,11 +88,11 @@ public class TestGramatica {
             
             Assert.assertFalse(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),r));
         }
-        
-        
-        
-        
-        actual = Ficha.Simbolo.T;
+//
+//        
+//        
+//        
+        actual = Ficha.Simbolo.M;
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._10_M_Y_E_));
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._11_M__E_));
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._12_M__E));
@@ -105,8 +105,8 @@ public class TestGramatica {
             
             Assert.assertFalse(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),r));
         }
-        
-
+//
+//
         actual = Ficha.Simbolo.Y;
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._14_Y_func));
         for (ReglaGramatical r : ReglaGramatical.values())
@@ -115,7 +115,7 @@ public class TestGramatica {
                 continue;
             Assert.assertFalse(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),r));
         }
-        
+//
         actual = Ficha.Simbolo.Q;
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._15_Q_num));
         Assert.assertTrue(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),ReglaGramatical._16_Q_var));
@@ -126,7 +126,7 @@ public class TestGramatica {
             
             Assert.assertFalse(Gramatica.sePuedeProducir(new ArbolSintactico<Ficha>(new Ficha(actual)),r));
         }
-        
+//
         Lista<Ficha> lf = new Lista<Ficha>();
         for( Simbolo s : Simbolo.values())
             lf.agregaFinal(new Ficha(s));
@@ -175,14 +175,15 @@ public class TestGramatica {
         l.agregaFinal(new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E)));
         l.agregaFinal(new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_D)));
         
-        Assert.assertTrue(Gramatica.sePuedeDerivar(l,ReglaGramatical._10_M_Y_E_));
+                Assert.assertTrue(Gramatica.sePuedeDerivar(l,ReglaGramatical._10_M_Y_E_));
+        
         for (ReglaGramatical r: ReglaGramatical.values()){
-            if(r == ReglaGramatical._10_M_Y_E_)
+            if(r == ReglaGramatical._10_M_Y_E_ || r== ReglaGramatical._11_M__E_ )
                 continue;
             Assert.assertFalse(Gramatica.sePuedeDerivar(l,r));
         }
-        
-        
+
+
         l = new Lista<ArbolSintactico<Ficha>>();
 
         l.agregaFinal(new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_I)));
@@ -196,8 +197,8 @@ public class TestGramatica {
                 continue;
             Assert.assertFalse(Gramatica.sePuedeDerivar(l,r));
         }
-        
-        
+
+
 
         l = new Lista<ArbolSintactico<Ficha>>();
         
@@ -206,13 +207,11 @@ public class TestGramatica {
         Assert.assertTrue(Gramatica.sePuedeDerivar(l,ReglaGramatical._12_M__E));
         for (ReglaGramatical r: ReglaGramatical.values())
         {
-            if(r == ReglaGramatical._12_M__E)
+            if(r == ReglaGramatical._1_S_E || r == ReglaGramatical._12_M__E)
                 continue;
             Assert.assertFalse(Gramatica.sePuedeDerivar(l,r));
         }
-        
-
-        
+      
         l = new Lista<ArbolSintactico<Ficha>>();
         l.agregaFinal(new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.E)));
         l.agregaFinal(new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MAS)));
@@ -221,12 +220,11 @@ public class TestGramatica {
         
         for (ReglaGramatical r: ReglaGramatical.values())
         {
-            if(r == ReglaGramatical._2_E_E_T)
+            if(r == ReglaGramatical._2_E_E_T || r == ReglaGramatical._4_E_T)
                 continue;
             Assert.assertFalse(Gramatica.sePuedeDerivar(l,r));
         }
-        
-        
+    
         
         
         

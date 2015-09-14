@@ -2,6 +2,7 @@ package mx.unam.ciencias.edd;
 
 import java.util.Iterator;
 import java.lang.IllegalArgumentException;
+import mx.unam.ciencias.edd.Gramatica;
 import mx.unam.ciencias.edd.Gramatica.ReglaGramatical;
 /**
  * <p>Clase para árboles sintacticos.</p>
@@ -15,35 +16,70 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     /*Regla gramatical con la cual el arbol fue creado.*/
     private ReglaGramatical reglaGramatical;
 
-    /**
-     * Constructor sin parámetros. Sencillamente ejecuta el
-     * constructor sin parámetros de {@link ArbolBinario}.
-     */
-    public ArbolSintactico(T ficha) {
-        super();
-        reglaGramatical = ReglaGramatical.__none;
-        raiz.elemento = ficha;
-        
-    }
+   
     //Valor del Simbolo.
-    public Ficha getFicha(){
+    public T getFicha(){
         return raiz.elemento;
     }
     
     /**
-     * Consructor de arbol sintactico. 
+     * Constructor de arboles de una sola ficha.
+     * Sin regla gramatical.
+     */
+    public ArbolSintactico(T ficha) {
+        super();
+        reglaGramatical = ReglaGramatical.__none;
+        raiz = new Vertice<T>(ficha);
+        
+        
+    }
+    
+    /**
+     * Constructor de arboles con su ficha y regla Gramatical.
+     * Este se agregara al final a la lista.
+     * @param ficha La ficha que reprensta al inicio del arbol.
+     * @param r La regla Gramatical que nos permite saber como se componen sus vertices hijos.
+     */
+    
+    public ArbolSintactico(T ficha, ReglaGramatical r)    {
+        
+        
+
+        
+    }
+    
+    /**
+     * -- Por incompatibilidad de tipo T con el metodo ser estatico, se dejo como metodo no-estatico.
+     * Derivador de arboles. Dada una lista con n arboles, con 0<n<5. Y una regla gramatical.
+     * Con respecto a la regla gramatical tomara todos los arboles que su puedan derivar. Y Regresara una lista con unicamente los arboles que sobraron y el nuevo arbol productor como ultimo elemento
+     * Este se agregara al final a la lista.
      * @param ficha La ficha que reprensta al inicio del arbol.
      * @param r La regla Gramatical que nos permite saber como se comonen sus vertices hijos.
      * @param l Lista de contiene a sus futuros Hijos.
+     * @throws  IllegalArgumentException Si la gramatica con coincide con los elementos dentro de mi lista.
+        o si la lista tienes menos elementos de los esperados por la gramatica.
      */
-    public ArbolSintactico(T ficha, ReglaGramatical r, Lista<ArbolSintactico<Ficha>> l) {
+    
+    public Lista<ArbolSintactico<T>> derivar(T ficha, ReglaGramatical r, Lista<ArbolSintactico<T>> l)
+    {
+        
+        
+        return null;
+    }
+    
+    /**
+     
+     * Constructor - Derivador de arboles. Dada una lista con n arboles, con 0<n<5. Y una regla gramatical.
+     * Con respecto a la regla gramatical tomara todos los arboles que su puedan derivar. Y Regresara una lista con unicamente los arboles que sobraron y el nuevo arbol productor como ultimo elemento
+     * Este se agregara al final a la lista.
+     * @param ficha La ficha que reprensta al inicio del arbol.
+     * @param r La regla Gramatical que nos permite saber como se comonen sus vertices hijos.
+     * @param l Lista de contiene a sus futuros Hijos.
+     * @throws  IllegalArgumentException Si no se corroboro con anteriorioridad si era una gramatica valida.
+     * @deprecated Uso no recomendado.
+     */
+    public ArbolSintactico(T ficha, ReglaGramatical r, Lista<ArbolSintactico<T>> l) throws IllegalArgumentException{
         super();
-        reglaGramatical = r;
-        raiz.elemento = ficha;
-        
-        //Agregar al vertice raiz, dependiendo de el tipo de gramatica en sus respectivos
-        //derecha e izquerda vertices.
-        
         
     }
     /** Este metodo permite recuperar en sentido inverso a los hijos de nuestra raiz.
@@ -51,10 +87,9 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
      * En los casos de la gramatica con parentesis
      * ReglaGramatical._10_M_Y_E_
      * ReglaGramatical._11_M__E_
+     * Y las gramaticas con simbolo, se agregaran.
      * se agregaran los parentesis.
      
-     * Y en los casos de por ejemplo ReglaGramatical._3_E_E__T, se bajaran 2 niveles. para Una
-     * exitosa reduccion.
      *@return Lista con los hijos de este arbol sintactico.
      */
     
