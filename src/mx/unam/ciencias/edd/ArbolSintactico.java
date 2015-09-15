@@ -719,6 +719,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
      * Metodo que nos permite evaular este arbol en un valor x.
      * @param x valor de la rectas sobre el eje x.
      * @return valor de la funcion. Valor y.
+     * @throws IllegalArgumentException cuando es divison entre 0. O es raiz de un real negativo.
      */
      public double evaluar(double x)throws IllegalArgumentException,AxiomaticSimbolException {
 //        if (x==0)

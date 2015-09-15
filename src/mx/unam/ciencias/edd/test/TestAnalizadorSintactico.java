@@ -46,7 +46,7 @@ public class TestAnalizadorSintactico {
         Lista<ArbolSintactico<Ficha>> a;
         Pila<ArbolSintactico<Ficha>> b;
         ArbolRetroceso<Gramatica> t;
-        
+        Lista<Ficha> f;
         a= new Lista<ArbolSintactico<Ficha>> ();
         b = new Pila<ArbolSintactico<Ficha>> ();
         t = new ArbolRetroceso<Gramatica>();
@@ -120,14 +120,105 @@ public class TestAnalizadorSintactico {
         
         Assert.assertFalse(aSint.analizar(a,b,t));
         
-        Lista<Ficha> f = AnalizadorLexico.analizar("25+sin(sqrt(x)*x)");
-//        System.out.println("Fichas: " + f);
-        
+//
+        f = AnalizadorLexico.analizar("25+sin(sqrt(x)*x)");
         a= new Lista<ArbolSintactico<Ficha>> ();
         t = new ArbolRetroceso<Gramatica>();
         
         Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
         
+        
+        
+        f = AnalizadorLexico.analizar("25+25^x");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        
+        f = AnalizadorLexico.analizar("sin(cos(x^x))");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        
+        f = AnalizadorLexico.analizar("x^(-3)");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        f = AnalizadorLexico.analizar("x^(-1/2)");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        
+        f = AnalizadorLexico.analizar("sqrt(x^2)");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        
+        
+        f = AnalizadorLexico.analizar("tan(cos(x))");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        
+        
+        f = AnalizadorLexico.analizar("cot(x)-5");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        
+        f = AnalizadorLexico.analizar("cot(x)--5");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        f = AnalizadorLexico.analizar("-----.");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        
+        f = AnalizadorLexico.analizar("tan(--5)");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        
+        
+        
+        f = AnalizadorLexico.analizar("tanx(--5)");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertFalse(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        
+        f = AnalizadorLexico.analizar("+x");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertFalse(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        f = AnalizadorLexico.analizar("-x");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
             
             
         

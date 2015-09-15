@@ -72,6 +72,43 @@ public class AnalizadorLexico{
                 {
                     
                     numberDetectedString += chars[i];
+                    
+                    
+                    if((i+1)>=tamano && backPointDetected==false)
+                    {
+                        
+                        
+                        numberDetectedString+='.';
+                        
+                        numberDetectedString+='0';
+                        
+                        
+                        
+                        Ficha f = new Ficha(Simbolo.REAL,ReglaGramatical.__none,numberDetectedString);
+                        listaFinal.agregaFinal(f);
+                        numberDetectedString = "";
+                        
+                        backPointDetected = false;
+                        numberDetected = false;
+                        
+                        
+                    }
+                    else if((i+1)>=tamano && backPointDetected==true)
+                    {
+                        
+                        
+                        
+                        
+                        
+                        Ficha f = new Ficha(Simbolo.REAL,ReglaGramatical.__none,numberDetectedString);
+                        listaFinal.agregaFinal(f);
+                        numberDetectedString = "";
+                        
+                        backPointDetected = false;
+                        numberDetected = false;
+                        
+                        
+                    }
                     continue;
                 }
                 else if(chars[i]=='.' && !backPointDetected){
@@ -92,8 +129,17 @@ public class AnalizadorLexico{
                     
                 }
                 
-                else
-                {
+                else if(chars[i]!='.'){//NO es numero y no es punto.
+                    
+                    numberDetectedString+='.';
+                                        numberDetectedString+='0';
+                    Ficha f = new Ficha(Simbolo.REAL,ReglaGramatical.__none,numberDetectedString);
+                    listaFinal.agregaFinal(f);
+                    backPointDetected = false;
+                    numberDetected = false;
+                    numberDetectedString = "";
+                }
+                else {
                     
                     
                     Ficha f = new Ficha(Simbolo.REAL,ReglaGramatical.__none,numberDetectedString);
@@ -143,27 +189,40 @@ public class AnalizadorLexico{
                 numberDetected = true;
                 numberDetectedString+= chars[i];
                 
-//                if((i+1)>=tamano)
-//                {
-//                    numberDetectedString+='.';
-//                    numberDetectedString+='0';
-//                    
-//                    Ficha f = new Ficha(Simbolo.REAL,ReglaGramatical.__none,numberDetectedString);
-//                    listaFinal.agregaFinal(f);
-//                    numberDetectedString = "";
-//                    backPointDetected = false;
-//                    numberDetected = false;
-//                }
-//                if((i+2)>=tamano)
-//                {
-//                    numberDetectedString+='.';
-//                    
-//                    Ficha f = new Ficha(Simbolo.REAL,ReglaGramatical.__none,numberDetectedString);
-//                    listaFinal.agregaFinal(f);
-//                    numberDetectedString = "";
-//                    backPointDetected = false;
-//                    numberDetected = false;
-//                }
+                if((i+1)>=tamano)
+                {
+                    
+                    
+                    numberDetectedString+='.';
+
+                    numberDetectedString+='0';
+                    
+                    
+                    
+                    Ficha f = new Ficha(Simbolo.REAL,ReglaGramatical.__none,numberDetectedString);
+                    listaFinal.agregaFinal(f);
+                    numberDetectedString = "";
+                    
+                    
+                }
+                else if((i+2)>=tamano && (chars[i+1]=='.'))
+                {
+                    
+                    
+                    numberDetectedString+='.';
+                    
+                    numberDetectedString+='0';
+                    
+                    
+                    
+                    Ficha f = new Ficha(Simbolo.REAL,ReglaGramatical.__none,numberDetectedString);
+                    listaFinal.agregaFinal(f);
+                    numberDetectedString = "";
+                    
+                    
+                }
+                
+//
                 
             }
                 //avisasr
