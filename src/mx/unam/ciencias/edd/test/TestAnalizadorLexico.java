@@ -31,35 +31,57 @@ public class TestAnalizadorLexico {
      * Prueba unitaria para {@link AnalizadorLexico#analizar}.
      */
     @Test public void testAnalizar() {
+        Lista<Ficha> l;
+//        
+         l = AnalizadorLexico.analizar(".");
+        fichas = new Lista<Ficha>();
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
+        Assert.assertTrue(fichas.equals(l));
+        
+        l = AnalizadorLexico.analizar("..");
+        fichas = new Lista<Ficha>();
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
+        Assert.assertTrue(fichas.equals(l));
+
+
+        
+        fichas = new Lista<Ficha>();
         for (int i = 0; i < 3; i++)
             fichas.agregaFinal(new Ficha(Ficha.Simbolo.PAR_I));
-        
-        Lista<Ficha> l = AnalizadorLexico.analizar("(((");
+
+        l = AnalizadorLexico.analizar("(((");
         Assert.assertTrue(fichas.equals(l));
-        
         l = AnalizadorLexico.analizar(" ( ((   ");
         Assert.assertTrue(fichas.equals(l));
-        
+
         l = AnalizadorLexico.analizar("- + *    /^");
         fichas = new Lista<Ficha>();
-        fichas.agregaFinal(new Ficha(Ficha.Simbolo.MAS));
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.MENOS));
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.MAS));
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.MULT));
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.DIV));
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.EXPO));
         Assert.assertTrue(fichas.equals(l));
+//
+//
         
-        
+//
         l = AnalizadorLexico.analizar("1.  .2  1..3  4   .1.200  33.3");
-        //1.0 0.2 1.0 0.3 4 0.1 0.200 33.3
-        
+        //SE TIENE QUE VER
+        //1.0 0.21 0.0 0.34 0.1 0.20033 0.3
+
+//        1.0 0.2 1.0 0.3 4 0.1 0.200 33.3
+
+
+
         fichas = new Lista<Ficha>();
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 7; i++)
             fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
 
         Assert.assertTrue(fichas.getLongitud()==l.getLongitud());
         Assert.assertTrue(fichas.equals(l));
-        
+//
         l= AnalizadorLexico.analizar("sin  (cos ( tan ( x ) +.2) ) ");
         fichas = new Lista<Ficha>();
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.FUNCION));
@@ -75,9 +97,12 @@ public class TestAnalizadorLexico {
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.PAR_D));
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.PAR_D));
+        
+
+
         Assert.assertTrue(fichas.getLongitud()==l.getLongitud());
         Assert.assertTrue(fichas.equals(l));
-        
+//
         l= AnalizadorLexico.analizar("++ --** xx sensen.1.1 (())1. 1. 2.2 2.2 )");
         fichas = new Lista<Ficha>();
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.MAS));
@@ -111,14 +136,14 @@ public class TestAnalizadorLexico {
 
         Assert.assertTrue(fichas.getLongitud()==l.getLongitud());
         Assert.assertTrue(fichas.equals(l));
-        
-        
+//
+//        
         try{
-            l= AnalizadorLexico.analizar(".");
+            l= AnalizadorLexico.analizar("q");
             Assert.fail();
         }catch(LexicalSimbolException e)
         {}
-        
+//
         
         
     }

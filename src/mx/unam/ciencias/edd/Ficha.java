@@ -165,7 +165,7 @@ public class Ficha{
             s= "v";
     
             
-        return s;
+        return s+"["+ valor+"]";
     }
     
     
