@@ -437,58 +437,234 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
      * se agregaran los parentesis.
      
      *@return Lista con los hijos de este arbol sintactico.
+     * @throws  IllegalArgumentException Si tenemos un regla gramatical no __none.
+        Y no tenemos hijos en los vertices de la raiz.
+     
      */
     
-    public Lista<ArbolSintactico<Ficha>> reducir(){
+    public Lista<ArbolSintactico<T>> reducir(){
         
+        
+        Lista<ArbolSintactico<T>> arbolesRecuperados = new Lista<ArbolSintactico<T>>();
+        
+        if(reglaGramatical == ReglaGramatical.__none)
+            return arbolesRecuperados;
+        
+        
+        
+        ArbolSintactico<T> as_0,as_2;
+        ArbolSintactico<Ficha> h1,h2;
         
         switch(reglaGramatical){
             case _1_S_E:
                 
+                if(!raiz.hayIzquierdo())
+                    throw new IllegalArgumentException("No tenemos vertice izquierdo para gramatica _1_S_E ");
+                
+
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                arbolesRecuperados.agregaFinal(as_0);
+
+                
+                
                 break;
             case _2_E_E_T:
+                
+                if(!raiz.hayIzquierdo() || !raiz.hayDerecho())
+                    throw new IllegalArgumentException("Falta algun vertice para la gramatica _2_E_E_T ");
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MAS),ReglaGramatical.__none);
+                as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
+                
+                @SuppressWarnings("unchecked") ArbolSintactico<T>mas = (ArbolSintactico<T>)h1;
+                arbolesRecuperados.agregaFinal(as_0);
+                arbolesRecuperados.agregaFinal(mas);
+                arbolesRecuperados.agregaFinal(as_2);
                 
                 break;
             case _3_E_E__T:
                 
+                if(!raiz.hayIzquierdo() || !raiz.hayDerecho())
+                    throw new IllegalArgumentException("Falta algun vertice para la gramatica _3_E_E__T ");
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MENOS),ReglaGramatical.__none);
+                as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
+                
+                @SuppressWarnings("unchecked") ArbolSintactico<T>menos = (ArbolSintactico<T>)h1;
+                arbolesRecuperados.agregaFinal(as_0);
+                arbolesRecuperados.agregaFinal(menos);
+                arbolesRecuperados.agregaFinal(as_2);
+                
                 break;
             case _4_E_T:
                 
+                
+                
+                if(!raiz.hayIzquierdo())
+                    throw new IllegalArgumentException("No tenemos vertice izquierdo para gramatica _4_E_T ");
+                
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                arbolesRecuperados.agregaFinal(as_0);
+                
                 break;
             case _5_T_T_F:
+                if(!raiz.hayIzquierdo() || !raiz.hayDerecho())
+                    throw new IllegalArgumentException("Falta algun vertice para la gramatica _5_T_T_F ");
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MULT),ReglaGramatical.__none);
+                as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
+                
+                @SuppressWarnings("unchecked") ArbolSintactico<T>mult = (ArbolSintactico<T>)h1;
+                arbolesRecuperados.agregaFinal(as_0);
+                arbolesRecuperados.agregaFinal(mult);
+                arbolesRecuperados.agregaFinal(as_2);
                 
                 break;
             case _6_T_T__F:
+                if(!raiz.hayIzquierdo() || !raiz.hayDerecho())
+                    throw new IllegalArgumentException("Falta algun vertice para la gramatica _6_T_T__F ");
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.DIV),ReglaGramatical.__none);
+                as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
+                
+                @SuppressWarnings("unchecked") ArbolSintactico<T>div = (ArbolSintactico<T>)h1;
+                arbolesRecuperados.agregaFinal(as_0);
+                arbolesRecuperados.agregaFinal(div);
+                arbolesRecuperados.agregaFinal(as_2);
                 
                 break;
             case _7_T_F:
+                if(!raiz.hayIzquierdo())
+                    throw new IllegalArgumentException("No tenemos vertice izquierdo para gramatica _7_T_F ");
+                
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                arbolesRecuperados.agregaFinal(as_0);
                 
                 break;
             case _8_F_F_M:
+                if(!raiz.hayIzquierdo() || !raiz.hayDerecho())
+                    throw new IllegalArgumentException("Falta algun vertice para la gramatica _8_F_F_M ");
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.EXPO),ReglaGramatical.__none);
+                as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
+                
+                @SuppressWarnings("unchecked") ArbolSintactico<T>expo = (ArbolSintactico<T>)h1;
+                arbolesRecuperados.agregaFinal(as_0);
+                arbolesRecuperados.agregaFinal(expo);
+                arbolesRecuperados.agregaFinal(as_2);
                 
                 break;
             case _9_F_M:
+                if(!raiz.hayIzquierdo())
+                    throw new IllegalArgumentException("No tenemos vertice izquierdo para gramatica _9_F_M ");
+                
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                arbolesRecuperados.agregaFinal(as_0);
                 
                 break;
             case _10_M_Y_E_:
                 
+                if(!raiz.hayIzquierdo() || !raiz.hayDerecho() )
+                    throw new IllegalArgumentException("Falta algun vertice para la gramatica _10_M_Y_E_ ");
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                h1 =  new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_I),ReglaGramatical.__none);
+                as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
+                h2 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_D),ReglaGramatical.__none);
+                
+                @SuppressWarnings("unchecked") ArbolSintactico<T>parI_ = (ArbolSintactico<T>)h1;
+                @SuppressWarnings("unchecked") ArbolSintactico<T>parD_ = (ArbolSintactico<T>)h2;
+                arbolesRecuperados.agregaFinal(as_0);
+                arbolesRecuperados.agregaFinal(parI_);
+                arbolesRecuperados.agregaFinal(as_2);
+                arbolesRecuperados.agregaFinal(parD_);
+                
+                
+                
+                
                 break;
             case _11_M__E_:
+                
+                if(!raiz.hayIzquierdo() )
+                    throw new IllegalArgumentException("Falta algun vertice para la gramatica _11_M__E_ ");
+                
+
+                h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_I),ReglaGramatical.__none);
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                h2 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_D),ReglaGramatical.__none);
+                
+                
+                @SuppressWarnings("unchecked") ArbolSintactico<T>parI = (ArbolSintactico<T>)h1;
+                @SuppressWarnings("unchecked") ArbolSintactico<T>parD = (ArbolSintactico<T>)h2;
+                
+                arbolesRecuperados.agregaFinal(parI);
+                arbolesRecuperados.agregaFinal(as_0);
+                arbolesRecuperados.agregaFinal(parD);
                 
                 break;
             case _12_M__E:
                 
+                if(!raiz.hayIzquierdo() )
+                    throw new IllegalArgumentException("Falta algun vertice para la gramatica _12_M__E ");
+                
+                
+                h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MENOS),ReglaGramatical.__none);
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                
+                
+                
+                @SuppressWarnings("unchecked") ArbolSintactico<T>menos_ = (ArbolSintactico<T>)h1;
+
+                
+                arbolesRecuperados.agregaFinal(menos_);
+                arbolesRecuperados.agregaFinal(as_0);
+
+                
+                
                 break;
             case _13_M_Q:
                 
+                if(!raiz.hayIzquierdo())
+                    throw new IllegalArgumentException("No tenemos vertice izquierdo para gramatica _13_M_Q ");
+                
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                arbolesRecuperados.agregaFinal(as_0);
+                
                 break;
             case _14_Y_func:
+                if(!raiz.hayIzquierdo())
+                    throw new IllegalArgumentException("No tenemos vertice izquierdo para gramatica _14_Y_func ");
+                
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                arbolesRecuperados.agregaFinal(as_0);
                 
                 break;
             case _15_Q_num:
+                if(!raiz.hayIzquierdo())
+                    throw new IllegalArgumentException("No tenemos vertice izquierdo para gramatica _15_Q_num ");
+                
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                arbolesRecuperados.agregaFinal(as_0);
                 
                 break;
             case _16_Q_var:
+                if(!raiz.hayIzquierdo())
+                    throw new IllegalArgumentException("No tenemos vertice izquierdo para gramatica _16_Q_var ");
+                
+                
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                arbolesRecuperados.agregaFinal(as_0);
                 
                 break;
                 
@@ -498,7 +674,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
         
         
         
-        return null;
+        return arbolesRecuperados;
     }
     
     /** Este metodo no hace nada, por el comportamiento de este tipo de arboles.
@@ -563,7 +739,15 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
         if (getClass() != o.getClass())
             return false;
         @SuppressWarnings("unchecked") ArbolSintactico<T> arbol = (ArbolSintactico<T>)o;
-        return (this.raiz.elemento.getSimbolo()==arbol.raiz.elemento.getSimbolo());
+        return (this.raiz.elemento.equals(arbol.raiz.elemento));
+    }
+    /**
+     * Regresa una representación en del Simbolo
+     * @return una representación en cadena del Simbolo
+     */
+    @Override public String toString(){
+        
+        return raiz.elemento.toString();
     }
     
 }
