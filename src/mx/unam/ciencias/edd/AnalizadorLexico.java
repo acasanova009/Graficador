@@ -143,6 +143,28 @@ public class AnalizadorLexico{
                 numberDetected = true;
                 numberDetectedString+= chars[i];
                 
+//                if((i+1)>=tamano)
+//                {
+//                    numberDetectedString+='.';
+//                    numberDetectedString+='0';
+//                    
+//                    Ficha f = new Ficha(Simbolo.REAL,ReglaGramatical.__none,numberDetectedString);
+//                    listaFinal.agregaFinal(f);
+//                    numberDetectedString = "";
+//                    backPointDetected = false;
+//                    numberDetected = false;
+//                }
+//                if((i+2)>=tamano)
+//                {
+//                    numberDetectedString+='.';
+//                    
+//                    Ficha f = new Ficha(Simbolo.REAL,ReglaGramatical.__none,numberDetectedString);
+//                    listaFinal.agregaFinal(f);
+//                    numberDetectedString = "";
+//                    backPointDetected = false;
+//                    numberDetected = false;
+//                }
+                
             }
                 //avisasr
             
@@ -400,7 +422,19 @@ public class AnalizadorLexico{
     
     public static Pila<ArbolSintactico<Ficha>> convertir(Lista<Ficha> l)
     {
-        return null;
+        
+        Pila<ArbolSintactico<Ficha>> b = new Pila<ArbolSintactico<Ficha>> ();
+        
+        IteradorLista<Ficha> itr = l.iteradorLista();
+        itr.end();
+
+        while(itr.hasPrevious()){
+            Ficha f =  itr.previous();
+            b.mete(new ArbolSintactico<Ficha>(f));
+            
+        }
+        return b;
+            
     }
     
     

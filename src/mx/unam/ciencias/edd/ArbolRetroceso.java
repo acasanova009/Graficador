@@ -86,8 +86,8 @@ public class ArbolRetroceso<T> {
         }
     }
     
-    public ArbolRetroceso(T elemento){
-        verticesRaiz = new Vertice<T>(elemento);
+    public ArbolRetroceso(){
+        verticesRaiz = null;
         verticeActual = verticesRaiz;
     }
     /**
@@ -98,10 +98,12 @@ public class ArbolRetroceso<T> {
      */
     public boolean elementoYaFueRegistrado(T elem)
     {
+        if(verticeActual==null)
+            return false;
         boolean yaFueRegistrado = false;
         for(Vertice<T> v : verticeActual.hijos)
         {
-            if (v.elemento == elem){
+            if (v.elemento.equals(elem)){
                 yaFueRegistrado = true;
             }
         }
@@ -117,10 +119,21 @@ public class ArbolRetroceso<T> {
         if(elementoYaFueRegistrado(elemento))
             return;
         
+        
         Vertice<T> nuevo = new Vertice<T>(elemento);
-        nuevo.padre = verticeActual;
-        verticeActual.hijos.agregaFinal(nuevo);
-        verticeActual = nuevo;
+        
+        if(verticesRaiz == null){
+            verticeActual= verticesRaiz = nuevo;
+            verticeActual = nuevo;
+            
+        }
+        else
+        {
+            nuevo.padre = verticeActual;
+            verticeActual.hijos.agregaFinal(nuevo);
+            verticeActual = nuevo;
+        }
+        
     }
     
     /**
@@ -130,7 +143,8 @@ public class ArbolRetroceso<T> {
      */
     public T regresar(){
 
-        if(!hayMasPosiblesCaminos())
+        
+        if(verticeActual==null || verticeActual.padre==null)
             return null;
             
         T t= verticeActual.elemento;
@@ -148,6 +162,29 @@ public class ArbolRetroceso<T> {
         return true;
     }
     
+    
+    /**
+     * Regresa una representación en cadena de la lista.
+     * @return una representación en cadena de la lista.
+     */
+    @Override public String toString() {
+        if(verticesRaiz==null || verticeActual==null)
+            return null;
+        return toStringR(verticeActual);
+    }
+    
+    /**
+     * Regresa una representación en cadena de la lista.
+     * @return una representación en cadena de la lista.
+     */
+     private String toStringR(Vertice<T> vertice) {
+       
+        if(vertice == null)
+            return "";
+        
+        return toStringR(vertice.padre) + "  "+vertice.elemento.toString();
+        
+    }
 
     
 

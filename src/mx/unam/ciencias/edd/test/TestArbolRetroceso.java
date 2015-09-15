@@ -35,7 +35,7 @@ public class TestArbolRetroceso {
      */
     @Test public void TestRegistrar() {
         
-        ArbolRetroceso<Integer> ar = new ArbolRetroceso<Integer>(0);
+        ArbolRetroceso<Integer> ar = new ArbolRetroceso<Integer>();
         for(int i = 0; i<3;i++)
             ar.registrar(2);
         
@@ -48,7 +48,7 @@ public class TestArbolRetroceso {
      * Prueba unitaria para {@link ArbolRetroceso#elementoYaFueRegistrado}.
      */
     @Test public void TestElementoYaFueRegistrado() {
-        ArbolRetroceso<Integer> ar = new ArbolRetroceso<Integer>(0);
+        ArbolRetroceso<Integer> ar = new ArbolRetroceso<Integer>();
         for(int i = 0; i<3;i++)
             ar.registrar(2);
         
@@ -61,7 +61,7 @@ public class TestArbolRetroceso {
      * Prueba unitaria para {@link ArbolRetroceso#regresar}.
      */
     @Test public void TestRegresar(){
-        ArbolRetroceso<Integer> ar = new ArbolRetroceso<Integer>(0);
+        ArbolRetroceso<Integer> ar = new ArbolRetroceso<Integer>();
         for(int i = 0; i<3;i++)
             ar.registrar(2);
         

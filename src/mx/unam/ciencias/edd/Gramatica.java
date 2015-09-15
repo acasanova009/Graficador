@@ -56,7 +56,163 @@ import mx.unam.ciencias.edd.Ficha.Simbolo;
 public class Gramatica {
     
     
+    private ReglaGramatical regla;
+    public Gramatica(ReglaGramatical r){
+        regla = r;
+        
+    }
+    public ReglaGramatical getRegla(){
+        return regla;
+    }
 
+    /**
+     * Regresa una representación en cadena de la lista.
+     * @return una representación en cadena de la lista.
+     */
+    @Override public String toString() {
+        String valorString = "";
+        switch(regla){
+            case _1_S_E:
+                valorString = "1";
+                break;
+            case _2_E_E_T:
+                
+                valorString = "2";
+                break;
+            case _3_E_E__T:
+                
+                valorString = "3";
+                break;
+            case _4_E_T:
+                valorString = "4";
+                break;
+            case _5_T_T_F:
+                
+                valorString = "5";
+                break;
+            case _6_T_T__F:
+                
+                valorString = "6";
+                break;
+            case _7_T_F:
+                
+                valorString = "7";
+                break;
+            case _8_F_F_M:
+                
+                valorString = "8";
+                break;
+            case _9_F_M:
+                
+                valorString = "9";
+                break;
+            case _10_M_Y_E_:
+                
+                valorString = "10";
+                break;
+            case _11_M__E_:
+                
+                valorString = "11";
+                break;
+            case _12_M__E:
+                
+                valorString = "12";
+                break;
+            case _13_M_Q:
+                
+                valorString = "13";
+                break;
+            case _14_Y_func:
+                
+                valorString = "14";
+                break;
+            case _15_Q_num:
+                
+                valorString = "15";
+                break;
+            case _16_Q_var:
+                valorString = "16";
+                
+                break;
+            default:
+                valorString = "";
+                
+                
+        }
+        return valorString;
+    }
+//    @Override public String toString() {
+//        String valorString = "";
+//        switch(regla){
+//            case _1_S_E:
+//                valorString = "_1_S_E";
+//                break;
+//            case _2_E_E_T:
+//                
+//                valorString = "_2_E_E_T";
+//                break;
+//            case _3_E_E__T:
+//                
+//                valorString = "_3_E_E__T";
+//                break;
+//            case _4_E_T:
+//                valorString = "_4_E_T";
+//                break;
+//            case _5_T_T_F:
+//                
+//                valorString = "_5_T_T_F";
+//                break;
+//            case _6_T_T__F:
+//                
+//                valorString = "_6_T_T__F";
+//                break;
+//            case _7_T_F:
+//                
+//                valorString = "_7_T_F";
+//                break;
+//            case _8_F_F_M:
+//                
+//                valorString = "_8_F_F_M";
+//                break;
+//            case _9_F_M:
+//                
+//                valorString = "_9_F_M";
+//                break;
+//            case _10_M_Y_E_:
+//                
+//                valorString = "_10_M_Y_E_";
+//                break;
+//            case _11_M__E_:
+//                
+//                valorString = "_11_M__E_";
+//                break;
+//            case _12_M__E:
+//                
+//                valorString = "_12_M__E";
+//                break;
+//            case _13_M_Q:
+//                
+//                valorString = "_13_M_Q";
+//                break;
+//            case _14_Y_func:
+//                
+//                valorString = "_14_Y_func";
+//                break;
+//            case _15_Q_num:
+//                
+//                valorString = "_15_Q_num";
+//                break;
+//            case _16_Q_var:
+//                valorString = "_16_Q_var";
+//                
+//                break;
+//            default:
+//                valorString = "";
+//                
+//                
+//        }
+//        return valorString;
+//    }
     
     
     public static enum ReglaGramatical{
@@ -192,6 +348,9 @@ public class Gramatica {
      *                  <tt>false</tt> en otro caso.
      */
     public static boolean sePuedeDerivar(Lista<ArbolSintactico<Ficha>> a, ReglaGramatical r){
+        
+        Gramatica g =new Gramatica(r);
+//        System.out.println("Ultimos "+a + " Gramatica: "+g);
         boolean siSePuede =false;
         
 //        System.out.println(a + "  LONG " + a.getLongitud());
@@ -432,6 +591,96 @@ public class Gramatica {
         }
         
         return siSePuede;
+    }
+    
+    /* Ficha para derivar a esta gramatica
+     * @param r ReglaGramatical a revisar
+     * @return  Ficha ficha que se deriva de r.
+     */
+    
+    public static Ficha getFichaForGramatica(ReglaGramatical r){
+        
+        Ficha f = null;
+        
+        switch(r){
+            case _1_S_E:
+                f = new Ficha(Ficha.Simbolo.S);
+                break;
+            case _2_E_E_T:
+                
+                f = new Ficha(Ficha.Simbolo.E);
+                break;
+            case _3_E_E__T:
+                
+                f = new Ficha(Ficha.Simbolo.E);
+                break;
+            case _4_E_T:
+                
+                f = new Ficha(Ficha.Simbolo.E);
+                break;
+            case _5_T_T_F:
+                
+                f = new Ficha(Ficha.Simbolo.T);
+                break;
+            case _6_T_T__F:
+                
+                f = new Ficha(Ficha.Simbolo.T);
+                break;
+            case _7_T_F:
+                
+                f = new Ficha(Ficha.Simbolo.T);
+                break;
+            case _8_F_F_M:
+                f = new Ficha(Ficha.Simbolo.F);
+                break;
+            case _9_F_M:
+                
+                f = new Ficha(Ficha.Simbolo.F);
+                break;
+            case _10_M_Y_E_:
+                
+                f = new Ficha(Ficha.Simbolo.M);
+                break;
+            case _11_M__E_:
+                
+                f = new Ficha(Ficha.Simbolo.M);
+                break;
+            case _12_M__E:
+                
+                f = new Ficha(Ficha.Simbolo.M);
+                break;
+            case _13_M_Q:
+                
+                f = new Ficha(Ficha.Simbolo.M);
+                break;
+            case _14_Y_func:
+                
+                f = new Ficha(Ficha.Simbolo.Y);
+                break;
+            case _15_Q_num:
+                
+                f = new Ficha(Ficha.Simbolo.Q);
+                break;
+            case _16_Q_var:
+                
+                f = new Ficha(Ficha.Simbolo.Q);
+                break;
+            default:
+                f = null;
+                
+        }
+        return f;
+        
+    }
+    @Override public boolean equals(Object o){
+        if (o == null)
+            return false;
+        if (getClass() != o.getClass())
+            return false;
+        @SuppressWarnings("unchecked")Gramatica f = (Gramatica)o;
+        return (f.regla == this.regla);
+        
+        
     }
    
     

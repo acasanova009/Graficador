@@ -17,6 +17,15 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     private ReglaGramatical reglaGramatical;
 
    
+    public boolean esArbolRaiz(){
+        
+
+
+        if(raiz.elemento.getSimbolo()==Ficha.Simbolo.S)
+            return true;
+        
+        return false;
+    }
     //Valor del Simbolo.
     public T getFicha(){
         return raiz.elemento;
@@ -76,8 +85,8 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
         //Para las gramaticas de n componentes.
         Lista<ArbolSintactico<T>> acotada;
         
-        Vertice<T> leftVertice;
-        Vertice<T> rightVertice;
+//        Vertice<T> leftVertice;
+//        Vertice<T> rightVertice;
         
         ArbolSintactico<T> left;
         ArbolSintactico<T> right;
@@ -89,7 +98,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
         
         //Para las gramaticas de 1 componente.
         
-        Vertice<T> verticeContenedor; // Sera para almacenar la ficha.
+//        Vertice<T> verticeContenedor; // Sera para almacenar la ficha.
     
         ArbolSintactico<T> unico; // Lo usaremos para gramaticas de un solo elemento.
         
@@ -104,9 +113,8 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 if(unicoSimbolo!=Ficha.Simbolo.E)
                     throw new IllegalArgumentException("Gramatica _1_S_E, solo funciona con simbolo E.");
                 
-                verticeContenedor =  new Vertice<T>(unico.getFicha());
-                verticeContenedor.padre = arbolContenedor.raiz;
-                arbolContenedor.raiz.izquierdo = verticeContenedor;
+                unico.raiz.padre = arbolContenedor.raiz;
+                arbolContenedor.raiz.izquierdo = unico.raiz;
                 
                 l.eliminaUltimo();
                 l.agregaFinal(arbolContenedor);
@@ -122,13 +130,13 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("Gramatica _2_E_E_T, solo funciona con simbolos E,MAS,T.");
 
                 
-                leftVertice =  new Vertice<T>(acotada.getPrimero().getFicha());
-                rightVertice =  new Vertice<T>(acotada.getUltimo().getFicha());
-                leftVertice.padre = arbolContenedor.raiz;
-                rightVertice.padre = arbolContenedor.raiz;
+                left = acotada.getPrimero();
+                right = acotada.getUltimo();
+                left.raiz.padre = arbolContenedor.raiz;
+                right.raiz.padre = arbolContenedor.raiz;
                 
-                arbolContenedor.raiz.izquierdo = leftVertice;
-                arbolContenedor.raiz.derecho = rightVertice;
+                arbolContenedor.raiz.izquierdo = left.raiz;
+                arbolContenedor.raiz.derecho = right.raiz;
                 
                 l.extraerUltimos(3);
                 
@@ -146,14 +154,13 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 if (!listaEqualSimbolArray(acotada,resta))
                     throw new IllegalArgumentException("Gramatica _3_E_E__T, solo funciona con simbolos E,MENOS,T.");
                 
+                left = acotada.getPrimero();
+                right = acotada.getUltimo();
+                left.raiz.padre = arbolContenedor.raiz;
+                right.raiz.padre = arbolContenedor.raiz;
                 
-                leftVertice =  new Vertice<T>(acotada.getPrimero().getFicha());
-                rightVertice =  new Vertice<T>(acotada.getUltimo().getFicha());
-                leftVertice.padre = arbolContenedor.raiz;
-                rightVertice.padre = arbolContenedor.raiz;
-                
-                arbolContenedor.raiz.izquierdo = leftVertice;
-                arbolContenedor.raiz.derecho = rightVertice;
+                arbolContenedor.raiz.izquierdo = left.raiz;
+                arbolContenedor.raiz.derecho = right.raiz;
                 
                 l.extraerUltimos(3);
                 
@@ -167,9 +174,8 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 if(unicoSimbolo!=Ficha.Simbolo.T)
                     throw new IllegalArgumentException("Gramatica _4_E_T, solo funciona con simbolo T.");
                 
-                verticeContenedor =  new Vertice<T>(unico.getFicha());
-                verticeContenedor.padre = arbolContenedor.raiz;
-                arbolContenedor.raiz.izquierdo = verticeContenedor;
+                unico.raiz.padre = arbolContenedor.raiz;
+                arbolContenedor.raiz.izquierdo = unico.raiz;
                 
                 l.eliminaUltimo();
                 l.agregaFinal(arbolContenedor);
@@ -184,14 +190,13 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 if (!listaEqualSimbolArray(acotada,mult))
                     throw new IllegalArgumentException("Gramatica _5_T_T_F, solo funciona con simbolos T,MULT,F.");
                 
+                left = acotada.getPrimero();
+                right = acotada.getUltimo();
+                left.raiz.padre = arbolContenedor.raiz;
+                right.raiz.padre = arbolContenedor.raiz;
                 
-                leftVertice =  new Vertice<T>(acotada.getPrimero().getFicha());
-                rightVertice =  new Vertice<T>(acotada.getUltimo().getFicha());
-                leftVertice.padre = arbolContenedor.raiz;
-                rightVertice.padre = arbolContenedor.raiz;
-                
-                arbolContenedor.raiz.izquierdo = leftVertice;
-                arbolContenedor.raiz.derecho = rightVertice;
+                arbolContenedor.raiz.izquierdo = left.raiz;
+                arbolContenedor.raiz.derecho = right.raiz;
                 
                 l.extraerUltimos(3);
                 
@@ -207,13 +212,13 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("Gramatica _6_T_T__F, solo funciona con simbolos T,DIV,F.");
                 
                 
-                leftVertice =  new Vertice<T>(acotada.getPrimero().getFicha());
-                rightVertice =  new Vertice<T>(acotada.getUltimo().getFicha());
-                leftVertice.padre = arbolContenedor.raiz;
-                rightVertice.padre = arbolContenedor.raiz;
+                left = acotada.getPrimero();
+                right = acotada.getUltimo();
+                left.raiz.padre = arbolContenedor.raiz;
+                right.raiz.padre = arbolContenedor.raiz;
                 
-                arbolContenedor.raiz.izquierdo = leftVertice;
-                arbolContenedor.raiz.derecho = rightVertice;
+                arbolContenedor.raiz.izquierdo = left.raiz;
+                arbolContenedor.raiz.derecho = right.raiz;
                 
                 l.extraerUltimos(3);
                 
@@ -228,9 +233,8 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 if(unicoSimbolo!=Ficha.Simbolo.F)
                     throw new IllegalArgumentException("Gramatica _7_T_F, solo funciona con simbolo F.");
                 
-                verticeContenedor =  new Vertice<T>(unico.getFicha());
-                verticeContenedor.padre = arbolContenedor.raiz;
-                arbolContenedor.raiz.izquierdo = verticeContenedor;
+                unico.raiz.padre = arbolContenedor.raiz;
+                arbolContenedor.raiz.izquierdo = unico.raiz;
                 
                 l.eliminaUltimo();
                 l.agregaFinal(arbolContenedor);
@@ -244,14 +248,13 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 if (!listaEqualSimbolArray(acotada,expo))
                     throw new IllegalArgumentException("Gramatica _8_F_F_M, solo funciona con F.EXPO.M .");
                 
+                left = acotada.getPrimero();
+                right = acotada.getUltimo();
+                left.raiz.padre = arbolContenedor.raiz;
+                right.raiz.padre = arbolContenedor.raiz;
                 
-                leftVertice =  new Vertice<T>(acotada.getPrimero().getFicha());
-                rightVertice =  new Vertice<T>(acotada.getUltimo().getFicha());
-                leftVertice.padre = arbolContenedor.raiz;
-                rightVertice.padre = arbolContenedor.raiz;
-                
-                arbolContenedor.raiz.izquierdo = leftVertice;
-                arbolContenedor.raiz.derecho = rightVertice;
+                arbolContenedor.raiz.izquierdo = left.raiz;
+                arbolContenedor.raiz.derecho = right.raiz;
                 
                 l.extraerUltimos(3);
                 
@@ -266,9 +269,9 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 if(unicoSimbolo!=Ficha.Simbolo.M)
                     throw new IllegalArgumentException("Gramatica _9_F_M, solo funciona con simbolo M.");
                 
-                verticeContenedor =  new Vertice<T>(unico.getFicha());
-                verticeContenedor.padre = arbolContenedor.raiz;
-                arbolContenedor.raiz.izquierdo = verticeContenedor;
+
+                unico.raiz.padre = arbolContenedor.raiz;
+                arbolContenedor.raiz.izquierdo = unico.raiz;
                 
                 l.eliminaUltimo();
                 l.agregaFinal(arbolContenedor);
@@ -284,16 +287,21 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("Gramatica _10_M_Y_E_, solo funciona con Y,PAR_I,E,PAR_D.");
                 
                 
-                leftVertice =  new Vertice<T>(acotada.getPrimero().getFicha());
-                //Hacemos una prequeña transicion para que sea mas facil.
+                left = acotada.getPrimero();
                 acotada = l.getUltimos(2);
-                rightVertice =  new Vertice<T>(acotada.getPrimero().getFicha());
+                right = acotada.getPrimero();
+
+                left.raiz.padre = arbolContenedor.raiz;
                 
-                leftVertice.padre = arbolContenedor.raiz;
-                rightVertice.padre = arbolContenedor.raiz;
+
+                right.raiz.padre = arbolContenedor.raiz;
                 
-                arbolContenedor.raiz.izquierdo = leftVertice;
-                arbolContenedor.raiz.derecho = rightVertice;
+
+                
+                arbolContenedor.raiz.izquierdo = left.raiz;
+                arbolContenedor.raiz.derecho = right.raiz;
+                
+
                 
                 l.extraerUltimos(4);
                 
@@ -309,13 +317,14 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("Gramatica _11_M__E_, solo p_i E p_d");
                 
                 
+                acotada = acotada.getUltimos(2);
+                left = acotada.getPrimero();
+
+                left.raiz.padre = arbolContenedor.raiz;
+                arbolContenedor.raiz.izquierdo = left.raiz;
+
                 
-                acotada = l.getUltimos(2);
                 
-                leftVertice =  new Vertice<T>(acotada.getPrimero().getFicha());
-                
-                leftVertice.padre = arbolContenedor.raiz;
-                arbolContenedor.raiz.izquierdo = leftVertice;
                 
                 l.extraerUltimos(3);
                 
@@ -331,19 +340,13 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("Gramatica _12_M__E, solo funciona con MENOS,E");
                 
                 
-                leftVertice =  new Vertice<T>(acotada.getUltimo().getFicha());
-                //Hacemos una prequeña transicion para que sea mas facil.
-//                acotada = l.getUltimos(2);
-//                rightVertice =  new Vertice<T>(acotada.getUltimo().getFicha());
+                left = acotada.getUltimo();
                 
-                leftVertice.padre = arbolContenedor.raiz;
-//                rightVertice.padre = arbolContenedor.raiz;
-                
-                arbolContenedor.raiz.izquierdo = leftVertice;
-//                arbolContenedor.raiz.derecho = rightVertice;
+                left.raiz.padre = arbolContenedor.raiz;
+                arbolContenedor.raiz.izquierdo = left.raiz;
+
                 
                 l.extraerUltimos(2);
-                
                 l.agregaFinal(arbolContenedor);
                 
                 
@@ -355,9 +358,8 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 if(unicoSimbolo!=Ficha.Simbolo.Q)
                     throw new IllegalArgumentException("Gramatica _13_M_Q, solo funciona con simbolo Q.");
                 
-                verticeContenedor =  new Vertice<T>(unico.getFicha());
-                verticeContenedor.padre = arbolContenedor.raiz;
-                arbolContenedor.raiz.izquierdo = verticeContenedor;
+                unico.raiz.padre = arbolContenedor.raiz;
+                arbolContenedor.raiz.izquierdo = unico.raiz;
                 
                 l.eliminaUltimo();
                 l.agregaFinal(arbolContenedor);
@@ -368,10 +370,8 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 unicoSimbolo = unico.getFicha().getSimbolo();
                 if(unicoSimbolo!=Ficha.Simbolo.FUNCION)
                     throw new IllegalArgumentException("Gramatica _14_Y_func, solo funciona con simbolo FUNCION.");
-                
-                verticeContenedor =  new Vertice<T>(unico.getFicha());
-                verticeContenedor.padre = arbolContenedor.raiz;
-                arbolContenedor.raiz.izquierdo = verticeContenedor;
+                unico.raiz.padre = arbolContenedor.raiz;
+                arbolContenedor.raiz.izquierdo = unico.raiz;
                 
                 l.eliminaUltimo();
                 l.agregaFinal(arbolContenedor);
@@ -379,16 +379,16 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
             case _15_Q_num:
                 
                 unico = l.getUltimo();
-                 unicoSimbolo = unico.getFicha().getSimbolo();
+                unicoSimbolo = unico.getFicha().getSimbolo();
                 if(unicoSimbolo!=Ficha.Simbolo.REAL)
                     throw new IllegalArgumentException("Gramatica _15_Q_num, solo funciona con simbolo REAL.");
                 
-                verticeContenedor =  new Vertice<T>(unico.getFicha());
-                verticeContenedor.padre = arbolContenedor.raiz;
-                arbolContenedor.raiz.izquierdo = verticeContenedor;
+                unico.raiz.padre = arbolContenedor.raiz;
+                arbolContenedor.raiz.izquierdo = unico.raiz;
                 
                 l.eliminaUltimo();
                 l.agregaFinal(arbolContenedor);
+                
                 break;
             case _16_Q_var:
                 
@@ -397,9 +397,8 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 if(unicoSimbolo!=Ficha.Simbolo.VAR)
                     throw new IllegalArgumentException("Gramatica _16_Q_var, solo funciona con simbolo VAR.");
                 
-                verticeContenedor =  new Vertice<T>(unico.getFicha());
-                verticeContenedor.padre = arbolContenedor.raiz;
-                arbolContenedor.raiz.izquierdo = verticeContenedor;
+                unico.raiz.padre = arbolContenedor.raiz;
+                arbolContenedor.raiz.izquierdo = unico.raiz;
                 
                 l.eliminaUltimo();
                 l.agregaFinal(arbolContenedor);
@@ -445,6 +444,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     public Lista<ArbolSintactico<T>> reducir(){
         
         
+        
         Lista<ArbolSintactico<T>> arbolesRecuperados = new Lista<ArbolSintactico<T>>();
         
         if(reglaGramatical == ReglaGramatical.__none)
@@ -463,6 +463,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 
 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                as_0.raiz = raiz.izquierdo;
                 arbolesRecuperados.agregaFinal(as_0);
 
                 
@@ -474,8 +475,10 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("Falta algun vertice para la gramatica _2_E_E_T ");
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                 as_0.raiz = raiz.izquierdo;
                 h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MAS),ReglaGramatical.__none);
                 as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
+                 as_2.raiz = raiz.derecho;
                 
                 @SuppressWarnings("unchecked") ArbolSintactico<T>mas = (ArbolSintactico<T>)h1;
                 arbolesRecuperados.agregaFinal(as_0);
@@ -489,9 +492,10 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("Falta algun vertice para la gramatica _3_E_E__T ");
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                    as_0.raiz = raiz.izquierdo;
                 h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MENOS),ReglaGramatical.__none);
                 as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
-                
+                    as_2.raiz = raiz.derecho;
                 @SuppressWarnings("unchecked") ArbolSintactico<T>menos = (ArbolSintactico<T>)h1;
                 arbolesRecuperados.agregaFinal(as_0);
                 arbolesRecuperados.agregaFinal(menos);
@@ -507,6 +511,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                as_0.raiz = raiz.izquierdo;
                 arbolesRecuperados.agregaFinal(as_0);
                 
                 break;
@@ -515,9 +520,10 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("Falta algun vertice para la gramatica _5_T_T_F ");
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                                 as_0.raiz = raiz.izquierdo;
                 h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MULT),ReglaGramatical.__none);
                 as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
-                
+                                     as_2.raiz = raiz.derecho;
                 @SuppressWarnings("unchecked") ArbolSintactico<T>mult = (ArbolSintactico<T>)h1;
                 arbolesRecuperados.agregaFinal(as_0);
                 arbolesRecuperados.agregaFinal(mult);
@@ -529,9 +535,10 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("Falta algun vertice para la gramatica _6_T_T__F ");
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                                as_0.raiz = raiz.izquierdo;
                 h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.DIV),ReglaGramatical.__none);
                 as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
-                
+                                 as_2.raiz = raiz.derecho;
                 @SuppressWarnings("unchecked") ArbolSintactico<T>div = (ArbolSintactico<T>)h1;
                 arbolesRecuperados.agregaFinal(as_0);
                 arbolesRecuperados.agregaFinal(div);
@@ -539,11 +546,13 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 
                 break;
             case _7_T_F:
+                
                 if(!raiz.hayIzquierdo())
                     throw new IllegalArgumentException("No tenemos vertice izquierdo para gramatica _7_T_F ");
                 
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                as_0.raiz = raiz.izquierdo;
                 arbolesRecuperados.agregaFinal(as_0);
                 
                 break;
@@ -552,8 +561,10 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("Falta algun vertice para la gramatica _8_F_F_M ");
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                                as_0.raiz = raiz.izquierdo;
                 h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.EXPO),ReglaGramatical.__none);
                 as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
+                                 as_2.raiz = raiz.derecho;
                 
                 @SuppressWarnings("unchecked") ArbolSintactico<T>expo = (ArbolSintactico<T>)h1;
                 arbolesRecuperados.agregaFinal(as_0);
@@ -567,6 +578,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                as_0.raiz = raiz.izquierdo;
                 arbolesRecuperados.agregaFinal(as_0);
                 
                 break;
@@ -576,8 +588,10 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("Falta algun vertice para la gramatica _10_M_Y_E_ ");
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                                                 as_0.raiz = raiz.izquierdo;
                 h1 =  new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_I),ReglaGramatical.__none);
                 as_2 = new ArbolSintactico<T>(raiz.derecho.elemento,raiz.derecho.elemento.getRegla());
+                                                 as_2.raiz = raiz.derecho;
                 h2 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_D),ReglaGramatical.__none);
                 
                 @SuppressWarnings("unchecked") ArbolSintactico<T>parI_ = (ArbolSintactico<T>)h1;
@@ -599,6 +613,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
 
                 h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_I),ReglaGramatical.__none);
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                                            as_0.raiz = raiz.izquierdo;
                 h2 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.PAR_D),ReglaGramatical.__none);
                 
                 
@@ -618,6 +633,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 
                 h1 = new ArbolSintactico<Ficha>(new Ficha(Ficha.Simbolo.MENOS),ReglaGramatical.__none);
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                                                                 as_0.raiz = raiz.izquierdo;
                 
                 
                 
@@ -636,8 +652,10 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     throw new IllegalArgumentException("No tenemos vertice izquierdo para gramatica _13_M_Q ");
                 
                 
-                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento ,raiz.izquierdo.elemento.getRegla());
+                as_0.raiz = raiz.izquierdo;
                 arbolesRecuperados.agregaFinal(as_0);
+                
                 
                 break;
             case _14_Y_func:
@@ -646,6 +664,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                as_0.raiz = raiz.izquierdo;
                 arbolesRecuperados.agregaFinal(as_0);
                 
                 break;
@@ -655,6 +674,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                as_0.raiz = raiz.izquierdo;
                 arbolesRecuperados.agregaFinal(as_0);
                 
                 break;
@@ -664,6 +684,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                 
                 
                 as_0 = new ArbolSintactico<T>(raiz.izquierdo.elemento,raiz.izquierdo.elemento.getRegla());
+                as_0.raiz = raiz.izquierdo;
                 arbolesRecuperados.agregaFinal(as_0);
                 
                 break;
@@ -747,7 +768,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
      */
     @Override public String toString(){
         
-        return raiz.elemento.toString();
+        return raiz.toString();
     }
     
 }

@@ -164,8 +164,8 @@ public class Ficha{
         if(this.simbolo==Simbolo.VAR)
             s= "v";
     
-            
-        return s+"["+ valor+"]";
+        return s;
+//        return s+"["+ valor+"]";
     }
     
     

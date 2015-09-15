@@ -43,6 +43,20 @@ public class TestAnalizadorLexico {
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
         Assert.assertTrue(fichas.equals(l));
+        
+//        l = AnalizadorLexico.analizar("1+1");
+//        fichas = new Lista<Ficha>();
+//        fichas.agregaFinal(new Ficha(Ficha.Simbolo.VAR));
+//        fichas.agregaFinal(new Ficha(Ficha.Simbolo.MAS));
+//        fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
+//        Assert.assertTrue(fichas.equals(l));
+        
+        
+        l = AnalizadorLexico.analizar("1");
+        fichas = new Lista<Ficha>();
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
+        Assert.assertTrue(fichas.equals(l));
+
 
 
         
