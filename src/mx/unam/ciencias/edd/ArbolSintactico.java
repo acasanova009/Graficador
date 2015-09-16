@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.lang.IllegalArgumentException;
 import mx.unam.ciencias.edd.Gramatica;
 import mx.unam.ciencias.edd.Gramatica.ReglaGramatical;
+import java.lang.Math;
 /**
  * <p>Clase para árboles sintacticos.</p>
 
@@ -15,6 +16,10 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     
     /*Regla gramatical con la cual el arbol fue creado.*/
     private ReglaGramatical reglaGramatical;
+    
+    
+    //Se usara para mantener el valor en la recursion.//No es necesrio pero es comoda.
+    private double x;
 
    
     public boolean esArbolRaiz(){
@@ -51,6 +56,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     public ArbolSintactico(T ficha, ReglaGramatical r)    {
         
         super();
+        x = 0;
         reglaGramatical = r;
         ficha.setRegla(r);
         raiz = new Vertice<T>(ficha);
@@ -715,18 +721,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     @Override public Iterator<T> iterator() { return null;}
 
     
-    /**
-     * Metodo que nos permite evaular este arbol en un valor x.
-     * @param x valor de la rectas sobre el eje x.
-     * @return valor de la funcion. Valor y.
-     * @throws IllegalArgumentException cuando es divison entre 0. O es raiz de un real negativo.
-     */
-     public double evaluar(double x)throws IllegalArgumentException,AxiomaticSimbolException {
-//        if (x==0)
-//            throw new IllegalArgumentException("divisor is 0");
-        return 0;
-        
-    }
+    
     public ReglaGramatical getReglaGramatical()
     {
         return reglaGramatical;
@@ -771,5 +766,169 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
         
         return raiz.toString();
     }
+    
+    /**
+     * Metodo que nos permite evaular este arbol en un valor x.
+     * @param x valor de la rectas sobre el eje x.
+     * @return valor de la funcion. Valor y.
+     * @throws IllegalArgumentException cuando es divison entre 0. O es raiz de un real negativo.
+     */
+    public double evaluar(double x_)throws IllegalArgumentException {
+        x = x_;
+        
+        return evaluar(raiz);
+    }
+    
+    /**
+     * Metodo recursivo que nos dara el valor.
+     * @param v vertice donde esta actualmente.
+     * @return valor de la funcion. Valor y.
+     * @throws IllegalArgumentException cuando es divison entre 0. O es raiz de un real negativo.
+     */
+    public double evaluar(Vertice<T> vActual ) throws IllegalArgumentException,AxiomaticSimbolException {
+        
+        if(!vActual.hayIzquierdo())
+            throw new AxiomaticSimbolException("No hay vertice izquierdo gramatica.");
+        
+        double regreso = 0;
+        ReglaGramatical r = vActual.elemento.getRegla();
+        switch(r){
+            case _1_S_E:
+                regreso =  evaluar(vActual.izquierdo);
+                
+                break;
+            case _2_E_E_T:
+                
+                if(!vActual.hayDerecho())
+                    throw new AxiomaticSimbolException("No hay vertice derecho en gramatica.");
+                regreso = evaluar(vActual.izquierdo) + evaluar(vActual.derecho);
+                
+
+                break;
+            case _3_E_E__T:
+                
+                if(!vActual.hayDerecho())
+                    throw new AxiomaticSimbolException("No hay vertice derecho en gramatica.");
+                regreso = evaluar(vActual.izquierdo) - evaluar(vActual.derecho);
+
+                break;
+            case _4_E_T:
+
+                regreso = evaluar(vActual.izquierdo);
+                
+                break;
+            case _5_T_T_F:
+                
+                if(!vActual.hayDerecho())
+                    throw new AxiomaticSimbolException("No hay vertice derecho en gramatica.");
+                regreso = evaluar(vActual.izquierdo) * evaluar(vActual.derecho);
+                
+                
+                break;
+            case _6_T_T__F:
+                
+                if(!vActual.hayDerecho())
+                    throw new AxiomaticSimbolException("No hay vertice derecho en gramatica.");
+                double noZero = evaluar(vActual.derecho);
+                if(noZero==0)
+                    throw new IllegalArgumentException("Division by zero.");
+
+//                System.out.println(noZero);
+                regreso = evaluar(vActual.izquierdo)/noZero;
+                
+
+                break;
+            case _7_T_F:
+                
+                regreso= evaluar(vActual.izquierdo);
+                
+                break;
+            case _8_F_F_M:
+                
+                
+                if(!vActual.hayDerecho())
+                    throw new AxiomaticSimbolException("No hay vertice derecho en gramatica.");
+                regreso = Math.pow(evaluar(vActual.izquierdo),evaluar(vActual.derecho));
+                
+                break;
+            case _9_F_M:
+                
+                regreso= evaluar(vActual.izquierdo);
+                
+                
+                break;
+            case _10_M_Y_E_:
+                
+                
+                if(!vActual.hayDerecho())
+                    throw new AxiomaticSimbolException("No hay vertice derecho en gramatica.");
+                
+                String func = vActual.izquierdo.izquierdo.elemento.getValor();
+                double m = evaluar(vActual.derecho);
+                
+                if(func.equals("sin"))
+                    regreso = Math.sin(m);
+                else if(func.equals("cos"))
+                    regreso = Math.cos(m);
+                else if(func.equals("tan"))
+                    regreso = Math.tan(m);
+                else if(func.equals("csc"))
+                    regreso = 1/(Math.sin(m));
+                else if(func.equals("sec"))
+                    regreso = 1/(Math.cos(m));
+                else if(func.equals("cot"))
+                    regreso = 1/(Math.tan(m));
+                else if (func.equals("sqrt")){
+                    if(m<0)
+                        throw new IllegalArgumentException("Sqrt, x es menor a 0.");
+                    regreso = Math.sqrt(m);
+                }
+                
+                
+                
+
+                break;
+            case _11_M__E_:
+                
+                regreso= evaluar(vActual.izquierdo);
+                
+
+                break;
+            case _12_M__E:
+                
+                regreso= -1*evaluar(vActual.izquierdo);
+                
+
+                break;
+            case _13_M_Q:
+                
+                regreso= evaluar(vActual.izquierdo);
+                
+                break;
+            case _14_Y_func:
+                
+                break;
+            case _15_Q_num:
+                
+                
+                regreso= Double.parseDouble(vActual.izquierdo.elemento.getValor());
+                
+                break;
+            case _16_Q_var:
+
+                regreso= x;
+                
+                break;
+            default:
+                
+                
+        }
+        
+        
+        
+        
+        return regreso;
+    }
+    
     
 }

@@ -219,8 +219,21 @@ public class TestAnalizadorSintactico {
         t = new ArbolRetroceso<Gramatica>();
         
         Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
-            
-            
+        
+        
+        
+        f = AnalizadorLexico.analizar("x(x+2)");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertFalse(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
+        
+        
+        f = AnalizadorLexico.analizar("-x*(-x+2)");
+        a= new Lista<ArbolSintactico<Ficha>> ();
+        t = new ArbolRetroceso<Gramatica>();
+        
+        Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
         
     }
     

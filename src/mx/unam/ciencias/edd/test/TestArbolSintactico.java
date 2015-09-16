@@ -742,17 +742,125 @@ public class TestArbolSintactico {
         Lista<Ficha> f;
         ArbolSintactico<Ficha> tree;
         
-        f = AnalizadorLexico.analizar("5*x");
-        a= new Lista<ArbolSintactico<Ficha>> ();
-        t = new ArbolRetroceso<Gramatica>();
+        //SE TIENE QUE METER COMO DOUBLE DE OTRA MANERA SE GENERAN ERRORES.
+        double test = random.nextInt(100);
         
-        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
-        tree = a.getUltimo();
+//        f = AnalizadorLexico.analizar("5");
+//        a= new Lista<ArbolSintactico<Ficha>> ();
+//        t = new ArbolRetroceso<Gramatica>();
+//        
+//        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
+//        tree = a.getUltimo();
+//        Assert.assertTrue(tree.evaluar(0)==5);
+
+//        
+//        f = AnalizadorLexico.analizar("x");
+//        a= new Lista<ArbolSintactico<Ficha>> ();
+//        t = new ArbolRetroceso<Gramatica>();
+//        
+//        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
+//        tree = a.getUltimo();
+//        
+//        Assert.assertTrue(test== tree.evaluar(test));
         
-        for(int i = -100 ;i<100; i++  )
-            Assert.assertTrue((5.0 *i) == tree.evaluar(i));
+//        
+//        f = AnalizadorLexico.analizar("-x");
+//        a= new Lista<ArbolSintactico<Ficha>> ();
+//        t = new ArbolRetroceso<Gramatica>();
+//        
+//        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
+//        tree = a.getUltimo();
+//        
+//        Assert.assertTrue(-test== tree.evaluar(test));
+        
+//        
+//        f = AnalizadorLexico.analizar("x+10");
+//        a= new Lista<ArbolSintactico<Ficha>> ();
+//        t = new ArbolRetroceso<Gramatica>();
+//        
+//        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
+//        tree = a.getUltimo();
+//        
+//        Assert.assertTrue(test+10== tree.evaluar(test));
+        
+//        f = AnalizadorLexico.analizar("x*10");
+//        a= new Lista<ArbolSintactico<Ficha>> ();
+//        t = new ArbolRetroceso<Gramatica>();
+//        
+//        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
+//        tree = a.getUltimo();
+//        
+//        Assert.assertTrue(test*10== tree.evaluar(test));
+        
+        
+        
+//        f = AnalizadorLexico.analizar("x/11");
+//        a= new Lista<ArbolSintactico<Ficha>> ();
+//        t = new ArbolRetroceso<Gramatica>();
+//
+//        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
+//        tree = a.getUltimo();
+//            Assert.assertTrue((test/11)== tree.evaluar(test));
+//        
+        
+        
+//        f = AnalizadorLexico.analizar("11/x");
+//        a= new Lista<ArbolSintactico<Ficha>> ();
+//        t = new ArbolRetroceso<Gramatica>();
+//        
+//        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
+//        tree = a.getUltimo();
+//        try{
+//            tree.evaluar(0);
+//            Assert.fail();
+//        }catch(IllegalArgumentException e){
+//            
+//        }
+//        
+//        f = AnalizadorLexico.analizar("2^2");
+//        a= new Lista<ArbolSintactico<Ficha>> ();
+//        t = new ArbolRetroceso<Gramatica>();
+//        
+//        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
+//        tree = a.getUltimo();
+//        Assert.assertTrue((Math.pow(2,2))== tree.evaluar(0));
+        
+//        
+//        f = AnalizadorLexico.analizar("2^x");
+//        a= new Lista<ArbolSintactico<Ficha>> ();
+//        t = new ArbolRetroceso<Gramatica>();
+//        
+//        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
+//        tree = a.getUltimo();
+//        Assert.assertTrue((Math.pow(2,test))== tree.evaluar(test));
+        //
+//        f = AnalizadorLexico.analizar("x^x");
+//        a= new Lista<ArbolSintactico<Ficha>> ();
+//        t = new ArbolRetroceso<Gramatica>();
+//        
+//        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
+//        tree = a.getUltimo();
+//        Assert.assertTrue((Math.pow(test,test))== tree.evaluar(test));
+        
+        
 
         
+
+        
+
+//        f = AnalizadorLexico.analizar("5*x");
+//        a= new Lista<ArbolSintactico<Ficha>> ();
+//        t = new ArbolRetroceso<Gramatica>();
+//        
+//        aSint.analizar(a,AnalizadorLexico.convertir(f),t);
+//        tree = a.getUltimo();
+//        
+//        for(int i = -100 ;i<100; i++  )
+//            Assert.assertTrue((5.0 *i) == tree.evaluar(i));
+//
+        
+//
+//        
         f = AnalizadorLexico.analizar("1/x");
         a= new Lista<ArbolSintactico<Ficha>> ();
         t = new ArbolRetroceso<Gramatica>();
@@ -760,23 +868,25 @@ public class TestArbolSintactico {
         aSint.analizar(a,AnalizadorLexico.convertir(f),t);
         tree = a.getUltimo();
         
-        for(int i = -100 ;i<100; i++  )
+        for(double i = -100.0 ;i<100; i++  )
         {
-            if(i==0)
+            if(i==0.0)
             {
                 try{
                     tree.evaluar(i);
                     Assert.fail();
-                }catch(IllegalArgumentException e){}
+                    
+                }catch(IllegalArgumentException e){
+                }
                 
                 
             }
             else
             {
-                Assert.assertTrue( (1/i) == tree.evaluar(i));
+                Assert.assertTrue( 1.0/i == tree.evaluar(i));
             }
         }
-        
+//
         f = AnalizadorLexico.analizar("sqrt(x)");
         a= new Lista<ArbolSintactico<Ficha>> ();
         t = new ArbolRetroceso<Gramatica>();
@@ -784,7 +894,7 @@ public class TestArbolSintactico {
         aSint.analizar(a,AnalizadorLexico.convertir(f),t);
         tree = a.getUltimo();
         
-        for(int i = -100 ;i<100; i++  )
+        for(double i = -100 ;i<100; i++  )
         {
             if(i<0)
             {
@@ -799,9 +909,9 @@ public class TestArbolSintactico {
                 Assert.assertTrue( (Math.sqrt(i)) == tree.evaluar(i));
             }
         }
-        
-        
-        f = AnalizadorLexico.analizar("(x+4)*(x-2)");
+//
+//        
+        f = AnalizadorLexico.analizar("x*(x+2)");
         a= new Lista<ArbolSintactico<Ficha>> ();
         t = new ArbolRetroceso<Gramatica>();
         
@@ -809,18 +919,17 @@ public class TestArbolSintactico {
         tree = a.getUltimo();
         
 
-        Lista<Ficha> f_ = AnalizadorLexico.analizar("x^2+2x-8");
-        
+        Lista<Ficha> f_ = AnalizadorLexico.analizar("x^2+2*x");
+
         Lista<ArbolSintactico<Ficha>> a_= new Lista<ArbolSintactico<Ficha>> ();
         ArbolRetroceso<Gramatica> t_ = new ArbolRetroceso<Gramatica>();
         aSint.analizar(a_,AnalizadorLexico.convertir(f_),t_);
         ArbolSintactico<Ficha> tree_ = a.getUltimo();
         
         for(int i = -100 ;i<100; i++  ){
-            Assert.assertTrue((Math.pow(i,2)+(2*i)-8) == tree.evaluar(i) );
+            Assert.assertTrue(i*(i+2)   == tree.evaluar(i) );
             Assert.assertTrue(tree_.evaluar(i) == tree.evaluar(i));
         }
-        
         
         
 
