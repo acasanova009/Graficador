@@ -74,6 +74,10 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.text.Document;
 
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
@@ -95,6 +99,12 @@ public class Controlador{
     
     private PanelPintar panel;
     private JButton[] buttons;
+    
+    private JSpinner spinnerAncho;
+    private JSpinner spinnerAlto;
+    private JSpinner spinnerX;
+    private JSpinner spinnerY;
+    
     //Cargamos la vista y la mostramos.
     private void vistaCargar()
     {
@@ -108,7 +118,7 @@ public class Controlador{
         panel.setPreferredSize(new Dimension(pixelesVistaX,pixelesVistaY));
         ventana.add(panel);
         ventana.setVisible(true);
-//        ventana.setResizable(false);
+        ventana.setResizable(false);
         
         ventana.pack();
         
@@ -138,41 +148,93 @@ public class Controlador{
         });
         bh.add(textField);
         
-        
-        
-        buttons[ZOOMIN] = new JButton("Zoom In");
-        buttons[ZOOMIN].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //()
+        ChangeListener listener;
+        listener= new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+
+                
+                JSpinner j = (JSpinner)e.getSource();
+                String s = j.getValue().toString();
+
+//ALTURA
+                double  r =Double.parseDouble(s);
+
+                panel.update(r,0,0,0);
+
+                ventana.repaint();
+                
+                
             }
-        });
-        bh.add(buttons[ZOOMIN]);
+        };
         
         
-        buttons[ZOOMOUT] = new JButton("Zoom Out");
-        buttons[ZOOMOUT].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //()
+        bh.add(new JLabel("   Altura: "));
+        spinnerAlto = creaRotativo( 50,-10000, 10000, 1, "#0");
+
+        
+        
+        spinnerAlto.addChangeListener(listener);
+        bh.add(spinnerAlto);
+        
+        
+        listener = new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+
+                
+                JSpinner j = (JSpinner)e.getSource();
+                String s = j.getValue().toString();
+
+//ANCHURA
+                double  r =Double.parseDouble(s);
+                
+                panel.update(0,r,0,0);
+                ventana.repaint();
+                
+                
             }
-        });
-        bh.add(buttons[ZOOMOUT]);
+        };
+        bh.add(new JLabel("   Anchura: "));
+        spinnerAncho = creaRotativo( 50,-10000, 10000, 1, "#0");
         
+        spinnerAncho.addChangeListener(listener);
         
-        buttons[CENTER] = new JButton("Center");
-        buttons[CENTER].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //()
-            }
-        });
-        bh.add(buttons[CENTER]);
+        bh.add(spinnerAncho);
         
-        buttons[EQUALIZE] = new JButton("Equal");
-        buttons[EQUALIZE].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //()
-            }
-        });
-        
+//        
+//        
+//        buttons[ZOOMIN] = new JButton("Zoom In");
+//        buttons[ZOOMIN].addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                //()
+//            }
+//        });
+//        bh.add(buttons[ZOOMIN]);
+//        
+//        
+//        buttons[ZOOMOUT] = new JButton("Zoom Out");
+//        buttons[ZOOMOUT].addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                //()
+//            }
+//        });
+//        bh.add(buttons[ZOOMOUT]);
+//        
+//        
+//        buttons[CENTER] = new JButton("Center");
+//        buttons[CENTER].addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                //()
+//            }
+//        });
+//        bh.add(buttons[CENTER]);
+//        
+//        buttons[EQUALIZE] = new JButton("Equal");
+//        buttons[EQUALIZE].addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                //()
+//            }
+//        });
+//        
         
         
         return bh;
@@ -183,6 +245,19 @@ public class Controlador{
         vistaCargar();
         
         
+    }
+    /* Crea un rotativo con los valores recibidos. */
+    private JSpinner creaRotativo(double valor, double min,
+                                  double max, double paso,
+                                  String formato) {
+        JSpinner spinner =
+        new JSpinner(new SpinnerNumberModel(valor, min, max, paso));
+        
+        JSpinner.NumberEditor ne = new JSpinner.NumberEditor(spinner, formato);
+        JTextField tf = ne.getTextField();
+        tf.setColumns(2);
+        spinner.setEditor(ne);
+        return spinner;
     }
 }
 
@@ -201,10 +276,16 @@ class PanelPintar extends JPanel{
     
         public ArbolSintactico<Ficha> a;
     
+        String funcion ;
+    double anchura;
+    double altura;
+    double x_;
+     double y_;
     
         public PanelPintar() {
             
-            
+            anchura = 50;
+            altura=50;
             listener("x");
             setBackground(Color.WHITE);
             setBorder(BorderFactory.createLineBorder(Color.black));
@@ -225,15 +306,38 @@ class PanelPintar extends JPanel{
             
         }
     
-    public void listener(String s){
+    
+    
+    public void update(double alt, double anch, double x, double y){
         
-        System.out.println("HERE");
+        if(alt!=0)
+            altura=alt;
+        if(anch!=0)
+            anchura =anch;
+        
+        
+        listener(funcion);
+    }
+    
+    
+    
+    public void listener(String s) {
+        funcion = s;
+        
+        
         a = Parser.scanf(s);
         
+        
+        double k = (double)pixelesVistaX+0.0;
+        double deDominio = -300.0;//partir de -300;
+        double hastaDominio = 300.0;//Mayor o igual a deDominio.
+        double dominioPuntos = hastaDominio +( -1*deDominio );
+        double segmentoUnitario = 1;//Cien pixeles por cada 1 entero.
+        double ratio = k/(segmentoUnitario *100);
+        
+        
+        
         puntos = new Line2D.Double[pixelesVistaY];
-        
-        double k = pixelesVistaX;
-        
         
         if(a!=null)
         {
@@ -241,16 +345,27 @@ class PanelPintar extends JPanel{
             
             
             double x1;
-            for(double x = -300.0; x<300;x+=1)
+            for(double x = deDominio ; x <= hastaDominio && c<pixelesVistaY; x+=dominioPuntos/k)
             {
                 try{
-                    double y = a.evaluar(x);
-                    y*=-1;
+                    double y = a.evaluar(x/anchura);
+                    
+                    
+                    
+                    y = y*altura;
+                    
+                    
+                    //Estos es por la cantidad de pixeles.
+                    
+                    y*=-1;//Por que el eje de Y de swing es positivo hacia abajo.
                     y+=300;
                     x1=x+300;
                     puntos[c] = new Line2D.Double(x1,y,x1,y);
                     
-                }catch(IllegalArgumentException e){}
+                }catch(IllegalArgumentException e){
+                    
+                    puntos[c] = new Line2D.Double(300,300,300,300);
+                }
                 
                 c++;
             }
@@ -303,10 +418,17 @@ class PanelPintar extends JPanel{
                 Graphics2D g2 = (Graphics2D)g;
            
             
-            System.out.println("Repintando");
-            
+            Point2D.Double last = null;
             for(Line2D.Double p:puntos){
-                g2.draw(p);}
+                if(last!=null){
+                    
+                    g2.draw(new Line2D.Double(p.getP1(),last));
+                    
+                    
+                }
+                last = (Point2D.Double)p.getP1();
+                g2.draw(p);
+            }
             
             
 

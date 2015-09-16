@@ -417,8 +417,8 @@ public class AnalizadorLexico{
         Ficha f = null;
         if(a=='s' && b=='i' && c=='n')
             f= new Ficha(Simbolo.FUNCION,ReglaGramatical.__none,"sin");
-        else if(a=='s' && b=='e' && c=='n')
-            f= new Ficha(Simbolo.FUNCION,ReglaGramatical.__none,"sen");
+        else if(a=='s' && b=='e' && c=='c')
+            f= new Ficha(Simbolo.FUNCION,ReglaGramatical.__none,"sec");
         else if(a=='t' && b=='a' && c=='n')
             f= new Ficha(Simbolo.FUNCION,ReglaGramatical.__none,"tan");
         else if(a=='c' && b=='o' && c=='s')
@@ -434,7 +434,7 @@ public class AnalizadorLexico{
         boolean esFuncion = false;
         if(a=='s' && b=='i' && c=='n')
             esFuncion = true;
-        else if(a=='s' && b=='e' && c=='n')
+        else if(a=='s' && b=='e' && c=='c')
             esFuncion = true;
         else if(a=='t' && b=='a' && c=='n')
             esFuncion = true;
