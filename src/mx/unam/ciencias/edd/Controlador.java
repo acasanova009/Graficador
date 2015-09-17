@@ -11,6 +11,7 @@ package mx.unam.ciencias.edd;
 //import java.io.InputStreamReader;
 //import java.io.OutputStreamWriter;
 
+import java.lang.Math;
 import java.util.NoSuchElementException;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -89,11 +90,6 @@ public class Controlador{
     
     private static final int pixelesVistaX = 600;
     private static final int pixelesVistaY = 600;
-    /* Opciones de la interfaz gráfica. */
-    private static final int ZOOMIN     = 0;
-    private static final int ZOOMOUT    = 1;
-    private static final int CENTER     = 2;
-    private static final int EQUALIZE   = 3;
     /* Componentes de la interfaz gráfica. */
     private JFrame ventana;
     
@@ -102,8 +98,6 @@ public class Controlador{
     
     private JSpinner spinnerAncho;
     private JSpinner spinnerAlto;
-    private JSpinner spinnerX;
-    private JSpinner spinnerY;
     
     //Cargamos la vista y la mostramos.
     private void vistaCargar()
@@ -136,12 +130,12 @@ public class Controlador{
         bh.add(label);
         
         //fifth component is NOT a button!
-        JTextField textField = new JTextField("x");
+        JTextField textField = new JTextField("Se puede arrastrar con el mouse.");
         textField.setColumns(10);
         textField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
-                panel.listener(textField.getText());
+                panel.generaPuntos(textField.getText());
                 ventana.repaint();
 
             }
@@ -202,39 +196,16 @@ public class Controlador{
         
 //        
 //        
-//        buttons[ZOOMIN] = new JButton("Zoom In");
-//        buttons[ZOOMIN].addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //()
-//            }
-//        });
-//        bh.add(buttons[ZOOMIN]);
-//        
-//        
-//        buttons[ZOOMOUT] = new JButton("Zoom Out");
-//        buttons[ZOOMOUT].addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //()
-//            }
-//        });
-//        bh.add(buttons[ZOOMOUT]);
-//        
-//        
-//        buttons[CENTER] = new JButton("Center");
-//        buttons[CENTER].addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //()
-//            }
-//        });
-//        bh.add(buttons[CENTER]);
-//        
-//        buttons[EQUALIZE] = new JButton("Equal");
-//        buttons[EQUALIZE].addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //()
-//            }
-//        });
-//        
+        JButton clear = new JButton("Borrar");
+        clear.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                panel.reset();
+                panel.generaPuntos("");
+                ventana.repaint();
+            }
+        });
+        bh.add(clear);
         
         
         return bh;
@@ -265,46 +236,67 @@ public class Controlador{
 class PanelPintar extends JPanel{
         
 //        RedSquare redSquare = new RedSquare();
-        Line2D veticalLine = new Line2D.Double(300, 0, 300, 600);
-        Line2D horizontalLine = new Line2D.Double(0, 300, 600, 300);
+    
+//    Line2D veticalLine = new Line2D.Double(300, 0, 300, 600);
+//    Line2D horizontalLine = new Line2D.Double(0, 300, 600, 300);
     
     
         private static final int pixelesVistaX = 600;
         private static final int pixelesVistaY = 600;
+
+        public Diccionario<String,ArbolSintactico<Ficha>> graficas;
+        public Lista<Line2D.Double> puntos;
     
-        public Line2D.Double[] puntos;
-    
-        public ArbolSintactico<Ficha> a;
+//        public ArbolSintactico<Ficha> a;
     
         String funcion ;
     double anchura;
     double altura;
-    double x_;
-     double y_;
+    double centerX;
+     double centerY;
+    
+    double lastX;
+    double lastY;
     
         public PanelPintar() {
             
-            anchura = 50;
-            altura=50;
-            listener("x");
+            reset();
+            
+            generaPuntos("");
+            
             setBackground(Color.WHITE);
             setBorder(BorderFactory.createLineBorder(Color.black));
             
-//            addMouseListener(new MouseAdapter(){
-//                public void mousePressed(MouseEvent e){
-//                    moveSquare(e.getX(),e.getY());
-//                }
-//            });
+            addMouseListener(new MouseAdapter(){
+                public void mousePressed(MouseEvent e){
+                    lastX = e.getX();
+                    lastY = e.getY();
+                }
+            });
             
-//            addMouseMotionListener(new MouseAdapter(){
-//                public void mouseDragged(MouseEvent e){
-//                  moveSquare(e.getX(),e.getY());
-//                    moveLine(veticalLine,e.getX(),e.getY());
-//                    moveLine(horizontalLine,e.getX(),e.getY());
-//                }
-//            });
+            addMouseMotionListener(new MouseAdapter(){
+                public void mouseDragged(MouseEvent e){
+                    double magX =  e.getX() -lastX;
+                    double magY =  e.getY() -lastY;
+                    
+                    update(0,0,magX,magY);
+                    
+                    lastX = e.getX();
+                    lastY = e.getY();
+                    repaint();
+                }
+            });
             
         }
+    public void reset(){
+        
+        anchura = 50;
+        altura=50;
+        centerX = pixelesVistaX/2;
+        centerY = pixelesVistaY/2;
+//        graficas = new Lista<Lista<Line2D.Double>>();
+        
+    }
     
     
     
@@ -314,166 +306,131 @@ class PanelPintar extends JPanel{
             altura=alt;
         if(anch!=0)
             anchura =anch;
+            centerX +=x;
+            centerY +=y;
         
-        
-        listener(funcion);
+        generaPuntos(funcion);
     }
     
     
     
-    public void listener(String s) {
+    public void generaPuntos(String s) {
         funcion = s;
+        ArbolSintactico<Ficha> a = Parser.scanf(s);
         
+//        if(graficas.contiene(s))
+//            a = graficas.get(s)
+//        else
+//            a = Parser.scanf(s);
         
-        a = Parser.scanf(s);
-        
-        
-        double k = (double)pixelesVistaX+0.0;
-        double deDominio = -300.0;//partir de -300;
-        double hastaDominio = 300.0;//Mayor o igual a deDominio.
-        double dominioPuntos = hastaDominio +( -1*deDominio );
-        double segmentoUnitario = 1;//Cien pixeles por cada 1 entero.
-        double ratio = k/(segmentoUnitario *100);
-        
-        
-        
-        puntos = new Line2D.Double[pixelesVistaY];
-        
+        puntos = new Lista<Line2D.Double>();
         if(a!=null)
         {
-            int c=0;
-            
-            
             double x1;
-            for(double x = deDominio ; x <= hastaDominio && c<pixelesVistaY; x+=dominioPuntos/k)
+            for(double x = -(centerX) ; x <= -(centerX-300.0)+600; x++)
             {
                 try{
                     double y = a.evaluar(x/anchura);
-                    
-                    
-                    
                     y = y*altura;
-                    
-                    
+
                     //Estos es por la cantidad de pixeles.
-                    
                     y*=-1;//Por que el eje de Y de swing es positivo hacia abajo.
-                    y+=300;
-                    x1=x+300;
-                    puntos[c] = new Line2D.Double(x1,y,x1,y);
+                    y+=centerY;
+                    x1=x+centerX;
+                    puntos.agregaFinal(new Line2D.Double(x1,y,x1,y));
                     
-                }catch(IllegalArgumentException e){
-                    
-                    puntos[c] = new Line2D.Double(300,300,300,300);
-                }
-                
-                c++;
+                }catch(IllegalArgumentException e){}
             }
+            
+//            graficas.agregaFinal(perk);
         }
         
     }
-    
-        private void moveLine(Line2D line,int x, int y){
-            final double x1 = line.getX1();
-            final double x2 = line.getX2();
-            final double y1 = line.getY1();
-            final double y2 = line.getY2();
-            
-            
-            
-        }
-//        private void moveSquare(int x, int y){
-//            
-//            // Current square state, stored as final variables
-//            // to avoid repeat invocations of the same methods.
-//            final int CURR_X = redSquare.getX();
-//            final int CURR_Y = redSquare.getY();
-//            final int CURR_W = redSquare.getWidth();
-//            final int CURR_H = redSquare.getHeight();
-//            final int OFFSET = 1;
-//            
-//            if ((CURR_X!=x) || (CURR_Y!=y)) {
-//                
-//                // The square is moving, repaint background
-//                // over the old square location.
-//                repaint(CURR_X,CURR_Y,CURR_W+OFFSET,CURR_H+OFFSET);
-//                
-//                // Update coordinates.
-//                redSquare.setX(x);
-//                redSquare.setY(y);
-//                
-//                // Repaint the square at the new location.
-//                repaint(redSquare.getX(), redSquare.getY(),
-//                        redSquare.getWidth()+OFFSET,
-//                        redSquare.getHeight()+OFFSET);
-//            }
-//        }
-    
-    
-    
-    
-    
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D)g;
            
             
-            Point2D.Double last = null;
-            for(Line2D.Double p:puntos){
-                if(last!=null){
+//             for(Lista<Line2D.Double> puntos :graficas){
+                Point2D.Double last = null;
+                for(Line2D.Double p :puntos){
+                    if(last!=null){
+//
                     
-                    g2.draw(new Line2D.Double(p.getP1(),last));
+//                    System.out.println("Last=" +last.getY()+ " new="+ p.getY1());
                     
+                    //Esto esta muy mal hecho, pero no se me ocurre como detectar asintotas aun.
+                    //Ya que en terminos computacionales no son asintotas. Son lineas casi verticales.
+                    if(distancia(last.getX(),last.getY(), p.getX1(),p.getY1() )<200)
+                    {
+                        //
+                        g2.draw(new Line2D.Double(last,p.getP1()));
+                    }
+
+                    
+                    
+
+//
+//                    if(p.getX1()-last.getX()==0)
+//                    {
+//                    
+//                    //                    {
+////                    System.out.println("Last_X=" +last.getX()+ " new_x="+ p.getX1());
+//                        System.out.print("Last=" +last.getX+ " new="+ p.getY1());
+//
+//                    }
+//                    
+//                    if(((int)last.getY() - (int)p.getY1() ) != 0)
+//                    {
+//                        
+//                        double futureLineSlope =(((int)last.getX() - (int)p.getX1())/  ((int)last.getY() - (int)p.getY1() )  );//x1-x2/y1-y2
+//                        
+//                        if(futureLineSlope==0)
+//                        {
+//                            
+//                            System.out.print("  Slopes="+futureLineSlope + "\n");
+//                        }
+//                        else
+//                            
+//                            g2.draw(new Line2D.Double(last,p.getP1()));
+//                    }else{
+//                        
+//                        g2.draw(new Line2D.Double(last,p.getP1()));
+//                    }
+                        //es totalmente horizaontal
+                    
+                    
+
+//                    System.out.print("  Slopes="+futureLineSlope + "\n");
+//                    if((int)last.getY() - (int)p.getY1() ==0)
+//                    {
+//                        System.out.println("YES");
+//                    }
+//                    else
+
+            
                     
                 }
-                last = (Point2D.Double)p.getP1();
-                g2.draw(p);
-            }
+                    last = (Point2D.Double)p.getP1();
+                    g2.draw(p);
+                }
+//             }
             
             
-
-                g2.draw(veticalLine);
-                g2.draw(horizontalLine);
+            g2.draw(new Line2D.Double(centerX,0,centerX,600));
             
-//            redSquare.paintSquare(g);
+            g2.draw(new Line2D.Double(0,centerY, 600,centerY));
         }
+    private double distancia(double x1,double y1, double x2, double y2)
+    {
+        x1= Math.abs(x1);
+        y1= Math.abs(y1);
+        x2= Math.abs(x2);
+        y2= Math.abs(y2);
+        
+        
+        
+        return Math.sqrt( Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
+        
     }
-    
-class RedSquare{
-        
-        private int xPos = 50;
-        private int yPos = 50;
-        private int width = 20;
-        private int height = 20;
-        
-        public void setX(int xPos){
-            this.xPos = xPos;
-        }
-        
-        public int getX(){
-            return xPos;
-        }
-        
-        public void setY(int yPos){
-            this.yPos = yPos;
-        }
-        
-        public int getY(){
-            return yPos;
-        }
-        
-        public int getWidth(){
-            return width;
-        } 
-        
-        public int getHeight(){
-            return height;
-        }
-        
-        public void paintSquare(Graphics g){
-            g.setColor(Color.BLACK);
-            g.fillRect(xPos,yPos,width,height);
-            g.setColor(Color.BLACK);
-            g.drawRect(xPos,yPos,width,height);  
-        }
 }
