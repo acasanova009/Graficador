@@ -27,6 +27,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -112,9 +113,11 @@ public class Controlador{
         ventana.add(bh, BorderLayout.NORTH);
         panel = new PanelPintar();
         panel.setPreferredSize(new Dimension(pixelesVistaX,pixelesVistaY));
+        ventana.repaint();
+        
         ventana.add(panel);
         ventana.setVisible(true);
-//        ventana.setResizable(false);
+        ventana.setResizable(true);
         
         ventana.pack();
         
@@ -154,7 +157,7 @@ public class Controlador{
 
 //ALTURA
                 double  r =Double.parseDouble(s);
-
+                
                 panel.update(r,0,0,0,0,0);
 
                 ventana.repaint();
@@ -165,7 +168,7 @@ public class Controlador{
         
         
         bh.add(new JLabel("   Altura: "));
-        spinnerAlto = creaRotativo( 50,-10000, 10000, 5, "#0");
+        spinnerAlto = creaRotativo( 50,-10000, 10000, 10, "#0");
 
         
         
@@ -184,6 +187,7 @@ public class Controlador{
                 double  r =Double.parseDouble(s);
                 
                 panel.update(0,r,0,0,0,0);
+
                 ventana.repaint();
                 
                 
@@ -236,38 +240,31 @@ public class Controlador{
 
 
 class PanelPintar extends JPanel{
-        
-//        RedSquare redSquare = new RedSquare();
     
-//    Line2D veticalLine = new Line2D.Double(300, 0, 300, 600);
-//    Line2D horizontalLine = new Line2D.Double(0, 300, 600, 300);
-    
-    
-        private int pixelesVistaX = 600;
-        private int pixelesVistaY = 600;
-    
-
-        public Diccionario<String,ArbolSintactico<Ficha>> graficas;
-        public Lista<Line2D.Double> puntos;
-        public ArbolSintactico<Ficha> a;
+    private static int pixelesVistaX = 600;
+    private static int pixelesVistaY = 600;
     
 
     
-        private String funcion ;
+    
     
     double anchura;
     double altura;
     double centerX;
-    double centerY;
+     double centerY;
     
     double lastX;
     double lastY;
     
+    
+            public Diccionario<String,ArbolSintactico<Ficha>> arboles;
+            public Lista<Lista<Line2D.Double>> graficas;
+
         public PanelPintar() {
             
-            reset();
             
-            generaPuntos("");
+            reset();
+
             
             setBackground(Color.WHITE);
             setBorder(BorderFactory.createLineBorder(Color.black));
@@ -285,6 +282,7 @@ class PanelPintar extends JPanel{
                     double magY =  e.getY() -lastY;
                     
                     update(0,0,magX,magY,0,0);
+
                     
                     lastX = e.getX();
                     lastY = e.getY();
@@ -294,7 +292,7 @@ class PanelPintar extends JPanel{
             
             addComponentListener(new ComponentAdapter() {
                 public void componentResized(ComponentEvent e) {
-                    // This is only called when the user releases the mouse button.
+                    
                     Dimension d = e.getComponent().getSize();
                     int lastPixelesVistaX = (int)d.getWidth() - pixelesVistaX;
                     int lastPixelesVistaY = (int)d.getHeight() - pixelesVistaY;
@@ -308,14 +306,13 @@ class PanelPintar extends JPanel{
         }
     public void reset(){
         
-        anchura = 50;
-        altura=50;
+        altura=50.0;
+        anchura=50.0;
         centerX = pixelesVistaX/2;
         centerY = pixelesVistaY/2;
-        funcion=null;
-        a = null;
 
-
+        arboles = new Diccionario<String, ArbolSintactico<Ficha>>();
+        graficas = new Lista<Lista<Line2D.Double>>();
         
     }
     
@@ -327,130 +324,122 @@ class PanelPintar extends JPanel{
             altura=alt;
         if(anch!=0)
             anchura =anch;
+        
             centerX +=x;
             centerY +=y;
-//        centerX+=pixX;
-//        centerY+=pixY;
+
+
         
         pixelesVistaX+=pixX;
         pixelesVistaY+=pixY;
         
-        generaPuntos(funcion);
+        generaPuntos("");
     }
     
     
     
     public void generaPuntos(String s) {
-        //Revisamos para no tener que crear -a de nuevo. Ya que es muy cara..... =(
-        if(funcion!=null && !funcion.equals(s))
-            a= Parser.scanf(s);
-        
-        funcion = s;
-        
-        
-        puntos = new Lista<Line2D.Double>();
-        if(a!=null)
+
+        ArbolSintactico<Ficha> as ;
+
+        if(arboles.contiene(s)){
+            as = arboles.get(s);
+        }
+        else
         {
+            as= Parser.scanf(s);
+            if(as!=null){
+                
+                arboles.agrega(s,as);
+            }
+                
+        }
+        
+        
+        graficas = new Lista<Lista<Line2D.Double>>();
+//
+        for(ArbolSintactico<Ficha> a: arboles)
+        {
+//            puntos =new Lista<Line2D.Double>();
+//
+            Lista<Line2D.Double> perk  = new Lista<Line2D.Double>();
+//            if(as!=null)
+
+//        puntos = new Lista<Line2D.Double>();
+//        if(a!=null)
+//        {
             double x1;
+
+//            for(double x = -300.0 ; x <= 300; x++)
             for(double x = -(centerX) ; x <= -(centerX-(pixelesVistaX/2))+pixelesVistaX; x++)
             {
                 try{
-                    double y = a.evaluar(x/anchura);
-                    y = y*altura;
-
-                    //Estos es por la cantidad de pixeles.
-                    y*=-1;//Por que el eje de Y de swing es positivo hacia abajo.
-                    y+=centerY;
-                    x1=x+centerX;
-                    puntos.agregaFinal(new Line2D.Double(x1,y,x1,y));
+                        double y = a.evaluar(x/anchura);
                     
-                }catch(IllegalArgumentException e){}
+//                    System.out.println("--X:"+x+"--Y:"+y);
+
+                        y = y*altura;
+
+                        //Estos es por la cantidad de pixeles.
+                        y*=-1;//Por que el eje de Y de swing es positivo hacia abajo.
+                        y+=centerY;
+                        x1=x+centerX;
+                        perk.agregaFinal(new Line2D.Double(x1,y,x1,y));
+//                        puntos.agregaFinal(new Line2D.Double(x1,y,x1,y));
+                    
+                    
+                    }catch(IllegalArgumentException e){}
             }
             
-//            graficas.agregaFinal(perk);
+            
+            graficas.agregaFinal(perk);
         }
+            
+            
+            
+        
+        
+    
         
     }
-        public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
             super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D)g;
-           
-            
-//             for(Lista<Line2D.Double> puntos :graficas){
+        
+        
+
+            //Por cada funcion.
+             for(Lista<Line2D.Double> puntos :graficas){
+        
                 Point2D.Double last = null;
+                 //Graficamos puntos.
                 for(Line2D.Double p :puntos){
+                    g2.draw(p);
                     if(last!=null){
-//
-                    
-//                    System.out.println("Last=" +last.getY()+ " new="+ p.getY1());
-                    
-                    //Esto esta muy mal hecho, pero no se me ocurre como detectar asintotas aun.
-                    //Ya que en terminos computacionales no son asintotas. Son lineas casi verticales.
-                    if(distancia(last.getX(),last.getY(), p.getX1(),p.getY1() )<200)
-                    {
-                        //
-                        g2.draw(new Line2D.Double(last,p.getP1()));
-                    }
+                        
+                        //Quitamos asintotas.
+                        if(p.getY1()>0 &&  p.getY1()<=pixelesVistaY){
+                            
+                            g2.draw(new Line2D.Double(last,p.getP1()));
+                        }
+                        else
+                            if(last.getY()>0 &&  last.getY()<=pixelesVistaY){
+                            
+                            g2.draw(new Line2D.Double(last,p.getP1()));
 
-                    
-                    
-
-//
-//                    if(p.getX1()-last.getX()==0)
-//                    {
-//                    
-//                    //                    {
-////                    System.out.println("Last_X=" +last.getX()+ " new_x="+ p.getX1());
-//                        System.out.print("Last=" +last.getX+ " new="+ p.getY1());
-//
-//                    }
-//                    
-//                    if(((int)last.getY() - (int)p.getY1() ) != 0)
-//                    {
-//                        
-//                        double futureLineSlope =(((int)last.getX() - (int)p.getX1())/  ((int)last.getY() - (int)p.getY1() )  );//x1-x2/y1-y2
-//                        
-//                        if(futureLineSlope==0)
-//                        {
-//                            
-//                            System.out.print("  Slopes="+futureLineSlope + "\n");
-//                        }
-//                        else
-//                            
-//                            g2.draw(new Line2D.Double(last,p.getP1()));
-//                    }else{
-//                        
-//                        g2.draw(new Line2D.Double(last,p.getP1()));
-//                    }
-                        //es totalmente horizaontal
-                    
-                    
-
-//                    System.out.print("  Slopes="+futureLineSlope + "\n");
-//                    if((int)last.getY() - (int)p.getY1() ==0)
-//                    {
-//                        System.out.println("YES");
-//                    }
-//                    else
-
-            
-                    
-                }
+                            
+                            }
+                        
+                        }
                     last = (Point2D.Double)p.getP1();
                     g2.draw(p);
+
                 }
-//             }
-            
-            
+             }
             g2.draw(new Line2D.Double(centerX,0,centerX,pixelesVistaY));
-            
             g2.draw(new Line2D.Double(0,centerY, pixelesVistaX,centerY));
         }
-    public void setPreferredSize(Dimension d){
-        super.setPreferredSize(d);
-        pixelesVistaX=(int)d.getWidth();
-        pixelesVistaY=(int)d.getHeight();
-    }
+
     private double distancia(double x1,double y1, double x2, double y2)
     {
         x1= Math.abs(x1);
