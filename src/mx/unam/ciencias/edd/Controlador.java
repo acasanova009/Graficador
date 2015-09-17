@@ -27,6 +27,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import java.net.URL;
 
@@ -112,7 +114,7 @@ public class Controlador{
         panel.setPreferredSize(new Dimension(pixelesVistaX,pixelesVistaY));
         ventana.add(panel);
         ventana.setVisible(true);
-        ventana.setResizable(false);
+//        ventana.setResizable(false);
         
         ventana.pack();
         
@@ -153,7 +155,7 @@ public class Controlador{
 //ALTURA
                 double  r =Double.parseDouble(s);
 
-                panel.update(r,0,0,0);
+                panel.update(r,0,0,0,0,0);
 
                 ventana.repaint();
                 
@@ -163,7 +165,7 @@ public class Controlador{
         
         
         bh.add(new JLabel("   Altura: "));
-        spinnerAlto = creaRotativo( 50,-10000, 10000, 1, "#0");
+        spinnerAlto = creaRotativo( 50,-10000, 10000, 5, "#0");
 
         
         
@@ -181,14 +183,14 @@ public class Controlador{
 //ANCHURA
                 double  r =Double.parseDouble(s);
                 
-                panel.update(0,r,0,0);
+                panel.update(0,r,0,0,0,0);
                 ventana.repaint();
                 
                 
             }
         };
         bh.add(new JLabel("   Anchura: "));
-        spinnerAncho = creaRotativo( 50,-10000, 10000, 1, "#0");
+        spinnerAncho = creaRotativo( 50,-10000, 10000, 5, "#0");
         
         spinnerAncho.addChangeListener(listener);
         
@@ -241,19 +243,22 @@ class PanelPintar extends JPanel{
 //    Line2D horizontalLine = new Line2D.Double(0, 300, 600, 300);
     
     
-        private static final int pixelesVistaX = 600;
-        private static final int pixelesVistaY = 600;
+        private int pixelesVistaX = 600;
+        private int pixelesVistaY = 600;
+    
 
         public Diccionario<String,ArbolSintactico<Ficha>> graficas;
         public Lista<Line2D.Double> puntos;
+        public ArbolSintactico<Ficha> a;
     
-//        public ArbolSintactico<Ficha> a;
+
     
-        String funcion ;
+        private String funcion ;
+    
     double anchura;
     double altura;
     double centerX;
-     double centerY;
+    double centerY;
     
     double lastX;
     double lastY;
@@ -279,13 +284,26 @@ class PanelPintar extends JPanel{
                     double magX =  e.getX() -lastX;
                     double magY =  e.getY() -lastY;
                     
-                    update(0,0,magX,magY);
+                    update(0,0,magX,magY,0,0);
                     
                     lastX = e.getX();
                     lastY = e.getY();
                     repaint();
                 }
             });
+            
+            addComponentListener(new ComponentAdapter() {
+                public void componentResized(ComponentEvent e) {
+                    // This is only called when the user releases the mouse button.
+                    Dimension d = e.getComponent().getSize();
+                    int lastPixelesVistaX = (int)d.getWidth() - pixelesVistaX;
+                    int lastPixelesVistaY = (int)d.getHeight() - pixelesVistaY;
+                    
+                    System.out.println("X changed="+lastPixelesVistaX + " Y="+lastPixelesVistaY);
+                    update(0,0,0,0,lastPixelesVistaX,lastPixelesVistaY);
+                }
+            });
+
             
         }
     public void reset(){
@@ -294,13 +312,16 @@ class PanelPintar extends JPanel{
         altura=50;
         centerX = pixelesVistaX/2;
         centerY = pixelesVistaY/2;
-//        graficas = new Lista<Lista<Line2D.Double>>();
+        funcion=null;
+        a = null;
+
+
         
     }
     
     
     
-    public void update(double alt, double anch, double x, double y){
+    public void update(double alt, double anch, double x, double y, int pixX,int pixY ){
         
         if(alt!=0)
             altura=alt;
@@ -308,6 +329,11 @@ class PanelPintar extends JPanel{
             anchura =anch;
             centerX +=x;
             centerY +=y;
+//        centerX+=pixX;
+//        centerY+=pixY;
+        
+        pixelesVistaX+=pixX;
+        pixelesVistaY+=pixY;
         
         generaPuntos(funcion);
     }
@@ -315,19 +341,18 @@ class PanelPintar extends JPanel{
     
     
     public void generaPuntos(String s) {
-        funcion = s;
-        ArbolSintactico<Ficha> a = Parser.scanf(s);
+        //Revisamos para no tener que crear -a de nuevo. Ya que es muy cara..... =(
+        if(funcion!=null && !funcion.equals(s))
+            a= Parser.scanf(s);
         
-//        if(graficas.contiene(s))
-//            a = graficas.get(s)
-//        else
-//            a = Parser.scanf(s);
+        funcion = s;
+        
         
         puntos = new Lista<Line2D.Double>();
         if(a!=null)
         {
             double x1;
-            for(double x = -(centerX) ; x <= -(centerX-300.0)+600; x++)
+            for(double x = -(centerX) ; x <= -(centerX-(pixelesVistaX/2))+pixelesVistaX; x++)
             {
                 try{
                     double y = a.evaluar(x/anchura);
@@ -417,10 +442,15 @@ class PanelPintar extends JPanel{
 //             }
             
             
-            g2.draw(new Line2D.Double(centerX,0,centerX,600));
+            g2.draw(new Line2D.Double(centerX,0,centerX,pixelesVistaY));
             
-            g2.draw(new Line2D.Double(0,centerY, 600,centerY));
+            g2.draw(new Line2D.Double(0,centerY, pixelesVistaX,centerY));
         }
+    public void setPreferredSize(Dimension d){
+        super.setPreferredSize(d);
+        pixelesVistaX=(int)d.getWidth();
+        pixelesVistaY=(int)d.getHeight();
+    }
     private double distancia(double x1,double y1, double x2, double y2)
     {
         x1= Math.abs(x1);
