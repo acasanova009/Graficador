@@ -37,7 +37,7 @@ public class TestAnalizadorLexico {
         fichas = new Lista<Ficha>();
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
         Assert.assertTrue(fichas.equals(l));
-        
+//
         l = AnalizadorLexico.analizar("..");
         fichas = new Lista<Ficha>();
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
@@ -54,6 +54,48 @@ public class TestAnalizadorLexico {
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.MAS));
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
         Assert.assertTrue(fichas.equals(l));
+        
+        
+        l = AnalizadorLexico.analizar("(1.55)+1");
+        fichas = new Lista<Ficha>();
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.PAR_I));
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.PAR_D));
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.MAS));
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
+        for(Ficha f :l ){
+
+        }
+        Assert.assertTrue(fichas.equals(l));
+        
+        
+        l = AnalizadorLexico.analizar("(1)+1.55");
+        fichas = new Lista<Ficha>();
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.PAR_I));
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.PAR_D));
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.MAS));
+        fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
+        for(Ficha f :l ){
+//            System.out.println(f);
+        }
+        Assert.assertTrue(fichas.equals(l));
+        
+        
+//        l = AnalizadorLexico.analizar("tan(3.1415963)");
+//        fichas = new Lista<Ficha>();
+//        
+//        fichas.agregaFinal(new Ficha(Ficha.Simbolo.FUNCION));
+//        fichas.agregaFinal(new Ficha(Ficha.Simbolo.PAR_I));
+//        fichas.agregaFinal(new Ficha(Ficha.Simbolo.REAL));
+//        fichas.agregaFinal(new Ficha(Ficha.Simbolo.PAR_D));
+//        for(Ficha f :l ){
+//                        System.out.println(f);
+//        }
+//        Assert.assertTrue(fichas.equals(l));
+        
+        
+
         
         
         l = AnalizadorLexico.analizar("2+12");

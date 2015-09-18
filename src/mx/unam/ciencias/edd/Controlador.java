@@ -557,7 +557,7 @@ class PanelPintar extends JPanel{
                         
                         }
                     last = (Point2D.Double)p.getP1();
-                    g2.draw(p);
+//                    g2.draw(p);
 
                 }
              }
@@ -605,7 +605,7 @@ class PanelPintar extends JPanel{
                 }
                 last = (Point2D.Double)p.getP1();
                 
-                m+=svglineTag(p.getX1(),p.getY1(),p.getX1(),p.getY1());
+//                m+=svglineTag(p.getX1(),p.getY1(),p.getX1(),p.getY1());
                 
             }
         }

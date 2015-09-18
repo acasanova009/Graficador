@@ -68,8 +68,7 @@ public class AnalizadorLexico{
             //Si yaHabiamosDetectadoUnNumero
             if (numberDetected){
                 
-                if(esNumero(chars[i]))
-                {
+                if(esNumero(chars[i])){
                     
                     numberDetectedString += chars[i];
                     
@@ -109,6 +108,23 @@ public class AnalizadorLexico{
                         
                         
                     }
+                    
+                    else if((i+1)<tamano && backPointDetected && !esNumero(chars[i+1]))
+                    {
+                        
+                        
+                        
+                        
+                        
+                        Ficha f = new Ficha(Simbolo.REAL,ReglaGramatical.__none,numberDetectedString);
+                        listaFinal.agregaFinal(f);
+                        numberDetectedString = "";
+                        
+                        backPointDetected = false;
+                        numberDetected = false;
+                        
+                        
+                    }
                     continue;
                 }
                 else if(chars[i]=='.' && !backPointDetected){
@@ -128,7 +144,6 @@ public class AnalizadorLexico{
                     continue;
                     
                 }
-                
                 else if(chars[i]!='.'){//NO es numero y no es punto.
                     
                     numberDetectedString+='.';
