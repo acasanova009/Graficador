@@ -1,10 +1,13 @@
 This program is a java based, grapher. 
 To compile to the program, one must have apache-ant installed.
 From the terminal:
-$ant
+$ ant
 
 To run the program, after compiled.
 $ java -jar proyecto1.jar
+
+To calculate big functions do:
+$ java -jar -Xss515m proyecto1.jar 
 
 
 

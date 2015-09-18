@@ -887,7 +887,7 @@ public class TestArbolSintactico {
             }
         }
 //
-        f = AnalizadorLexico.analizar("sqrt(x)");
+        f = AnalizadorLexico.analizar("sqr(x)");
         a= new Lista<ArbolSintactico<Ficha>> ();
         t = new ArbolRetroceso<Gramatica>();
         

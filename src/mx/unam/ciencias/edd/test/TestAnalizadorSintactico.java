@@ -121,7 +121,7 @@ public class TestAnalizadorSintactico {
         Assert.assertFalse(aSint.analizar(a,b,t));
         
 //
-        f = AnalizadorLexico.analizar("25+sin(sqrt(x)*x)");
+        f = AnalizadorLexico.analizar("25+sin(sqr(x)*x)");
         a= new Lista<ArbolSintactico<Ficha>> ();
         t = new ArbolRetroceso<Gramatica>();
         
@@ -156,7 +156,7 @@ public class TestAnalizadorSintactico {
         Assert.assertTrue(aSint.analizar(a,AnalizadorLexico.convertir(f),t));
         
         
-        f = AnalizadorLexico.analizar("sqrt(x^2)");
+        f = AnalizadorLexico.analizar("sqr(x^2)");
         a= new Lista<ArbolSintactico<Ficha>> ();
         t = new ArbolRetroceso<Gramatica>();
         
