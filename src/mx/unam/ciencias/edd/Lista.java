@@ -736,4 +736,42 @@ public class Lista<T> implements Iterable<T> {
     }
     
 
+    public Lista<T> getUltimos(int i)
+    {
+        if(i<0)
+            return null;
+        
+        Lista<T> rl = new Lista<T>();
+        IteradorLista<T> itr = this.iteradorLista();
+        itr.end();
+        int c =0;
+        while(itr.hasPrevious() && c<i){
+            
+            rl.agregaInicio(itr.previous());
+            c++;
+        }
+        
+        return rl;
+        
+    }
+    public Lista<T> extraerUltimos(int i){
+        if(i<0)
+            return null;
+        
+        Lista<T> rl = new Lista<T>();
+        IteradorLista<T> itr = this.iteradorLista();
+        itr.end();
+        int c =0;
+        while(itr.hasPrevious() && c<i){
+            
+            T current = itr.previous();
+            this.eliminaUltimo();
+            rl.agregaInicio(current);
+            c++;
+        }
+        
+        return rl;
+    }
+    
+
 }

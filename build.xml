@@ -74,5 +74,15 @@
       </batchtest>
     </junit>
   </target>
+  
+<!--  <target name="jar" depends="proyecto1.jar">-->
+<!--      <mkdir dir="${release.dir}" />-->
+<!--      <jarbundler-->
+<!--      dir="${release.dir}"-->
+<!--      -->
+<!--      name="${jarbundler.name}"-->
+<!--      mainclass="mx.unam.ciencias.edd.proyecto1"-->
+<!--      jar="proyecto1.jar" />-->
+<!--    </target>-->
 
 </project>

@@ -2,11 +2,13 @@ package mx.unam.ciencias.edd.test;
 
 //import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.lang.IllegalArgumentException;
 import java.util.Random;
 import mx.unam.ciencias.edd.ExcepcionIndiceInvalido;
 import mx.unam.ciencias.edd.IteradorLista;
 import mx.unam.ciencias.edd.Lista;
 import mx.unam.ciencias.edd.Ficha;
+import mx.unam.ciencias.edd.Cola;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,100 +17,47 @@ import org.junit.Test;
  */
 public class TestFicha {
 
-    private Random random;
-    private int total;
-    private Ficha ficha;
+//    private Random random;
+//    private int total;
+//    private Ficha ficha;
     
     /**
      */
     public TestFicha() {
-        random = new Random();
-        total = 10 + random.nextInt(90);
-        ficha = new Ficha("");
+//        random = new Random();
+//        total = 10 + random.nextInt(90);
+////        ficha = new Ficha();
     }
+    
     /**
-     * Prueba unitaria para {@link AnalizadorLexico#analizarLexico}.
+     * Prueba unitaria para {@link Ficha#esTerminal}.
      */
-    @Test public void testGenerarFicha() {
-        
+    @Test public void testEsTerminal() {
         Ficha f;
-        f = new Ficha("sin");
-        Assert.assertTrue(Ficha.Token.FUNCION == f.getToken());
-        Assert.assertTrue("sin" == f.getValor());
+        f = new Ficha(Ficha.Simbolo.S);
+        Assert.assertFalse(f.esTerminal());
         
-        f = new Ficha("45678.67");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
-        Assert.assertTrue("45678.67" == f.getValor());
+        f = new Ficha(Ficha.Simbolo.E);
+        Assert.assertFalse(f.esTerminal());
         
-        f = new Ficha(".67");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
-        Assert.assertTrue(".67" == f.getValor());
+        f = new Ficha(Ficha.Simbolo.T);
+        Assert.assertFalse(f.esTerminal());
         
-        f = new Ficha("45678.");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
-        Assert.assertTrue("45678." == f.getValor());
+        f = new Ficha(Ficha.Simbolo.F);
+        Assert.assertFalse(f.esTerminal());
         
-        f = new Ficha("45");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
-        Assert.assertTrue("45" == f.getValor());
+        f = new Ficha(Ficha.Simbolo.M);
+        Assert.assertFalse(f.esTerminal());
         
-        f = new Ficha("x");
-        Assert.assertTrue(Ficha.Token.VAR == f.getToken());
-        Assert.assertTrue("x" == f.getValor());
+        f = new Ficha(Ficha.Simbolo.Y);
+        Assert.assertFalse(f.esTerminal());
         
-    }
-    /**
-     * Prueba unitaria para {@link Ficha#esFichaValida}.
-     */
-    @Test public void testEsFichaValida() {
+        f = new Ficha(Ficha.Simbolo.Q);
+        Assert.assertFalse(f.esTerminal());
         
-        Assert.assertTrue(Ficha.esFichaValida("2345.09876"));
-        Assert.assertTrue(Ficha.esFichaValida("("));
-        Assert.assertTrue(Ficha.esFichaValida(")"));
-        Assert.assertTrue(Ficha.esFichaValida("sin"));
-        Assert.assertTrue(Ficha.esFichaValida("cos"));
-        Assert.assertTrue(Ficha.esFichaValida("tan"));
-        Assert.assertTrue(Ficha.esFichaValida("cot"));
-        Assert.assertTrue(Ficha.esFichaValida("sec"));
-        Assert.assertTrue(Ficha.esFichaValida("csc"));
-        
-                Assert.assertTrue(Ficha.esFichaValida("*"));
-                Assert.assertTrue(Ficha.esFichaValida("+"));
-                Assert.assertTrue(Ficha.esFichaValida("-"));
-                Assert.assertTrue(Ficha.esFichaValida("/"));
-                Assert.assertTrue(Ficha.esFichaValida("^"));
-        
-        Assert.assertFalse(Ficha.esFichaValida("--"));
-        Assert.assertFalse(Ficha.esFichaValida("*sen"));
-        Assert.assertFalse(Ficha.esFichaValida("(3"));
-        Assert.assertFalse(Ficha.esFichaValida("-6"));
-        Assert.assertFalse(Ficha.esFichaValida("2^"));
-        
-        Assert.assertFalse(Ficha.esFichaValida(""));
-        Assert.assertFalse(Ficha.esFichaValida(" "));
-        
-        
-        Ficha f;
-        f = new Ficha("sin");
-        Assert.assertTrue(Ficha.Token.FUNCION == f.getToken());
-        
-        f = new Ficha("45678.67");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
-        
-        f = new Ficha(".67");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
-        
-        f = new Ficha("45678.");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
-        
-        f = new Ficha("45");
-        Assert.assertTrue(Ficha.Token.REAL == f.getToken());
-        
-        f = new Ficha("x");
-        Assert.assertTrue(Ficha.Token.VAR == f.getToken());
-        
+        f = new Ficha(Ficha.Simbolo.REAL);
+        Assert.assertTrue(f.esTerminal());
 
-        
         
     }
 }

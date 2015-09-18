@@ -19,4 +19,25 @@ public class Pila<T> extends MeteSaca<T> {
         }
         elementos++;
     }
+    
+    /**
+     * Regresa una representación en cadena de la lista.
+     * @return una representación en cadena de la lista.
+     */
+    @Override public String toString() {
+        return toStringR(cabeza);
+    }
+    /**
+     * Regresa una representación en cadena de la lista.
+     * @return una representación en cadena de la lista.
+     */
+     private String toStringR(Nodo<T> t) {
+        if(t==null)
+            return "";
+            
+        return t.elemento.toString()+toStringR(t.siguiente);
+        
+    }
+
+
 }
