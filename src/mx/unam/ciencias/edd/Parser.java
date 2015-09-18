@@ -5,10 +5,15 @@ package mx.unam.ciencias.edd;
  * Parser. Clase que con el texto genera un arbol sintactico.
  *
  */
-public class Parser {
+public abstract class Parser {
     
-    
-    public static ArbolSintactico<Ficha> scanf(String texto)
+    /*
+     *Metodo publico que analiza un texto, si es una expresion aritmetica, genera una arbol sintactico
+     *que se puede evaular sobre x.
+     *@param texto String a evaular.
+     *@return ArbolSintactico regreso un arbol con toda la expresion aritmetica.
+     */
+    public static ArbolSintactico<Ficha> scanf(String texto) throws LexicalSimbolException
     {
         
         //Dada una linea de texto con formato UTF-8.
@@ -28,12 +33,20 @@ public class Parser {
         
         ArbolRetroceso<Gramatica> t;
         ArbolSintactico<Ficha> arbolSintactico = null;
+        Lista<Ficha> b;
         
         a= new Lista<ArbolSintactico<Ficha>> ();
         t = new ArbolRetroceso<Gramatica>();
         AnalizadorSintactico aSint = new AnalizadorSintactico();
+
+        try{
+            b= AnalizadorLexico.analizar(texto);
+        }catch(LexicalSimbolException e)
+        {
+            throw e;
+        }
         
-        if( aSint.analizar(a,AnalizadorLexico.convertir(AnalizadorLexico.analizar(texto)),t))
+        if( aSint.analizar(a,AnalizadorLexico.convertir(b),t))
         {
             
             arbolSintactico = a.getUltimo();

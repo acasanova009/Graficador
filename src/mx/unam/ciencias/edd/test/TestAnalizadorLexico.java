@@ -130,7 +130,7 @@ public class TestAnalizadorLexico {
         Assert.assertTrue(fichas.getLongitud()==l.getLongitud());
         Assert.assertTrue(fichas.equals(l));
 
-        l= AnalizadorLexico.analizar("++ --** xx sensen.1.1 (())1. 1. 2.2 2.2 )");
+        l= AnalizadorLexico.analizar("++ --** xx secsec.1.1 (())1. 1. 2.2 2.2 )");
         fichas = new Lista<Ficha>();
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.MAS));
         fichas.agregaFinal(new Ficha(Ficha.Simbolo.MAS));

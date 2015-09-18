@@ -2,14 +2,14 @@
 package mx.unam.ciencias.edd;
 
 
-//import java.io.BufferedReader;
-//import java.io.BufferedWriter;
-//import java.io.File;
-//import java.io.FileInputStream;
-//import java.io.FileOutputStream;
-//import java.io.IOException;
-//import java.io.InputStreamReader;
-//import java.io.OutputStreamWriter;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 import java.lang.Math;
 import java.util.NoSuchElementException;
@@ -27,6 +27,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.awt.image.BufferedImage;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -79,6 +82,7 @@ import javax.swing.table.TableModel;
 import javax.swing.text.Document;
 
 
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -101,10 +105,12 @@ public class Controlador{
     
     private JSpinner spinnerAncho;
     private JSpinner spinnerAlto;
+    private JLabel estado;
     
     //Cargamos la vista y la mostramos.
     private void vistaCargar()
     {
+        
         
         //Tiene la vista que maneja, y la carga
         ventana = new JFrame("Graficador");
@@ -115,6 +121,9 @@ public class Controlador{
         panel.setPreferredSize(new Dimension(pixelesVistaX,pixelesVistaY));
         ventana.repaint();
         
+        
+        estado = new JLabel("Graficador. Tip: Se puede arrastrar con el raton.");
+        ventana.add(estado, BorderLayout.SOUTH);
         ventana.add(panel);
         ventana.setVisible(true);
         ventana.setResizable(true);
@@ -135,13 +144,25 @@ public class Controlador{
         bh.add(label);
         
         //fifth component is NOT a button!
-        JTextField textField = new JTextField("Se puede arrastrar con el mouse.");
+        JTextField textField = new JTextField("x");
         textField.setColumns(10);
         textField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
-                panel.generaPuntos(textField.getText());
-                ventana.repaint();
+                try{
+                    Parser.scanf( textField.getText());
+                    
+                    
+                    estado.setText("Funcion valida: "+textField.getText());
+                    panel.generaPuntos(textField.getText());
+                    ventana.repaint();
+                }
+                catch(LexicalSimbolException lexical)
+                {
+                    estado.setText(lexical.getMessage());
+                    
+                }
+                
 
             }
         });
@@ -167,7 +188,7 @@ public class Controlador{
         };
         
         
-        bh.add(new JLabel("   Altura: "));
+        bh.add(new JLabel("   Eje Y: "));
         spinnerAlto = creaRotativo( 50,-10000, 10000, 10, "#0");
 
         
@@ -193,7 +214,7 @@ public class Controlador{
                 
             }
         };
-        bh.add(new JLabel("   Anchura: "));
+        bh.add(new JLabel("   Eje X: "));
         spinnerAncho = creaRotativo( 50,-10000, 10000, 5, "#0");
         
         spinnerAncho.addChangeListener(listener);
@@ -202,21 +223,62 @@ public class Controlador{
         
 //        
 //        
-        JButton clear = new JButton("Borrar");
+        JButton clear = new JButton(" Borrar ");
         clear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
                 panel.reset();
                 panel.generaPuntos("");
+                estado.setText("Vista borrada y centrada. Tip: Se puede arrastar la vista con el raton.");
                 ventana.repaint();
             }
         });
         bh.add(clear);
         
+        JButton png = new JButton(" PNG ");
+        png.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                generarPNG();
+            }
+        });
+        bh.add(png);
+        
+        JButton svg = new JButton(" SVG ");
+        svg.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                generarSVG();
+            }
+        });
+        bh.add(svg);
+        
+        
+//        JMenu menu = new JMenu("Ayuda");
+//        
+//        menu.setMnemonic(KeyEvent.VK_Y);
+//        bh.add(menu);
+//        
+//        
+//        JMenuItem acercaDe = new JMenuItem("Acerca de...", KeyEvent.VK_D);
+//        acercaDe.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                acercaDe();
+//            }
+//        });
+//        menu.add(acercaDe);
+        
         
         return bh;
         
         
+    }
+    
+    private void acercaDe() {
+        JOptionPane.showMessageDialog(
+                                      ventana,
+                                      "Graficador, v1.0\n" +
+                                      "© 2015 Alfonso Casanova",
+                                      "Acerca de...",
+                                      JOptionPane.INFORMATION_MESSAGE);
     }
     public Controlador() {
         vistaCargar();
@@ -235,6 +297,70 @@ public class Controlador{
         tf.setColumns(2);
         spinner.setEditor(ne);
         return spinner;
+    }
+    
+    private void generarPNG()
+    {
+        
+//        System.out.println("Here:");
+        BufferedImage bi = new BufferedImage((int)panel.getSize().width,(int)panel.getSize().height,BufferedImage.TYPE_INT_ARGB);
+        Graphics g = bi.createGraphics();
+        panel.paint(g);
+        g.dispose();
+
+        try{
+            ImageIO.write(bi,"png",new File("pngFunciones.png"));
+        }catch (Exception e) {
+//            System.out.println("Error:" + e);
+        }
+    }
+    private void generarSVG()
+    {
+        
+        
+        String m  = "";
+        m+= headCreator("", 2);
+        m+= panel.toScalableVectorGraphics();
+        m= encapusuladorHtmlConRegreso(null,m,"Funciones");
+        writeStringToFile(m,new File("svgFunciones.html"));
+        
+    }
+    
+    private static String headCreator(String title, int i)
+    {
+        return String.format("\n<h%d>%s</h%d>\n",i,title,i);
+    }
+    private static String encapusuladorHtmlConRegreso(String paginaAnterior, String aEncapsular, String tituloActual)
+    {
+        
+        String m = ("<!DOCTYPE html>\n<html>\n<head>\n"+
+                    
+                    "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"\n>"+
+                    "<link rel=\"stylesheet\" href=\"http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css\">"+
+                    "<link rel=\"stylesheet\" href=\"styles.css\" />\n"+
+                    "</head>");
+        m+= String.format("\n<body>\n<h1 class=\"mainTitle\">%s</h1>\n<hr/>\n",tituloActual);
+        m+= aEncapsular;
+        m+="<br/><br/>";
+        if(paginaAnterior!=null)
+            m+=String.format("<a href=\"%s.html\">&larr; Volver</a>",paginaAnterior);
+        m+="\n</body>\n</html>";
+        
+        return m ;
+    }
+    private static void writeStringToFile(String stringToWrite, File file)
+    {
+        
+        try {
+            FileOutputStream fileOut = new FileOutputStream(file);
+            OutputStreamWriter osOut = new OutputStreamWriter(fileOut);
+            BufferedWriter out = new BufferedWriter(osOut);
+            out.write(stringToWrite);
+            out.close();
+            
+        } catch (IOException ioe) {
+            System.exit(1);
+        }
     }
 }
 
@@ -297,7 +423,6 @@ class PanelPintar extends JPanel{
                     int lastPixelesVistaX = (int)d.getWidth() - pixelesVistaX;
                     int lastPixelesVistaY = (int)d.getHeight() - pixelesVistaY;
                     
-                    System.out.println("X changed="+lastPixelesVistaX + " Y="+lastPixelesVistaY);
                     update(0,0,0,0,lastPixelesVistaX,lastPixelesVistaY);
                 }
             });
@@ -349,7 +474,7 @@ class PanelPintar extends JPanel{
         {
             as= Parser.scanf(s);
             if(as!=null){
-                
+                //estado fallo.
                 arboles.agrega(s,as);
             }
                 
@@ -446,10 +571,57 @@ class PanelPintar extends JPanel{
         y1= Math.abs(y1);
         x2= Math.abs(x2);
         y2= Math.abs(y2);
-        
-        
-        
         return Math.sqrt( Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
+    }
+    public String toScalableVectorGraphics()
+    {
+        String m = "";
+        
+        m+=svgSize(getSize().width,getSize().height);
+        m+=svglineTag(centerX,0,centerX,pixelesVistaY);
+        m+=svglineTag(0,centerY, pixelesVistaX,centerY);
+        
+        //Por cada funcion.
+        for(Lista<Line2D.Double> puntos :graficas){
+            
+            Point2D.Double last = null;
+            //Graficamos puntos.
+            for(Line2D.Double p :puntos){
+
+                if(last!=null){
+                    
+                    //Quitamos asintotas.
+                    if(p.getY1()>0 &&  p.getY1()<=pixelesVistaY){
+                        
+                        m+=svglineTag(last.getX(),last.getY(),p.getX1(),p.getY1());
+                    }
+                    else if(last.getY()>0 &&  last.getY()<=pixelesVistaY){
+                            
+                        m+=svglineTag(last.getX(),last.getY(),p.getX1(),p.getY1());
+                            
+                            
+                        }
+                    
+                }
+                last = (Point2D.Double)p.getP1();
+                
+                m+=svglineTag(p.getX1(),p.getY1(),p.getX1(),p.getY1());
+                
+            }
+        }
+
+        return m;
         
     }
+    private String svgSize(double width , double height)
+    {
+        return String.format("\n<div class=\"svgContainer\"> \n<svg width='%.2f' height='%.2f'>\n<g>\n",width,height);
+    }
+    private String svglineTag(double x1, double y1, double x2, double y2)
+    {
+        
+        return String.format("<line x1='%.2f' y1='%.2f' x2='%.2f' y2='%.2f' stroke='black' stroke-width='0.2' />\n",x1,y1,x2,y2 );
+    }
+
+    
 }

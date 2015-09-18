@@ -878,7 +878,9 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
                     regreso = 1/(Math.cos(m));
                 else if(func.equals("cot"))
                     regreso = 1/(Math.tan(m));
-                else if (func.equals("sqrt")){
+                
+                
+                else if (func.equals("sqrt")||func.equals("sqr")){
                     if(m<0)
                         throw new IllegalArgumentException("Sqrt, x es menor a 0.");
                     regreso = Math.sqrt(m);

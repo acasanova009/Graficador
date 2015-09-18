@@ -258,7 +258,7 @@ public class AnalizadorLexico{
                 }
                 else
                 {
-                    throw new LexicalSimbolException("Deberia exisitr una funcion que inicia con'" + chars[i] +"' \nAl final de: " + paraInformarDondeEstaElError + "  Pero no hay mas caracteres.");
+                    throw new LexicalSimbolException("Deberia exisitr una funcion que inicia con '" + chars[i] +"' \nAl final de: " + paraInformarDondeEstaElError + "  Pero no hay mas caracteres.");
                 }
                 if ((i+3)<tamano)
                 {
@@ -427,6 +427,8 @@ public class AnalizadorLexico{
             f= new Ficha(Simbolo.FUNCION,ReglaGramatical.__none,"csc");
         else if(a=='c' && b=='o' && c=='t')
             f= new Ficha(Simbolo.FUNCION,ReglaGramatical.__none,"cot");
+        else if(a=='s' && b=='q' && c=='r')
+            f= new Ficha(Simbolo.FUNCION,ReglaGramatical.__none,"sqr");
         return f;
     }
     
@@ -443,6 +445,9 @@ public class AnalizadorLexico{
         else if(a=='c' && b=='s' && c=='c')
             esFuncion = true;
         else if(a=='c' && b=='o' && c=='t')
+            esFuncion = true;
+        
+        else if(a=='s' && b=='q' && c=='r')
             esFuncion = true;
             
         return esFuncion;
