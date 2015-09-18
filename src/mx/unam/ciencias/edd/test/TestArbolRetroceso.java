@@ -14,7 +14,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Clase para pruebas unitarias de la clase {@link Ficha}.
+ * Clase para pruebas unitarias de la clase {@link ArbolRetroceso}.
  */
 public class TestArbolRetroceso {
 

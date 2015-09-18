@@ -4,52 +4,42 @@ package mx.unam.ciencias.edd;
 import java.lang.IllegalArgumentException;
 import mx.unam.ciencias.edd.Ficha.Simbolo;
 /**
- * Clase que define que producciones o derivaciones se 
- * pueden realizar dadas n Fichas,  0<n<5.
+ * <p>Clase que define que producciones o derivaciones se
+ * pueden realizar dadas n Fichas.</p>
  *
- * Gramatica:
+ * <p>Gramatica:
  
-    S-> E
-    E-> E+T | E-T | T
-    T-> T*F | T/F | F
-    F-> F^M | M
-    M-> Y(E) | (E) | -E | Q
-    Y-> func
-    Q-> num | var
+    S- E
+    E- E+T | E-T | T
+    T- T*F | T/F | F
+    F- F^M | M
+    M- Y(E) | (E) | -E | Q
+    Y- func
+    Q- num | var
  
     Gramatica Desglosada.
  
-    S-> E
-    E-> E+T
-    E-> E-T
-    E-> T
-    T-> T*F 
-    T-> T/F 
-    T-> F
-    F-> F^M
-    F-> M
-    M-> Y(E) //tamaño 4
-    M-> (E)
-    M-> -E   //tamño 2
-    M-> Q
-    Y-> func
-    Q-> num 
-    Q-> var
+    S- E
+    E- E+T
+    E- E-T
+    E- T
+    T- T*F
+    T- T/F
+    T- F
+    F- F^M
+    F- M
+    M- Y(E) //tamaño 4
+    M- (E)
+    M- -E   //tamño 2
+    M- Q
+    Y- func
+    Q- num
+    Q- var
+ </p>
  
- 
- _1_S_E,
- _4_E_T,
- _7_T_F,
- _9_F_M,
- _13_M_Q,
- _14_Y_func,
- _15_Q_num,
- _16_Q_var,
- 
- 
- * Una produccion va de izquierda a derecha "->"
- * Una derivacion va de derecha a izquierda "<-"
- * Contiene todas las 16 posibles derivaciones.
+ * <p>Una produccion va de izquierda a derecha.
+ * Una derivacion va de derecha a izquierda.
+ * Contiene todas las 16 posibles derivaciones.</p>
  *
  *
  */

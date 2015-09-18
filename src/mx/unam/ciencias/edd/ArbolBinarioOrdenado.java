@@ -131,7 +131,7 @@ public class ArbolBinarioOrdenado<T extends Comparable<T>>
      * Elimina un elemento. Si el elemento no está en el árbol, no
      * hace nada; si está varias veces, elimina el primero que
      * encuentre (in-order). El árbol conserva su orden in-order.
-     * @param elemento el elemento a eliminar.
+     * @param e el elemento a eliminar.
      */
    
     @Override public void elimina(T e) {
@@ -309,7 +309,7 @@ public class ArbolBinarioOrdenado<T extends Comparable<T>>
         /**
          * Gira el árbol a la derecha sobre el vértice recibido. Si el
          * vértice no tiene hijo izquierdo, el método no hace nada.
-         * @param vertice el vértice sobre el que vamos a girar.
+         * @param v el vértice sobre el que vamos a girar.
          */
         
     protected void miDerecha(Vertice<T> v)
@@ -367,7 +367,7 @@ public class ArbolBinarioOrdenado<T extends Comparable<T>>
         /**
          * Gira el árbol a la izquierda sobre el vértice recibido. Si el
          * vértice no tiene hijo derecho, el método no hace nada.
-         * @param vertice el vértice sobre el que vamos a girar.
+         * @param v vertice el vértice sobre el que vamos a girar.
          */
         public void giraIzquierda(VerticeArbolBinario<T> v) {
             miIzquierda(vertice(v));

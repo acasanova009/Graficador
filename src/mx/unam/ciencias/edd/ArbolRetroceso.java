@@ -6,7 +6,7 @@ import java.lang.Math;
 /**
  * <p>Un arbol retroceso permite al usuario hacer un BackTracking.
  * Lo cual significa que te permite generar caminos en busqueda de la solucion.
- * Y no te permite repetir caminos.
+ * Y no te permite repetir caminos.</p>
  */
 public class ArbolRetroceso<T> {
     
@@ -27,7 +27,7 @@ public class ArbolRetroceso<T> {
         
         /**
          * Constructor único que recibe un elemento.
-         * @param elemento el elemento del vértice.
+         * @param elem elemento el elemento del vértice.
          */
         public Vertice(T elem) {
             //Aquí va su código.
@@ -93,8 +93,8 @@ public class ArbolRetroceso<T> {
     /**
      * Revisa si este elemento ya esta en los hijos del vertice actual.
      * @param elem Elemento a revisar.
-     * @return <tt> true <tt> Si el elemento ya existe.
-                    <tt> false <tt> En otro caso.
+     * @return <tt> true </tt> Si el elemento ya existe.
+                    <tt> false </tt> En otro caso.
      */
     public boolean elementoYaFueRegistrado(T elem)
     {
@@ -113,7 +113,7 @@ public class ArbolRetroceso<T> {
     /**
      * Crea un nuevo vertice con el elemento y este nuevo vertice se 
      * vuelve el vertice Actual.
-     * @param elem element a crear.
+     * @param elemento elemento a registrar.
      */
     public void registrar(T elemento){
         if(elementoYaFueRegistrado(elemento))
@@ -139,6 +139,7 @@ public class ArbolRetroceso<T> {
     /**
      * Regresa un elemento.
      * Excepto cuando ya no hayan mas.
+     * @return regresa la ultima regrla asociada.
      *
      */
     public T regresar(){
@@ -154,6 +155,9 @@ public class ArbolRetroceso<T> {
     
     /**
      *Revisa si el vertice actual es igual al vertice raiz.
+     
+     * @return <tt>true</tt> Si hay mas posibles caminos.
+     *         <tt>false</tt> en otro caso.
      *
      */
     public boolean hayMasPosiblesCaminos(){

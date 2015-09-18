@@ -1,6 +1,7 @@
 package mx.unam.ciencias.edd;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Interfaz para iteradores de lista. Un iterador de lista se puede
@@ -21,6 +22,7 @@ public interface IteradorLista<T> extends Iterator<T> {
     /**
      * Regresa el elemento a la izquierda del iterador, y lo mueve a
      * la izquierda.
+     * @return el elemento previo
      * @throws NoSuchElementException si el iterador no tiene
      *         elemento a la izquierda.
      */

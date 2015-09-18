@@ -559,6 +559,7 @@ public class Lista<T> implements Iterable<T> {
      * lista recibida tiene que contener nada más elementos que
      * implementan la interfaz {@link Comparable}.
      * @param l la lista que se ordenará.
+          * @param <T> tipo T
      * @return una copia de la lista recibida, pero ordenada.
      */
     
@@ -627,6 +628,7 @@ public class Lista<T> implements Iterable<T> {
      * tiene que contener nada más elementos que implementan la
      * interfaz {@link Comparable}, y se da por hecho que está
      * ordenada.
+     * @param <T> tipo T.
      * @param l la lista donde se buscará.
      * @param e el elemento a buscar.
      * @return <tt>true</tt> si e está contenido en la lista,

@@ -368,6 +368,7 @@ public class Grafica<T> implements Iterable<T> {
 
     /**
      * Nos dice si el elemento está contenido en la gráfica.
+     * @param elemento El elemento a buscar.
      * @return <tt>true</tt> si el elemento está contenido en la
      *         gráfica, <tt>false</tt> en otro caso.
      */
@@ -454,6 +455,7 @@ public class Grafica<T> implements Iterable<T> {
      * Regresa el vértice correspondiente el elemento recibido.
      * @throws NoSuchElementException si elemento no es elemento de
      *         la gráfica.
+     * @param elemento regreso el elemento
      * @return el vértice correspondiente el elemento recibido.
      */
     public VerticeGrafica<T> vertice(T elemento) throws NoSuchElementException{
@@ -846,6 +848,8 @@ public class Grafica<T> implements Iterable<T> {
     /**
      * Genera un string con la informacion para un svg (Scalable Vector Graphics)
      * adaptable a paginas web.
+     * @param lock si esta blouqeada
+     * @param desplazo Espacio entre barras.
      * @return La cadena con el svg.
      */
     public String generaScalableVectorGraphics(boolean lock, int desplazo)

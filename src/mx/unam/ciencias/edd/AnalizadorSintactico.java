@@ -8,7 +8,8 @@ import mx.unam.ciencias.edd.Ficha.Simbolo;
 
 /**
  * <p>El analizador sintactico permite dada una lista de fichas, verificar la sintaxis de esta lista.
- * Lo hace a partir del algoritmo de construccion ascendente con retroceso.<p>
+ * Lo hace a partir del algoritmo de construccion ascendente con retroceso.
+ * El cual tiene una complejidad a lo menos <i>O</i>(<i>n*n</i>)</p>
  *
  */
 public class AnalizadorSintactico{

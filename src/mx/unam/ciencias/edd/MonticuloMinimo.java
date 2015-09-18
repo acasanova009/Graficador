@@ -72,6 +72,7 @@ public class MonticuloMinimo<T extends ComparableIndexable<T>>
      * más barato construir un montículo con todos sus elementos de
      * antemano (tiempo <i>O</i>(<i>n</i>)), que el insertándolos
      * uno por uno (tiempo <i>O</i>(<i>n</i> log <i>n</i>)).
+     * @param lista Definicion
      */
     public MonticuloMinimo(Lista<T> lista) {
         siguiente = lista.getLongitud();
@@ -204,6 +205,7 @@ public class MonticuloMinimo<T extends ComparableIndexable<T>>
     /**
      * Regresa el <i>i</i>-ésimo elemento del árbol, por niveles.
      * @return el <i>i</i>-ésimo elemento del árbol, por niveles.
+     * @param i obtener i
      * @throws NoSuchElementException si i es menor que cero, o
      *         mayor o igual que el número de elementos.
      */

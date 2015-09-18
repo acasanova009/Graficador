@@ -43,7 +43,7 @@ public abstract class ArbolBinario<T> implements Iterable<T> {
         }
         /**
          * Constructor único que recibe un elemento.
-         * @param elemento el elemento del vértice.
+         * @param elem el elemento del vértice.
          */
         public Vertice(T elem) {
             //Aquí va su código.

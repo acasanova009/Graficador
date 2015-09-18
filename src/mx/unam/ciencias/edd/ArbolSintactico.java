@@ -8,9 +8,11 @@ import java.lang.Math;
 /**
  * <p>Clase para árboles sintacticos.</p>
 
- * <p>Un arbol sintactico contiene fichas en sus vertices. Las cuales son creadas a partir de una
- * lista de reglas gramaticales.
- * <p>
+ * <p>Es la clase principal para convertir a n fichas, a un arbol a partir de una gramatica.
+ * Es usado a partir del analizador sintactico.
+ * 
+ *
+ * </p>
  */
 public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     
@@ -39,6 +41,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     /**
      * Constructor de arboles de una sola ficha.
      * Sin regla gramatical.
+     * @param ficha Ficha con la que representa a este arbol.
      */
     public ArbolSintactico(T ficha) {
         this(ficha,ReglaGramatical.__none);
@@ -64,12 +67,13 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     
     /**
      * -- Por incompatibilidad de tipo T con el metodo ser estatico, se dejo como metodo no-estatico.
-     * Derivador de arboles. Dada una lista con n arboles, con 0<n<5. Y una regla gramatical.
+     * Derivador de arboles. Dada una lista con n arboles, con 0_n_5. Y una regla gramatical.
      * Con respecto a la regla gramatical tomara todos los arboles que su puedan derivar. Y Regresara una lista con unicamente los arboles que sobraron y el nuevo arbol productor como ultimo elemento
      * Este se agregara al final a la lista.
      * @param ficha La ficha que reprensta al inicio del arbol.
      * @param r La regla Gramatical que nos permite saber como se comonen sus vertices hijos.
      * @param l Lista de contiene a sus futuros Hijos.
+     * @return es la misma lista l, pero por que se requiere se regresa...
      * @throws  IllegalArgumentException Si la gramatica con coincide con los elementos dentro de mi lista.
         o si la lista tienes menos elementos de los esperados por la gramatica.
      */
@@ -420,7 +424,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     
     /**
      
-     * Constructor - Derivador de arboles. Dada una lista con n arboles, con 0<n<5. Y una regla gramatical.
+     * Constructor - Derivador de arboles. Dada una lista con n arboles, con 0-n-5. Y una regla gramatical.
      * Con respecto a la regla gramatical tomara todos los arboles que su puedan derivar. Y Regresara una lista con unicamente los arboles que sobraron y el nuevo arbol productor como ultimo elemento
      * Este se agregara al final a la lista.
      * @param ficha La ficha que reprensta al inicio del arbol.
@@ -769,7 +773,7 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     
     /**
      * Metodo que nos permite evaular este arbol en un valor x.
-     * @param x valor de la rectas sobre el eje x.
+     * @param x_ valor de la rectas sobre el eje x.
      * @return valor de la funcion. Valor y.
      * @throws IllegalArgumentException cuando es divison entre 0. O es raiz de un real negativo.
      */
@@ -781,9 +785,11 @@ public class ArbolSintactico<T extends Ficha> extends ArbolBinario<T> {
     
     /**
      * Metodo recursivo que nos dara el valor.
-     * @param v vertice donde esta actualmente.
-     * @return valor de la funcion. Valor y.
+     * @param vActual vertice donde esta actualmente.
+
+     * @return Valor de la funcion. Valor y.
      * @throws IllegalArgumentException cuando es divison entre 0. O es raiz de un real negativo.
+     * @throws AxiomaticSimbolException cuando faltan vertices.
      */
     public double evaluar(Vertice<T> vActual ) throws IllegalArgumentException,AxiomaticSimbolException {
         

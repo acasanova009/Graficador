@@ -149,7 +149,7 @@ public class Diccionario<K, V> implements Iterable<V> {
      * Construye un diccionario con un tamaño inicial, y un método
      * de huella digital definidos por el usuario.
      * @param tam el tamaño del diccionario.
-     * @param huella la huella digital a utilizar.
+     * @param h la huella digital a utilizar.
      */
     public Diccionario(int tam, HuellaDigital<K> h) {
 
@@ -168,7 +168,7 @@ public class Diccionario<K, V> implements Iterable<V> {
      * agregar un valor, el diccionario reemplaza ese valor con el
      * recibido aquí.
      * @param llave la llave para agregar el valor.
-     * @param valor el valor a agregar.
+     * @param v el valor a agregar.
      */
 
     public void agrega(K llave, V v) {
@@ -275,7 +275,7 @@ public class Diccionario<K, V> implements Iterable<V> {
      * proporcionada.
      * @param llave la llave para buscar el valor.
      * @return el valor correspondiente a la llave.
-     * @throws <tt>NoSuchElementException</tt> si la llave no está
+     * @throws NoSuchElementException si la llave no está
      *         en el diccionario.
      */
     public V get(K llave) throws NoSuchElementException {

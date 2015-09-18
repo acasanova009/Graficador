@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  *
  * <p>Un árbol binario completo agrega y elimina elementos de tal
  * forma que el árbol siempre es lo más cercano posible a estar
- * lleno.<p>
+ * lleno.</p>
  */
 public class ArbolBinarioCompleto<T> extends ArbolBinario<T> {
 

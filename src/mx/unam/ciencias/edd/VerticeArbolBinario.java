@@ -1,4 +1,5 @@
 package mx.unam.ciencias.edd;
+import java.util.NoSuchElementException;
 
 /**
  * Interfaz para vértices de árboles binarios.
@@ -31,7 +32,7 @@ public interface VerticeArbolBinario<T> {
      * @return el vértice padre del vértice.
      * @throws NoSuchElementException si el vértice no tiene padre.
      */
-    public VerticeArbolBinario<T> getPadre();
+    public VerticeArbolBinario<T> getPadre() throws NoSuchElementException ;
 
     /**
      * Regresa el vértice izquierdo del vértice.

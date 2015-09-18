@@ -194,7 +194,7 @@ public class Histograma<T> implements Iterable<T> {
     
     /**
      * Agrega un elemento al diccionario.
-     * @param elemento el elemento que queremos vamos a agregar.
+     * @param e elemento el elemento que queremos vamos a agregar.
      * en el diccionario.
      */
     public void agrega(T e )
@@ -204,7 +204,7 @@ public class Histograma<T> implements Iterable<T> {
     
      /**
      * Agrega un elemento al diccionario con su respectiva cantidad.
-     * @param elemento el elemento que queremos vamos a agregar.
+     * @param e elemento el elemento que queremos vamos a agregar.
      * @param c la cantidad de veces que este elemento aparece.
      * en el diccionario.
      */
@@ -245,6 +245,10 @@ public class Histograma<T> implements Iterable<T> {
     }
     /**
      * Elimina el elemento. Y ajusta la cantidad de apariciones.
+     *
+     * @param e elemento
+
+
      */
 
     public void elimina(T e)
@@ -256,7 +260,14 @@ public class Histograma<T> implements Iterable<T> {
         apariciones-=c.cantidad;
         d.elimina(e);
     }
-    /** Contiene*/
+    /** Contiene
+     *
+     * @param e elemento
+
+     * @return <tt> true </tt> Si esta contenido
+                <tt> false </tt> Si no esta
+     *
+     */
     
     public boolean contiene(T e)
     {
@@ -265,6 +276,9 @@ public class Histograma<T> implements Iterable<T> {
     /** Metodo que permite con una lista de elementos comparables, ordenarlos, y cuantificarlos.
      *  Si tengo [a,b,a,a,b,c,a,c];
      *  Regresa un histograma con [(a,4),(b,2),(c,2)];
+     * @param lista Lista a revisar.
+     * @param <T> Tipo T
+     * @return Histograma seccionado.
      */
     
     public static <T extends Comparable<T>> Histograma<T> seccionamiento(Lista<T> lista)
