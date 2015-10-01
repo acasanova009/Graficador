@@ -246,8 +246,9 @@ public class Controlador{
         JButton svg = new JButton(" SVG ");
         svg.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                generarSVG();
-            }
+                
+                SecondaryThread s = new SecondaryThread(panel.centerX,panel.centerY,panel.pixelesVistaX,panel.pixelesVistaY,panel.graficas);
+                s.start();            }
         });
         bh.add(svg);
         
@@ -314,13 +315,93 @@ public class Controlador{
 //            System.out.println("Error:" + e);
         }
     }
+}
+class SecondaryThread extends Thread {
+    
+    
+    public int pixelesVistaX;
+    public int pixelesVistaY;
+    
+    public double centerX;
+    public double centerY;
+
+    
+    public Lista<Lista<Line2D.Double>> graficas;
+    SecondaryThread(double centerX, double centerY,int pixelesVistaX,int pixelesVistaY, Lista<Lista<Line2D.Double>> graficas ) {
+        
+        this.centerX=centerX;
+        this.centerY=centerY;
+        this.pixelesVistaX = pixelesVistaX;
+        this.pixelesVistaY = pixelesVistaY;
+        this.graficas =graficas;
+
+    }
+    
+    public void run() {
+        
+        generarSVG();
+        
+    }
+    
+    private String toScalableVectorGraphics()
+    {
+        String m = "";
+        
+//        m+=svgSize(getSize().width,getSize().height);
+        m+=svgSize(pixelesVistaX,pixelesVistaY);
+
+        m+=svglineTag(centerX,0,centerX,pixelesVistaY);
+        m+=svglineTag(0,centerY, pixelesVistaX,centerY);
+        
+        //Por cada funcion.
+        for(Lista<Line2D.Double> puntos :graficas){
+            
+            Point2D.Double last = null;
+            //Graficamos puntos.
+            for(Line2D.Double p :puntos){
+                
+                if(last!=null){
+                    
+                    //Quitamos asintotas.
+                    if(p.getY1()>0 &&  p.getY1()<=pixelesVistaY){
+                        
+                        m+=svglineTag(last.getX(),last.getY(),p.getX1(),p.getY1());
+                    }
+                    else if(last.getY()>0 &&  last.getY()<=pixelesVistaY){
+                        
+                        m+=svglineTag(last.getX(),last.getY(),p.getX1(),p.getY1());
+                        
+                        
+                    }
+                    
+                }
+                last = (Point2D.Double)p.getP1();
+                
+                //                m+=svglineTag(p.getX1(),p.getY1(),p.getX1(),p.getY1());
+                
+            }
+        }
+        
+        return m;
+        
+    }
+    private String svgSize(double width , double height)
+    {
+        return String.format("\n<div class=\"svgContainer\"> \n<svg width='%.2f' height='%.2f'>\n<g>\n",width,height);
+    }
+    private String svglineTag(double x1, double y1, double x2, double y2)
+    {
+        
+        return String.format("<line x1='%.2f' y1='%.2f' x2='%.2f' y2='%.2f' stroke='black' stroke-width='0.2' />\n",x1,y1,x2,y2 );
+    }
+    
     private void generarSVG()
     {
         
         
         String m  = "";
         m+= headCreator("", 2);
-        m+= panel.toScalableVectorGraphics();
+        m+= toScalableVectorGraphics();
         m= encapusuladorHtmlConRegreso(null,m,"Funciones");
         writeStringToFile(m,new File("svgFunciones.html"));
         
@@ -364,11 +445,10 @@ public class Controlador{
     }
 }
 
-
 class PanelPintar extends JPanel{
     
-    private static int pixelesVistaX = 600;
-    private static int pixelesVistaY = 600;
+    public static int pixelesVistaX = 600;
+    public static int pixelesVistaY = 600;
     
 
     
@@ -376,8 +456,8 @@ class PanelPintar extends JPanel{
     
     double anchura;
     double altura;
-    double centerX;
-     double centerY;
+    public double centerX;
+    public double centerY;
     
     double lastX;
     double lastY;
@@ -461,8 +541,6 @@ class PanelPintar extends JPanel{
         generaPuntos("");
     }
     
-    
-    
     public void generaPuntos(String s) {
 
         ArbolSintactico<Ficha> as ;
@@ -539,7 +617,7 @@ class PanelPintar extends JPanel{
                 Point2D.Double last = null;
                  //Graficamos puntos.
                 for(Line2D.Double p :puntos){
-                    g2.draw(p);
+
                     if(last!=null){
                         
                         //Quitamos asintotas.
@@ -577,7 +655,8 @@ class PanelPintar extends JPanel{
     {
         String m = "";
         
-        m+=svgSize(getSize().width,getSize().height);
+//        m+=svgSize(getSize().width,getSize().height);
+                m+=svgSize(pixelesVistaX,pixelesVistaY);
         m+=svglineTag(centerX,0,centerX,pixelesVistaY);
         m+=svglineTag(0,centerY, pixelesVistaX,centerY);
         
